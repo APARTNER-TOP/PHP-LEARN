@@ -1,0 +1,26 @@
+<style type="text/css">
+table{padding: 0.5em; overflow: auto; margin:0px; padding:0px; box-shadow: 10px 10px 5px #888888; border:1px solid #000000;  -moz-border-radius-bottomleft:0px; -webkit-border-bottom-left-radius:0px; border-bottom-left-radius:0px;  -moz-border-radius-bottomright:0px; -webkit-border-bottom-right-radius:0px; border-bottom-right-radius:0px;  -moz-border-radius-topright:0px; -webkit-border-top-right-radius:0px; border-top-right-radius:0px;  -moz-border-radius-topleft:0px; -webkit-border-top-left-radius:0px; border-top-left-radius:0px; border-collapse:collapse}
+table tr:nth-child(odd){background-color:#e6e6e6}
+table tr:ntd-child(even){background-color:#ffffff}
+table td{Vertically-align: middle; text-align: center; border:1px solid #000000; border-widtd:0px 1px 1px 0px; padding:10px; font-family:Arial}
+table td .green{color:white;background-color:green; text-align: center; }
+.green{color:white;background-color:green}
+</style>
+<?php
+$arrayValue = array(true, false, 1, 0, '1', '0', '-1', -1, NULL, array(), 'php');
+echo '<table>';
+foreach ($arrayValue as $key => $valueHorizontally) {
+    if ($key == 0) {
+        echo '<tr>';
+        foreach ($arrayValue as $key => $valueFirstTr) {
+            echo ($key == 0 ? '<td></td>' : '').'<td class="green">'.var_export($valueFirstTr, true).'</td>';
+        }
+        echo '</tr>';
+    }
+    echo '<tr>';
+    foreach ($arrayValue as $key => $valueVertically) {
+        echo ($key == 0 ? '<td class="green">'.var_export($valueHorizontally, true).'</td>' : '').'<td>'.($valueHorizontally === $valueVertically ? 'true' : 'false').'</td>';
+    }
+    echo '</tr>';
+}
+echo '</table>';
