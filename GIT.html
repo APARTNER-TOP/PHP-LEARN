@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Git за 30 хвилин</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <style>
+      .hljs {
+         display: block;
+         overflow-x: auto;
+         padding: 0.5em;
+         background: #002b36;
+         color: #839496;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="post-content">
+      <h2>Git за 30 хвилин</h2>
+      <div class="content-container content-styles">
+         <div>
+            <p>Git став особливо популярним за останні роки. Система контролю версіями використовується багатьма
+               великими Open Source проектами, наприклад, Linux.</p>
+            <p>Початківці не рідко лякаються через загадкові команди і аргументи, які вимагає git. Але вам не потрібно
+               знати усе це, щоб почати роботу з цією системою. Ви можете освоїти основні команди, а потім повільно
+               просуватися далі. І це саме те, чому ви навчитеся сьогодні. Почнемо!</p>
+            <h3 id="основи">Основи<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="#" href="#основи"
+                  style="opacity: 1; padding-left: 0.375em;"></a></h3>
+            <p>Git є набором утиліт командного рядка, які дозволяють відстежувати і записувати зміни в файлах
+               (найчастіше коду, але ви можете відстежувати будь-що). З її допомогою ви можете відновити старі версії
+               вашого проекту, порівнювати, аналізувати, об'єднувати зміни та багато іншого. Цей процес називається
+               <em>управлінням версіями</em>. Є багато подібних систем контролю версій. Можливо, ви вже чули деякі з
+               них: SVN, Mercurial, Perforce, CVS, Bitkeeper та ін.
+            </p>
+            <p>Git працює децентралізовано, що означає, тобто не залежить від центрального сервера. Дані зберігаються
+               локально в папці на вашому жорсткому диску, яка називається репозиторій. Проте ви також можете зберегти
+               копію вашого репозиторія онлайн, що дає можливість команді людей працювати одночасно над одним кодом. Для
+               цього використовуються такі сайти, як GitHub і BitBucket.</p>
+            <p><strong>1. Інсталяція Git</strong></p>
+            <p>Встановити git на ваш комп'ютер дуже просто:</p>
+            <ul>
+               <li>Linux - відкрийте термінал та встановіть git за допомогою менеджеру пакетів вашого дистрибутиву. Для
+                  Ubuntu введіть команду: <code>sudo apt-get install git</code></li>
+               <li>Windows - рекомендуємо <a href="https://git-for-windows.github.io/" target="_blank"
+                     rel="nofollow noreferrer noopener">git для Windows</a> так як там є і GUI-клієнт, і емулятор
+                  командного рядка BASH</li>
+               <li>OS X: Найпростіший спосіб - встановити <a href="http://brew.sh/" target="_blank"
+                     rel="nofollow noreferrer noopener">homebrew</a>, а потім просто запустити
+                  <code>brew install git</code> з вашого терміналу
+               </li>
+            </ul>
+            <p>Якщо ви новачок, то графічний клієнт Git - ідеальний для вас варіант. Рекомендуємо <a
+                  href="https://desktop.github.com/" target="_blank" rel="nofollow noreferrer noopener">GitHub
+                  Desktop</a> або <a href="https://www.atlassian.com/software/sourcetree" target="_blank"
+                  rel="nofollow noreferrer noopener">Sourcetree</a>, але є ще багато інших чудових і безкоштовних
+               додатків. Знати основні команди git все ж важливо, навіть якщо ви використовуєте GUI, тож в цьому
+               туторіалі ми будемо фокусуватися на них.</p>
+            <p><strong>2. Налаштування Git</strong></p>
+            <p>Тепер, коли ми встановили git на наш комп'ютер, нам потрібно буде зробити деякі налаштування. Є багато
+               опцій, з якими можна ще погратися, але спочатку про найголовніші з них: ім'я користувача та адреса
+               електронної пошти. Відкрийте термінал і запустіть наступні команди:</p>
+            <pre>
+   <code class="hljs">
+      $ git<span class="hljs-built_in"> config </span>--global user.name <span class="hljs-string">"My Name"</span>
+      $ git<span class="hljs-built_in"> config </span>--global user.email myEmail@example.com
+   </code>
+            </pre>
+            <p>Кожен крок, який ми робимо в git буде тепер прив'язуватися до наших ім'я і адреси. Таким чином
+               користувачі завжди знатимуть, кому належать зміни, і все буде більш організовано.</p>
+            <p><strong>3. Створення нового репозиторія - git init</strong></p>
+            <p>Як ми вже згадували раніше, git зберігає свої файли і історію безпосередньо в папці у вашому проекті. Для
+               того, щоб створити новий репозиторій, потрібно відкрити термінал, перейти в каталог проекту і запустити
+               <code>git init</code>. Це дасть git право на доступ до цієї папки і створить прихований каталог
+               <em>.git</em>, де буде зберігатися історія репозиторія і його конфігурації.
+            </p>
+            <p>Створіть папку на вашому робочому столі під назвою <em>git_exercise</em>, відкрийте новий термінал і
+               введіть наступні команди:</p>
+            <pre>
+   <code class="hljs">
+      <span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> Desktop/git_exercise/</span>
+      <span class="hljs-meta">$</span><span class="bash"> git init</span>
+   </code>
+         </pre>
+            <p>Командний рядок повинен відповісти наступним чином:</p>
+            <pre><code class="hljs">Initialized empty Git repository <span class="hljs-keyword">in</span> <span class="hljs-regexp">/home/u</span>ser<span class="hljs-regexp">/Desktop/gi</span>t_exercise<span class="hljs-regexp">/.git/</span>
+         </code></pre>
+            <p>Це означає, що наш репозиторій був успішно створений, але він все ще порожній. Тепер створіть простий
+               текстовий файл <em>hello.txt</em> та збережіть його в папці <em>git_exercise</em>.</p>
+            <p><strong>4. Перевірка статусу – git status</strong></p>
+            <p>Git status - ще одна команда, яку необхідно знати. Вона повертає інформацію про поточний стан
+               репозиторія: що нового, що змінилося тощо. Запуск <code>git status</code> у нашому випадку поверне
+               наступне:</p>
+            <pre>
+   <code class="hljs">
+   $ git status
+
+   On branch master
+
+   Initial <span class="hljs-keyword">commit</span>
+
+   Untracked files:
+   (<span class="hljs-keyword">use</span> <span class="hljs-string">"git add ..."</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">include</span> <span class="hljs-keyword">in</span> what will be committed)
+
+   hello.txt
+   </code>
+            </pre>
+            <p>У повідомленні наголошується, що <em>hello.txt</em> не є відслідкованим. Це означає, що файл є новим і
+               git ще не знає, потрібно слідкувати за його змінами, чи краще просто ігнорувати його. Щоб підтвердити
+               новий файл, нам потрібно його перемістити.</p>
+            <p><strong>5. Переміщення - git add</strong></p>
+            <p>Git має поняття <em>"проміжної області"</em>. Ви можете думати про це як про чисте полотно, яке містить
+               зміни, які ви хотіли б внести. Воно спочатку порожнє, але ви можете додавати файли до нього (або окремі
+               рядки і частини файлів) з командою <code>git add</code>, і, нарешті, зробити коміт з
+               <code>git commit</code>.
+            </p>
+            <p>У нашому випадку, ми маємо лише один файл:</p>
+            <pre><code class="hljs">$ git <span class="hljs-keyword">add</span><span class="bash"> hello.txt</span>
+         </code></pre>
+            <p>Якщо ми хочемо додати усе в директорій, ми можемо застосувати:</p>
+            <pre><code class="hljs">$ git <span class="hljs-keyword">add</span><span class="bash"> -A</span>
+         </code></pre>
+            <p>Повторна перевірка статусу тепер поверне іншу відповідь:</p>
+            <pre>
+<code class="hljs">
+   $ git status
+
+   On branch master
+
+   Initial <span class="hljs-keyword">commit</span>
+
+   Changes <span class="hljs-keyword">to</span> be committed:
+      (<span class="hljs-keyword">use</span> <span class="hljs-string">"git rm --cached ..."</span> <span class="hljs-keyword">to</span> unstage)
+
+   <span class="hljs-keyword">new</span> <span class="hljs-keyword">file</span>:   hello.txt
+</code>
+            </pre>
+            <p>Наш файл тепер готовий до коміту. Статус також каже нам, що саме змінилося у файлах - в нашому випадку
+               <em>новий файл</em>, але він може бути <em>змінений</em> або <em>видалений</em>, в залежності від того,
+               що відбулося з ним з моменту останнього <code>git add</code>.
+            </p>
+            <p><strong>6. Внесення коміту – git commit</strong></p>
+            <p>Коміт відображає стан нашого репозиторія у момент, коли він був зроблений. Це як знімок, до якого ми
+               можемо повернутися і побачити, як усе було, коли ми його тільки зробили.</p>
+            <p>Для створення нового коміту нам потрібно мати принаймні одну зміну, додану до проміжної області (ми
+               тільки що зробили це з <code>git add</code>), і виконати наступне:</p>
+            <pre><code class="hljs"><span class="hljs-variable">$ </span>git commit -m <span class="hljs-string">"Initial commit."</span>
+         </code></pre>
+            <p>Це створить новий коміт з усіма змінами з проміжної області (додавання <em>hello.txt</em>). Частина з
+               <code>-m "Initial commmit"</code> призначена для опису, який узагальнює усі зміни, які були зроблені
+               користувачем. Рекомендовано часто робити коміти і писати змістовні коміт-повідомлення до них.
+            </p>
+            <h3 id="дистанційні-репозиторії">Дистанційні репозиторії<a class="anchorjs-link " aria-label="Anchor"
+                  data-anchorjs-icon="#" href="#дистанційні-репозиторії" style="opacity: 1; padding-left: 0.375em;"></a>
+            </h3>
+            <p>На даний момент наш коміт лише локальний - він існує тільки в папці _.git _. Хоча локальні репозиторії
+               корисні самі по собі, не рідко ми хочемо поділитися своєю роботою і завантажити її на сервер або сервіс
+               хостингу репозиторіїв.</p>
+            <p><strong>1. Підключення до дистанційного репозиторія – git remote add</strong></p>
+            <p>Для того, щоб завантажити щось на дистанційний репозиторій, нам подрібно встановити з ним зв'язок. У
+               цьому туторіалі адресою нашого сховища буде <em><a href="https://github.com/codeguida/nolink"
+                     target="_blank" rel="nofollow noreferrer noopener">https://github.com/codeguida/nolink</a></em>. Ми
+               рекомендуємо вам створити свій власний порожній репозиторій на <a href="https://github.com/"
+                  target="_blank" rel="nofollow noreferrer noopener">GitHub</a>, <a href="https://bitbucket.org/"
+                  target="_blank" rel="nofollow noreferrer noopener">BitBucket</a> або інших подібних сайтах. Реєстрація
+               та налаштування може зайняти деякий час, але усі сервіси пропонують свої step-by-step гіди, щоб допомогти
+               вам.</p>
+            <p>Для того, щоб зв'язати наш локальний репозиторій з репозиторієм на GitHub, ми запускаємо наступний рядок
+               в терміналі:</p>
+            <pre><code class="hljs">
+   <span class="hljs-comment"># Це лише приклад. Замініть URI адресою вашого репозиторія.</span>
+   $ git remote add origin https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/codeguida/</span>nolink.git
+         </code></pre>
+            <p>Проект може мати безліч дистанційних репозиторіїв одночасно. Для того, щоб відрізнити їх один від одного
+               ми даємо їм різні назви. Традиційно основний дистанційний репозиторій в git називається <em>origin</em>.
+            </p>
+            <p><strong>2. Завантаження но сервер – git push</strong></p>
+            <p>Час завантижити свої коміти на сервер. Цей процес називається <strong>push</strong>, і це робиться
+               щоразу, коли ми хочемо оновити наш дистанційний репозиторій.</p>
+            <p>Команда git, яка це виконує, <code>git push</code> і приймає два параметри - назва дистанційного репо (у
+               нашому випадку <em>origin</em>) і гілка, на яку ми хочемо завантажити коміт (за замовчування для кожного
+               репозиторія встановлена гілка <em>master</em>).</p>
+            <pre><code class="hljs">
+   $ git push origin master
+
+   Counting objects: <span class="hljs-number">3</span>, done.
+   Writing objects: <span class="hljs-number">100</span>% (<span class="hljs-number">3</span>/<span class="hljs-number">3</span>), <span class="hljs-number">212</span> bytes | <span class="hljs-number">0</span> bytes/s, done.
+   Total <span class="hljs-number">3</span> (delta <span class="hljs-number">0</span>), reused <span class="hljs-number">0</span> (delta <span class="hljs-number">0</span>)
+   To https:<span class="hljs-comment">//github.com/codeguida/nolink.git</span>
+      * [new branch]      master -&gt; master
+         </code></pre>
+            <p>Залежно від сервісу, який ви використовуєте, вам потрібно буде ідентифікувати себе перед завантаженням
+               коміту. Якщо все було зроблено правильно, зайшовши на віддалений репозиторій у вашому браузері, ви
+               помітите <em>hello.txt</em>.</p>
+            <p><strong>3. Клонування репозиторія – git clone</strong></p>
+            <p>Зараз, люди можуть бачити ваш віддалений репозиторій на GitHub. Але вони також можуть завантажити його
+               локально і мати повністю робочу копію проекту за допомогою команди <code>git clone</code>:</p>
+            <pre><code class="hljs">$ git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/codeguida/nolink.git
+         </code></pre>
+            <p>Автоматично створюється новий локальний репозиторій, з github версією налаштованою як дистанційний
+               репозиторій.</p>
+            <p><strong>4. Отримання змін з серверу – git pull</strong></p>
+            <p>Якщо ви зробили зміни у своєму репозиторії, люди можуть завантажити ці зміни за допомогою однієї команди
+               - <strong>pull</strong>:</p>
+            <pre><code class="hljs">
+   $ git pull origin <span class="hljs-keyword">master</span>
+
+   <span class="hljs-title">From</span> https://github.com/codeguida/nolink
+      * branch            <span class="hljs-keyword">master</span>     <span class="hljs-title">-&gt; FETCH_HEAD</span>
+   Already up-to-<span class="hljs-keyword">date</span>.
+         </code></pre>
+            <p>Так як ніяких комітів не було після того, як ми клонували репозиторій, нема чого і завантажувати.</p>
+            <h3 id="гілки">Гілки<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="#" href="#гілки"
+                  style="opacity: 1; padding-left: 0.375em;"></a></h3>
+            <p>При розробці чогось нового, вважається гарною практикою працювати над копією оригінального проекту, яка
+               називається <em>гілкою</em>. Гілки мають свою історію та ізолюють свої зміни одна від одної, поки ви не
+               вирішите з'єднати їх. Це робиться по деяким причинам:</p>
+            <ul>
+               <li>Вже працююча, стабільна версія коду не буде порушена</li>
+               <li>Багато додатків можуть бути безпечно розроблені одночасно різними людьми</li>
+               <li>Розробники можуть працювати на своїй власній гілці, без ризику зміни свого коду кимось іншим</li>
+               <li>Коли не впевнені, що краще. Кілька версій одного і того ж додатку можуть бути розроблені на окремих
+                  гілках, і потім порівнюватися</li>
+            </ul>
+            <p><strong>1. Створення нової гілки – git branch</strong></p>
+            <p>За замовчуванням гілка будь-якого репозиторія називається <strong><em>master</em></strong>. Щоб створити
+               додаткові гілки ми використовуємо команду <code>git branch &lt;ім'я&gt;</code>:</p>
+            <pre><code class="hljs">$ git <span class="hljs-keyword">branch </span>amazing_new_feature
+         </code></pre>
+            <p>Це тільки створює нову гілку, яка на даний момент є такою самою, як <em>master</em>.</p>
+            <p><strong>2. Перехід між гілками – git checkout</strong></p>
+            <p>Коли ми запустимо <code>git branch</code>, ми побачимо, що нам доступні дві опції:</p>
+            <pre><code class="hljs">$ git branch
+           amazing_new_feature
+         * <span class="hljs-keyword">master</span>
+         <span class="hljs-title"></span></code></pre>
+            <p>Master є поточною гілкою і позначена зірочкою. Але ми хочемо працювати над нашими новими дивовижними
+               додатками, так що потрібно перейти на іншу гілку. Це робиться за допомогою команди
+               <code>git checkout</code>, з параметром - гілка, до якої нам треба перейти.
+            </p>
+            <pre><code class="hljs"><span class="hljs-variable">$ </span>git checkout amazing_new_feature
+         </code></pre>
+            <p><strong>3. З'єднання гілок – git merge</strong></p>
+            <p>Наш "дивовижний новий додаток" буде просто ще один текстовий файл з ім'ям <em>feature.txt</em>. Ми
+               створимо його, додамо і зробимо коміт.</p>
+            <pre><code class="hljs">
+   $ git <span class="hljs-keyword">add</span><span class="bash"> feature.txt</span>
+   $ git commit -m <span class="hljs-string">"New feature complete."</span>
+         </code></pre>
+            <p>Новий додаток завершений, ми можемо повернутися до гілки <em>master</em>.</p>
+            <pre><code class="hljs">$ git checkout <span class="hljs-keyword">master</span>
+         <span class="hljs-title"></span></code></pre>
+            <p>Тепер, якщо ми відкриємо наш проект у файл-браузері, ми помітимо, що <em>feature.txt</em> зник. Це тому,
+               що ми повернулися до гілки master, де <em>feature.txt</em> ніколи не створювався. Для того, щоб внести
+               його сюди, нам потрібно запустити <code>git merge</code> та об'єднати дві гілки разом, враховуючи усі
+               зміни, зроблені в <em>amazing_new_feature</em>.</p>
+            <pre><code class="hljs">git <span class="hljs-keyword">merge</span> amazing_new_feature
+         </code></pre>
+            <p>Гілку master тепер оновлено. Гілка <em>awesome_new_feature</em> більше не потрібна і може бути видалена.
+            </p>
+            <pre><code class="hljs"><span class="hljs-symbol">git</span> <span class="hljs-keyword">branch </span>-d awesome_new_feature
+         </code></pre>
+            <h3 id="додатково">Додатково<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="#"
+                  href="#додатково" style="opacity: 1; padding-left: 0.375em;"></a></h3>
+            <p>В останньому розділі цього гайду, ми збираємося розглянути деякі більш складні опції, які, цілком
+               можливо, стануть у нагоді.</p>
+            <p><strong>1. Перевірка різниці між комітами</strong></p>
+            <p>Кожен коміт має унікальний ID у вигляді рядка цифр і символів. Щоб побачити список всіх комітів і їх ID,
+               ми використовуємо <code>git log</code>:</p>
+            <pre><code class="hljs">
+   $ git log
+
+   commit ba25c0ff30e1b2f0259157b42b9f8f5d174d80d7
+   Author: Tutorialzine
+   Date:   Mon May <span class="hljs-number">30</span> <span class="hljs-number">17</span>:<span class="hljs-number">15</span>:<span class="hljs-number">28</span> <span class="hljs-number">2016</span> +<span class="hljs-number">0300</span>
+
+      New feature complete
+
+   commit b10cc1238e355c02a044ef9f9860811ff605c9b4
+   Author: Tutorialzine
+   Date:   Mon May <span class="hljs-number">30</span> <span class="hljs-number">16</span>:<span class="hljs-number">30</span>:<span class="hljs-number">04</span> <span class="hljs-number">2016</span> +<span class="hljs-number">0300</span>
+
+      Added content to hello.txt
+
+   commit <span class="hljs-number">09</span>bd8cc171d7084e78e4d118a2346b7487dca059
+   Author: Tutorialzine
+   Date:   Sat May <span class="hljs-number">28</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">14</span> <span class="hljs-number">2016</span> +<span class="hljs-number">0300</span>
+
+      Initial commit
+         </code></pre>
+            <p>Як можна побачити, ID виглядають дуже довгими, але при роботі з ними немає необхідності копіювати все -
+               перших кілька символів, як правило, достатньо.
+               Для того, щоб подивитися, що нового відбулося у коміті, ми можемо запустити
+               <code>git show [коміт]</code>:
+            </p>
+            <pre><code class="hljs">
+   $ git <span class="hljs-keyword">show</span> b10cc123
+   
+   <span class="hljs-keyword">commit</span> b10cc1238e355c02a044ef9f9860811ff605c9b4
+   Author: Tutorialzine
+   <span class="hljs-built_in">Date</span>:   Mon May <span class="hljs-number">30</span> <span class="hljs-number">16</span>:<span class="hljs-number">30</span>:<span class="hljs-number">04</span> <span class="hljs-number">2016</span> +<span class="hljs-number">0300</span>
+   
+         Added <span class="hljs-keyword">content</span> <span class="hljs-keyword">to</span> hello.txt
+   
+   diff <span class="hljs-comment">--git a/hello.txt b/hello.txt</span>
+   <span class="hljs-keyword">index</span> e69de29..b546a21 <span class="hljs-number">100644</span>
+   <span class="hljs-comment">--- a/hello.txt</span>
+   +++ b/hello.txt
+   @@ <span class="hljs-number">-0</span>,<span class="hljs-number">0</span> +<span class="hljs-number">1</span> @@
+   +Nice weather today, isn<span class="hljs-string">'t it?
+         </span></code></pre>
+            <p>Щоб побачити різницю між будь-якими двома комітами ми можемо використовувати <code>git diff</code> з
+               [коміт з-] .. [коміт до]:</p>
+            <pre>
+         <code class="hljs">$ git diff <span class="hljs-number">09</span>bd8cc..ba25c0ff
+
+   diff <span class="hljs-comment">--git a/feature.txt b/feature.txt</span>
+   new <span class="hljs-built_in">file</span> mode <span class="hljs-number">100644</span>
+   index <span class="hljs-number">0000000.</span>.e69de29
+   diff <span class="hljs-comment">--git a/hello.txt b/hello.txt</span>
+   index e69de29..b546a21 <span class="hljs-number">100644</span>
+   <span class="hljs-comment">--- a/hello.txt</span>
+   +++ b/hello.txt
+   @@ <span class="hljs-number">-0</span>,<span class="hljs-number">0</span> +<span class="hljs-number">1</span> @@
+   +Nice weather today, <span class="hljs-keyword">isn't</span> <span class="hljs-keyword">it</span>?
+         </code></pre>
+            <p>Ми порівняли перший коміт з останнім і бачимо усі зміни, які були зроблені. Зазвичай це простіше зробити
+               за допомогою команди <code>git difftool</code>, яка відкриває графічний клієнт, що показує всі
+               відмінності.</p>
+            <p><strong>2. Повернення файлу до попереднього стану</strong></p>
+            <p>Git дозволяє повертати будь-який обраний файл у стан, який був в деякому коміті. Це робиться за допомогою
+               знайомої нам команди <code>git checkout</code>, яку ми використовували раніше для переходу між гілками.
+               Вона також може бути використана для переходу між комітами (досить часто у git одна команда може робити
+               багато не спільних між собою функцій).</p>
+            <p>У наступному прикладі ми візмемо <em>hello.txt</em> і повернемо все у початковий стан. Для цього ми
+               повинні знати ID коміту до якого ми хочемо повернутися, а також повний шлях до нашого файлу.</p>
+            <pre><code class="hljs">$ git checkout <span class="hljs-number">09</span>bd8cc1 hello<span class="hljs-selector-class">.txt</span>
+         </code></pre>
+            <p><strong>3. Редагування коміту</strong></p>
+            <p>Якщо ви помітили, що ви зробили помилку у вашому коміт-повідомленні, або ви забули додати файл після
+               того, як зробили коміт, ви можете легко виправити це за допомогою <code>git commit --amend</code>. Це
+               додасть все з останнього коміту в проміжну область для нового виправленого коміту.</p>
+            <p>Для більш складних виправлень, які знаходяться не в останньому коміті (або якщо ви вже завантажили свої
+               зміни через push), можна використати <code>git revert</code>. Це дасть змогу взяти всі зміни, які були у
+               коміті, відмінити їх, і створити новий комміт.</p>
+            <p>Новий коміт можна отримати через HEAD.</p>
+            <pre><code class="hljs">$ git <span class="hljs-keyword">revert </span>HEAD
+         </code></pre>
+            <p>Для інших комітів краще використовувати ID.</p>
+            <pre><code class="hljs">$ git <span class="hljs-keyword">revert </span><span class="hljs-keyword">b10cc123
+         </span></code></pre>
+            <p>Коли ви повертаєтесь до старих комітів, майте на увазі, що виникає ризик отримати т.з. "конфлікти
+               злиття". Це відбувається, коли файл змінюється через інший пізніший коміт, і тепер git не може знайти
+               правильні рядки, до яких треба повернутися, так як їх там вже нема.</p>
+            <p><strong>4. Вирішення конфлікту злиття</strong></p>
+            <p>Крім сценарію, показаного в попередньому пункті, конфлікти регулярно з'являються при злитті гілок або
+               отриманні змін (<code>git pull</code>). Іноді git автоматично обробляє конфлікти, але в інших випадках
+               користувач повинен вирішити (і, як правило, ретельно підібрати), який код залишити, а який видалити.</p>
+            <p>Давайте розглянемо приклад, де ми намагаємося об'єднати дві гілки, ivan_branch і mukola_branch. Обидва
+               Іван і Микола пишуть в тому ж файлі функцію, яка відображає всі елементи в масиві.</p>
+            <p>Іван використовує for-цикл:</p>
+            <pre><code class="hljs">// використання <span class="hljs-keyword">for</span>-циклу для console.<span class="hljs-built_in">log</span>.
+         <span class="hljs-keyword">for</span>(<span class="hljs-built_in">var</span> i=<span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-built_in">length</span>; i++) {
+             console.<span class="hljs-built_in">log</span>(arr[i]);
+         }
+         </code></pre>
+            <p>Миколі більше подобається forEach:</p>
+            <pre><code class="hljs">// використання forEach для console.<span class="hljs-built_in">log</span>.
+         arr.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span></span> {
+             console.<span class="hljs-built_in">log</span>(item);
+         });
+         </code></pre>
+            <p>Вони обидва комітять свій код на їх гілках. Тепер, якщо вони вирішать об'єднати дві гілки, то побачать
+               таке повідомлення про помилку:</p>
+            <pre><code class="hljs">$ git merge mukola_branch 
+         
+         Auto-merging print_array.js
+         <span class="hljs-keyword">CONFLICT</span> (content): Merge <span class="hljs-keyword">conflict</span> <span class="hljs-keyword">in</span> print_array.js
+         Automatic merge failed; fix conflicts <span class="hljs-keyword">and</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">commit</span> the result.
+         </code></pre>
+            <p>Git не вдалося автоматично об'єднати гілки, так що тепер це робота розробників, вручну розв'язати
+               конфлікт. Якщо вони відкриють файл, в якому відбувся конфлікт, вони побачать, що Git поставив маркер на
+               рядках з конфліктами.</p>
+            <pre><code class="hljs">
+         &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+         <span class="hljs-comment">// використання for-циклу для console.log.</span>
+         for(var i=0; i &lt; arr.length; i++) {
+         <span class="hljs-code">    console.log(arr[i]);</span>
+         <span class="hljs-section">}
+         =======</span>
+         <span class="hljs-comment">// використання forEach для console.log.</span>
+         arr.forEach(function(item) {
+         <span class="hljs-code">    console.log(item);</span>
+         });
+         &gt;&gt;&gt;&gt;&gt;&gt;&gt; Commit Миколи.
+         </code></pre>
+            <p>Над ===== ми маємо нинішній HEAD коміт, і нижче конфліктуючий коміт. Таким чином, ми можемо ясно бачити
+               відмінності, і вирішити, яка з версій краща, або написати нову гілку з потрібним нам результатом. У цій
+               ситуації ми йдемо назад і переписуємо все, видаливши маркери, щоб дати знати git, що ми закінчили.</p>
+            <pre><code class="hljs">// не використовуючи for-цикл або <span class="hljs-keyword">for</span>Each.
+         // використання Array.<span class="hljs-keyword">to</span>String() для console.<span class="hljs-keyword">log</span>.
+         console.<span class="hljs-keyword">log</span>(arr.<span class="hljs-keyword">to</span>String());
+         </code></pre>
+            <p>Коли все зроблено, потрібно зробити злиття комітів, щоб завершити процес.</p>
+            <pre><code class="hljs">
+   $ git <span class="hljs-keyword">add</span><span class="bash"> -A</span>
+   $ git commit -m <span class="hljs-string">"Array printing conflict resolved."</span>
+   </code>
+      </pre>
+            <p>Як ви бачите цей процес досить виснажливий і може бути дуже важким у великих проектах. Більшість
+               розробників вважають, що краще вирішувати дані конфлікти за допомогою <a
+                  href="https://git-scm.com/download/gui/linux" target="_blank" rel="nofollow noreferrer noopener">GUI
+                  клієнту</a>. Щоб запустити графічний клієнт використовують <code>git mergetool</code>.</p>
+            <p><strong>5. Налаштування .gitignore</strong></p>
+            <p>У більшості проектів є файли або цілі папки, які ми не хочемо комітити. Ми можемо зробити, щоб вони не
+               були випадково включені в <code>git add -A</code> шляхом створення файлу <em>.gitignore</em>:</p>
+            <ol>
+               <li>Вручну створіть текстовий файл під назвою.gitignore і збережіть його в директорії вашого проекту.
+               </li>
+               <li>Всередині, напишіть назви файлів / директорій, які мають бути проігноровані, починаючи кожну назву з
+                  нового рядка.</li>
+               <li>Сам .gitignore потрібно додати, закомітити і завантажити так само, як і будь-який інший файл у
+                  проекті.</li>
+            </ol>
+            <p>Приклади файлів, які ігноруються:</p>
+            <ul>
+               <li>лог-файли</li>
+               <li>інструменти для збірки</li>
+               <li>папка node_modules у проектах node.js</li>
+               <li>папки, створені IDE такі як Netbeans та IntelliJ</li>
+               <li>персональні записи розробника</li>
+            </ul>
+            <p>.gitignore, який ігнорує файли, приведені вище, буде виглядати приблизно так:</p>
+            <pre><code class="hljs">*<span class="hljs-selector-class">.log</span>
+         build/
+         node_modules/
+         .idea/
+         my_notes<span class="hljs-selector-class">.txt</span>
+         </code></pre>
+            <p>Слеш в кінці деяких рядків попереджує, що це папка, і потрібно рекурсивно ігнорувати все те, що всередині
+               неї.</p>
+         </div>
+         <!---->
+      </div>
+   </div>
+
+</body>
+
+</html>
