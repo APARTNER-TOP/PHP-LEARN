@@ -1,0 +1,119 @@
+1) Визначити довжину рядка 'The length of the string is length'
+2) Видалення символів екранування з цього тесту 'This is a \'test\' string.'
+3) Визначення кількості символів до першого співпадіння з словом word з цього тексту 'Hello, world!'
+4) Порівняння двох рядків один 'Hello' і 'hello!'
+5) Пошук підрядка 'world' в рядку "Hello, world!"
+6) Форматування рядка за допомогою sprintf(). В рядку "My name is John, I'm 30 years old, and my height is 1.75 meters."
+зробити заміну в імені , кількість років і зріст.
+7) Визначити ,що слова вимовляються приблизно однаково Smith , Smyth, John, join
+8) Заміни символів, які можуть бути сприйняті як HTML-теги з цієї строки
+<script>alert('test');</script>
+
+
+Завдання 1: Визначити довжину рядка
+
+Для визначення довжини рядка у PHP можна використовувати функцію strlen(). Вона приймає один аргумент - рядок, і повертає його довжину в символах.
+
+Наприклад:
+
+$string = 'Hello, world!';
+$length = strlen($string);
+echo "The length of the string is $length";
+
+========
+
+Завдання 2: Видалення символів екранування
+
+Для видалення символів екранування у рядку у PHP можна використовувати функцію stripslashes(). Вона приймає один аргумент - рядок, з якого потрібно видалити символи екранування, і повертає модифікований рядок.
+
+Наприклад:
+
+$string = 'This is a \'test\' string.';
+$modified_string = stripslashes($string);
+echo "The modified string is $modified_string";
+
+========
+
+Завдання 3: Визначення кількості символів до першого співпадіння
+
+Для визначення кількості символів у рядку до першого співпадіння зі заданим шаблоном у PHP можна використовувати функцію strcspn(). Вона приймає два аргументи - рядок і шаблон, і повертає кількість символів у рядку до першого співпадіння з шаблоном.
+
+Наприклад:
+
+$string = 'Hello, world!';
+$pattern = 'world';
+$count = strcspn($string, $pattern);
+echo "The number of characters before the first occurrence of '$pattern' is $count";
+
+========
+
+Завдання 4: Порівняння двох рядків
+
+Для порівняння двох рядків у PHP можна використовувати функцію strcmp(). Вона приймає два аргументи - рядки, які потрібно порівняти, і повертає 0, якщо рядки однакові, від'ємне число, якщо перший рядок менший за другий, та додатнє число, якщо перший рядок більший за другий.
+
+Наприклад:
+
+$string1 = 'Hello';
+$string2 = 'hello';
+$result = strcmp($string1, $string2);
+if ($result === 0) {
+    echo "The strings are equal";
+} elseif ($result < 0) {
+    echo "String 1 is less than string 2";
+} else {
+    echo "String 1 is greater than string 2";
+}
+
+=========
+
+Завдання 5: Пошук підрядка в рядку
+
+Наприклад:
+
+$string = 'Hello, world!';
+$substring = 'world';
+$result = strstr($string, $substring);
+if ($result === false) {
+    echo "The substring '$substring' was not found";
+} else {
+    echo "The substring '$substring' was found: $result";
+}
+
+=========
+
+Завдання 6: Форматування рядка за допомогою sprintf()
+
+Для форматування рядка у PHP можна використовувати функцію sprintf(). Вона приймає перший аргумент - рядок-шаблон, в якому можна використовувати спеціальні символи для позначення місця вставки значень, і наступні аргументи - значення, які потрібно вставитати у відповідні місця.
+
+Наприклад:
+
+$name = 'John';
+$age = 30;
+$height = 1.75;
+$result = sprintf("My name is %s, I'm %d years old, and my height is %f meters.", $name, $age, $height);
+echo $result;
+
+=========
+
+Завдання 7:
+
+Функція soundex() в PHP призначена для обчислення числового коду Soundex для рядка. Цей числовий код використовується для порівняння вимови слів, незважаючи на їх різні написання. Наприклад, слова "Smith" та "Smyth" матимуть однаковий числовий код Soundex, що дає змогу зробити висновок, що вони вимовляються приблизно однаково.
+
+Наприклад:
+
+$str1 = "Smith";
+$str2 = "Smyth";
+
+if (soundex($str1) == soundex($str2)) {
+    echo "The words sound alike";
+} else {
+    echo "The words do not sound alike";
+}
+
+=========
+
+Завдання 8:
+
+Функція htmlspecialchars() в PHP призначена для заміни символів, які можуть бути сприйняті як HTML-теги, на їх HTML-ентиті (спеціальні символи).
+
+$protectedString = htmlspecialchars($string);
