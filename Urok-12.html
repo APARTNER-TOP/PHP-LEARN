@@ -1,0 +1,2538 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Рядкові функції в PHP</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+   <style>
+      a,
+      p {
+         font-size: 18px;
+      }
+
+      font {
+         font-size: inherit;
+      }
+   </style>
+</head>
+
+<body>
+
+   <div class="post-content">
+      <h2>Текстові (Рядкові) функції</h2>
+      Для Web розробки найголовнішим інструментом є рядки та функції їх обробки.<br><a data-fancybox="gallery"
+         href="assets/img/ryadkovi-funkcii-v-php.jpg">
+         <img src="assets/img/ryadkovi-funkcii-v-php.jpg" alt="Рядкові функції в PHP" title="Рядкові функції в PHP" />
+      </a>
+
+      <br>
+
+      <tr valign="top">
+         <td bgcolor="#FAFAFA" align="left" colspan="3">
+            <!-- content begin end -->
+            <font size="2">
+               Усі ці функції різноманітно оброблюють рядки.
+               Окремі рядкові функції можна знайти у розділах про регулярні вирази
+               та про функції обробки URL.
+               <br>
+               <br><a href="#addslashes">addslashes()</a>
+               <br><a href="#chop">chop()</a>
+               <br><a href="#chr">chr()</a>
+               <br><a href="#chunk_split">chunk_split()</a>
+               <br><a href="#convert_cyr_string">convert_cyr_string()</a>
+               <br><a href="#crypt">crypt()</a>
+               <br><a href="#echo">echo()</a>
+               <br><a href="#explode">explode()</a>
+               <br><a href="#flush">flush()</a>
+               <br><a href="#get_meta_tags">get_meta_tags()</a>
+               <br><a href="#htmlentities">htmlentities()</a>
+               <br><a href="#htmlspecialchars">htmlspecialchars()</a>
+               <br><a href="#implode">implode()</a>
+               <br><a href="#join">join()</a>
+               <br><a href="#ltrim">ltrim()</a>
+               <br><a href="#md5">md5()</a>
+               <br><a href="#NL2BR">nl2br()</a>
+               <br><a href="#ord">ord()</a>
+               <br><a href="#parse_str">parse_str()</a>
+               <br><a href="#print">print()</a>
+               <br><a href="#printf">printf()</a>
+               <br><a href="#quoted_printable_decode">quoted_printable_decode()</a>
+               <br><a href="#quotemeta">quotemeta()</a>
+               <br><a href="#rawurldecode">rawurldecode()</a>
+               <br><a href="#rawurlencode">rawurlencode()</a>
+               <br><a href="#setlocale">setlocale()</a>
+               <br><a href="#soundex">soundex()</a>
+               <br><a href="#sprintf">sprintf()</a>
+               <br><a href="#strchr">strchr()</a>
+               <br><a href="#strcmp">strcmp()</a>
+               <br><a href="#strcspn">strcspn()</a>
+               <br><a href="#stripslashes">stripslashes()</a>
+               <br><a href="#strlen">strlen()</a>
+               <br><a href="#strpos">strpos()</a>
+               <br><a href="#strrchr">strrchr()</a>
+               <br><a href="#strrev">strrev()</a>
+               <br><a href="#strrpos">strrpos()</a>
+               <br><a href="#strspn">strspn()</a>
+               <br><a href="#strstr">strstr()</a>
+               <br><a href="#strtok">strtok()</a>
+               <br><a href="#strtolower">strtolower()</a>
+               <br><a href="#strtoupper">strtoupper()</a>
+               <br><a href="#str_replace">str_replace()</a>
+               <br><a href="#strtr"> strtr()</a>
+               <br><a href="#substr">substr()</a>
+               <br><a href="#trim">trim()</a>
+               <br><a href="#ucfirst">ucfirst()</a>
+               <br><a href="#ucwords">ucwords()</a>
+               <p></p>
+               <hr>
+               <p></p>
+
+               <h3><a name="#addslashes">addslashes</a></h3><a name="#addslashes">
+                  <font face="Times New Roman">
+                     <p>AddSlashes - Повертає той же рядок із захищеними (маскованими) службовими символами.</p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string addslashes</font>(string str);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>У рядку str додає зворотну похилу риску (\) перед символами, що мають бути захищеними у запитах
+                        до баз
+                        даних. </p>
+                  </font>
+                  <p>
+                     <font face="Times New Roman">Це символи: (</font>
+                     <font face="Courier New" size="2">'</font>), (<font face="Courier New" size="2">"</font>), (<font
+                           face="Courier New" size="2">\</font>
+                     <font face="Times New Roman">) та NUL . </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+               </a>
+               <p><a name="#addslashes">
+                     <font face="Times New Roman">Також див. </font>
+                  </a><a href="#stripslashes"><b>stripslashes()</b></a>, <a
+                     href="#htmlspecialchars"><b>htmlspecialchars()</b></a>
+                  <font face="Times New Roman"> та </font><a href="#quotemeta"><b>quotemeta()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#chop">chop</a></h3><a name="#chop">
+                  <font face="Times New Roman">
+                     <p>Chop - Відсікає білі символи (символи пропуску, whitespaces) у кінці рядка </p>
+                  </font>
+                  <h5>
+                     <font face="Times New Roman">Опис</font>:
+                  </h5>
+                  <font face="Courier New">
+                     <h5>string chop(string str); </h5>
+                  </font>
+                  <font face="Times New Roman">
+                     <p>Повертає рядок без кінцевих білих символів, символ нового рядка включно. </p>
+                     <p>Білі символи це " ", "\n", "\r", "\t", "\v", "\0"</p>
+                  </font>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <p>Example 1. chop()</p>
+                              </b>
+                              <font face="Courier New" size="2"></font>
+                              <p>
+                                 <font face="Courier New" size="2">$trimmed = Chop($line);</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#chop">
+                     <font face="Times New Roman">Також див. </font>
+                  </a><a href="#trim"><b>trim()</b></a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#chr">chr</a></h3><a name="#chr">
+                  <font face="Times New Roman">
+                     <p>Chr - Повертає вказаний символ </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string chr</font>(int ascii);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає рядок з одного символу, що був указаний числом у коді </font>
+                     <i>
+                        <font face="Courier New" size="2">ascii.</font>
+                     </i>
+                  </p>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. chr()</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>$str .= chr(27); /* додає символ ESC у кінець $str */</p>
+                                 <p>/* Часто корисніше інша функція */</p>
+                              </font>
+                              <font face="Courier New" size="2"></font>
+                              <p>
+                                 <font face="Courier New" size="2">$str = sprintf("The string ends in escape: %c", 27);
+                                 </font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#chr">
+                     <font face="Times New Roman">Ця функція доповнює функцію </font>
+                  </a><a href="#ord"><b>ord()</b></a>
+                  <font face="Times New Roman">. Також див. у </font><a href="#sprintf"><b>sprintf()</b></a>
+                  <font face="Times New Roman"> форматуючий рядок з </font>
+                  <font face="Courier New" size="2">%c</font>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#chunk_split">chunk_split</a></h3><a name="#chunk_split">
+                  <font face="Times New Roman">
+                     <p>chunk_split - Розбиває рядок на менші частини </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string chunk_split</font>(string string, int [kusen] , string
+                     [end] );
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Після кожних </font><i>kusen</i>
+                     <font face="Times New Roman"> символів функція вставляє рядок </font><i>
+                        <font face="Courier New" size="2">end</font>
+                     </i>
+                     <font face="Times New Roman"> . kusen за замовчанням дорівнює 76, </font><i>
+                        <font face="Courier New" size="2">end</font>
+                     </i>
+                     <font face="Times New Roman"> за замовчанням = "\r\n". Функція повертає новій рядок, первісний
+                        залишається недоторканим. </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+               </a>
+               <p><a name="#chunk_split">
+                     <font face="Times New Roman">Годиться, наприклад, для перетворення результату функції </font>
+                  </a><a href="#base64-encode">base64_encode</a>
+                  <font face="Times New Roman"> до вимог RFC 2045. </font>
+               </p>
+               <table cellspacing="0" border="0" width="80%">
+                  <tbody>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <b>
+                              <p>Example 1. chr_replace()</p>
+                           </b>
+                           <font face="Courier New" size="2">
+                              <p># format $data using RFC 2045 semantics</p>
+                           </font>
+                           <p>
+                              <font face="Courier New" size="2">$new_string = chunk_split(base64_encode($data));</font>
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+               <font face="Times New Roman"></font>
+               <p>
+                  <font face="Times New Roman">Ця функція значно швидше, ніж </font><a
+                     href="#ereg-replace"><b>ereg_replace()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#convert_cyr_string">convert_cyr_string</a></h3><a name="#convert_cyr_string">
+                  <font face="Times New Roman">
+                     <p>convert_cyr_string - Переводить з одної кириличної абетки до іншої</p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string convert_cyr_string</font>(string str, string z, string
+                     do);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Ця функція змінює одне стандартне числове відображення кириличної абетки на інше.</p>
+                     <p>Змінні z та do є символами, які визначають, із якого на який стандарт змінюємо.</p>
+                     <p>Підтримуються стандарти: </p>
+
+                  </font>
+                  <ul>
+                     <font face="Times New Roman">
+                     </font>
+                     <li>k - koi8-r </li>
+                     <li>w - windows-1251 </li>
+                     <li>i - iso8859-5 </li>
+                     <li>a - x-cp866 </li>
+                     <li>d - x-cp866 </li>
+                     <li>m - x-mac-cyrillic </li>
+                  </ul>
+
+                  <p></p>
+                  <hr>
+                  <p></p>
+               </a>
+               <h3><a name="#convert_cyr_string"></a><a name="#crypt">crypt</a></h3><a name="#crypt">
+                  <font face="Times New Roman">
+                     <p>crypt - шифрує рядок методом DES </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string crypt</font>(string shovaty, [string jak]);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Шифрує рядок стандартною методою UNIX DES. shovaty - рядок, який треба відобразити, jak -
+                        2-символьний
+                        рядок, що змінює алгоритм шифрування. Див. документацію UNIX для додаткової інформації. </p>
+                     <p>Якщо параметр (підстава) jak відсутня, то PHP згенерує її випадковим чином. </p>
+                  </font>
+                  <p>
+                     <font face="Times New Roman">Деякі операційні системи підтримують декілька типів таємничення. В
+                        дійсності, інколи замість методи DES використовується метода MD5. Тип шифрування встановлюється
+                        параметром jak. Під час установлення PHP виявляє, які методи таємного відображення має
+                        операційна
+                        системи, та буде підтримувати підставу jak для інших методів таємничення. Якщо програміст не
+                        вкаже
+                        підставу jak, то PHP створить ключ для прийнятого у системі методу таємного відображення, чи то
+                        2-символьний ключ для DES, чи то 12-символьний ключ для MD5. PHP підтримує сталу на ім'я
+                        CRYPT_SALT_LENGTH, яка вкаже вам, який ключ</font>
+                     <font face="Times New Roman">застосовує ваша операційна система.</font>
+                  </p>
+                  <font face="Times New Roman">
+                     <p>При застосуванні методу DES результат функції містить ключ у двох перших символах.</p>
+                     <p>Немає функції для зворотного перетворення у первісний рядок, бо метод цього не потребує.</p>
+                  </font>
+                  <p></p>
+                  <hr>
+                  <p></p>
+               </a>
+               <h3><a name="#crypt"></a><a name="#echo">echo</a></h3><a name="#echo">
+                  <font face="Times New Roman">
+                     <p>echo - виводить у результуючу сторінку один чи декілька рядків </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">echo</font>(string arg1, string [argn]...);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Додає до результуючої сторінки всі параметри. </p>
+                  </font><b></b>
+                  <p><b>echo()</b>
+                     <font face="Times New Roman"> не є функцією - це мовна конструкція, тому дужки не обов'язкові.
+                     </font>
+                  </p>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. echo</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2"></font>
+                              <p>
+                                 <font face="Courier New" size="2">echo "Hello World";</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#echo">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#print"><b>print()</b></a>, <a href="#printf"><b>printf()</b></a>, <a
+                     href="#flush"><b>flush()</b></a> </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#explode">explode</a></h3><a name="#explode">
+                  <font face="Times New Roman">
+                     <p>explode - Розкладає рядок в елементи масиву </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">array explode</font>(string separator, string string);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає масив, що містить в елементах частини, які були відокремлені
+                        у
+                        первісному рядку рядочками </font><i>
+                        <font face="Courier New" size="2">separator</font>
+                     </i>.
+                  </p>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. explode()</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>$pizza = "piece1 piece2 piece3 piece4 piece5 piece6";</p>
+                              </font>
+                              <p>
+                                 <font face="Courier New" size="2">$pieces = explode(" ", $pizza);</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#explode">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#chunk_split"><b>chunk_split()</b></a>
+                  <font face="Times New Roman"> та </font><a href="#implode"><b>implode()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#flush">flush</a></h3><a name="#flush">
+                  <font face="Times New Roman">
+                     <p>flush - виштовхує вміст усіх буферів у мережу та до оглядача</p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">void flush</font>(void);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Виштовхує вміст буфера виводу PHP та усіх інших буферів, що
+                        використовує PHP
+                        (CGI, web-сервер i т</font><i>.</i>
+                     <font face="Times New Roman">д.). Це є ефективна можливість видати усе накопичене в буферах
+                        оглядачу.
+                     </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+                  <p></p>
+                  <hr>
+                  <p></p>
+               </a>
+               <h3><a name="#flush"></a><a name="#get_meta_tags">get_meta_tags</a></h3>
+               <font face="Times New Roman">
+                  <p>get_meta_tags - Копіює вміст мета-тегів у двоколонкову таблицю (асоціативний масив)</p>
+                  <h5>Опис</h5>
+               </font>
+               <font face="Courier New" size="2"></font>
+               <p>
+                  <font face="Courier New" size="2">array get_meta_tags</font>(string filename, int [use_include_path]);
+               </p>
+               <font face="Times New Roman"></font>
+               <p>
+                  <font face="Times New Roman">Відкриває файл </font><i>
+                     <font face="Courier New" size="2">filename,</font>
+                  </i>
+                  <font face="Times New Roman"> обробляє його рядок за рядком та копіює мета-теги. </font>
+               </p>
+               <table cellspacing="0" border="0" width="80%">
+                  <tbody>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <b>
+                              <font face="Times New Roman">
+                                 <p>Приклад 1. Мета Теги </p>
+                              </font>
+                           </b>
+                           <font face="Courier New" size="2">
+                              <p>&lt;meta name="author" content="name"&gt;</p>
+                              <p>&lt;meta name="tags" content="php3 documentation"&gt;</p>
+                           </font>
+                           <p>
+                              <font face="Courier New" size="2">&lt;/head&gt; &lt;!- parsing stops here -&gt;</font>
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+               <font face="Times New Roman">
+                  <p>(Зверніть увагу на символи закінчення рядків, PHP3 використовує OS-залежну функцію для перегляду
+                     рядків,
+                     тому тексти з MAC оброблюються неправильно на Unix.)</p>
+                  <p>Значення властивості name стає ключем, значення властивості content стає значенням масиву, який
+                     повертає
+                     функція, тому ви можете використовувати типові функції щоб переглядати цей масив чи окремі
+                     елементи.</p>
+                  <p>Спеціальні символи, якщо містяться в значенні властивості name, замінюються на символ '_', інші
+                     перетворюються у нижній регістр (малі літери).</p>
+               </font>
+               <p>
+                  <font face="Times New Roman">Якщо параметр </font><i>
+                     <font face="Courier New" size="2">use_include_path</font>
+                  </i>
+                  <font face="Times New Roman"> встановлений у 1, то PHP3 буде намагатися відкрити файл по стандартному
+                     include шляху. </font>
+               </p>
+               <font face="Times New Roman">
+               </font>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#htmlentities">htmlentities</a></h3><a name="#htmlentities">
+                  <font face="Times New Roman">
+                     <p>htmlentities - Перетворює всі можливі символи у коди HTML. </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string htmlentities</font>(string string);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#htmlentities">
+                     <font face="Times New Roman">Ця функція ідентична </font>
+                  </a><a href="#htmlspecialchars"><b>htmlspecialchars()</b></a>
+                  <font face="Times New Roman"> , за винятком того, що всі символи, що мають код HTML, замінюються на
+                     цей HTML
+                     код. </font>
+               </p>
+               <font face="Times New Roman">
+                  <p>PHP 3.0 використовує кодову таблицю ISO-8859-1. </p>
+               </font>
+               <h4>
+                  <font face="Times New Roman">Також див.: </font><a href="#htmlspecialchars">htmlspecialchars()</a>
+                  <font face="Times New Roman"> та </font><a href="#nl2br">nl2br()</a>.
+               </h4>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#htmlspecialchars">htmlspecialchars</a></h3><a name="#htmlspecialchars">
+                  <font face="Times New Roman">
+                     <p>htmlspecialchars - Перетворює у коди HTML символи &amp; " &lt; &gt; </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string htmlspecialchars</font>(string string);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Деякі символи мають особливо значення у HTML, тож, якщо такі є, їх слід замінити кодами HTML. Ця
+                        функція повертає рядки з такими замінами. </p>
+                     <p>Ця функція корисна для вилучення розмітки HTML у тексті, що надійшов від користувача. (дошки
+                        повідомлень, книги відвідувачів). </p>
+                     <p>PHP 3.0 робить такі заміни: </p>
+
+                     <ul>
+                        <li>'&amp;' (амперсанд) стає '&amp;amp;' </li>
+                        <li>'"' (подвоєні лапки) стає '&amp;quot;' </li>
+                        <li>'&lt;' (знак менше) стає '&amp;lt;' </li>
+                        <li>'&gt;' (знак більше) стає '&amp;gt;' </li>
+                     </ul>
+
+                  </font>
+               </a>
+               <p><a name="#htmlspecialchars">
+                     <font face="Times New Roman">Майте на увазі, що ця функція не заміняє нічого іншого. Для повної
+                        обробки
+                        див. функцію </font>
+                  </a><a href="#htmlentities"><b>htmlentities()</b></a>. </p>
+               <font face="Times New Roman"></font>
+               <p>
+                  <font face="Times New Roman">Також див.:</font> <a href="#htmlentities"><b>htmlentities()</b></a>
+                  <font face="Times New Roman"> та </font><a href="#NL2BR"><b>nl2br()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#implode">implode</a></h3><a name="#implode">
+                  <font face="Times New Roman">
+                     <p>implode - Створює рядок з елементів масиву. </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string implode</font>(string glue, array pieces);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Повертає рядок з усіма елементами масиву у тому ж порядку, із рядком glue проміж елементами.
+                     </p>
+                  </font>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. implode()</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2"></font>
+                              <p>
+                                 <font face="Courier New" size="2">$colon_separated = implode(":", $array);</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#implode">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#EXPLODE"><b>explode()</b></a>, <a href="#join"><b>join()</b></a>
+                  <font face="Times New Roman">, та </font><a href="#chunk_split"><b>chunk_split()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#join">join</a></h3><a name="#join">
+                  <font face="Times New Roman">
+                     <p>join - Створює рядок з елементів масиву </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string join</font>(array pieces, string glue);
+                  </p>
+                  <b></b>
+               </a>
+               <p><a name="#join"><b>join()</b>
+                     <font face="Times New Roman"> є псевдонимом функції </font>
+                  </a><a href="#implode"><b>implode()</b></a>
+                  <font face="Times New Roman">, и цілком їй тотожна. </font>
+               </p>
+               <font face="Times New Roman">
+               </font>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#ltrim">ltrim</a></h3><a name="#ltrim">
+                  <font face="Times New Roman">
+                     <p>ltrim - Відсікає недруковані (білі) символи на початку рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string ltrim</font>(string str);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Ця функція повертає рядок без початкових білих символів, символ нового рядка включно. </p>
+                     <p>Білі символи це " ", "\n", "\r", "\t", "\v", "\0"</p>
+                  </font>
+               </a>
+               <p><a name="#ltrim">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#chop"><b>chop()</b></a>
+                  <font face="Times New Roman"> та </font><a href="#trim"><b>trim()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#md5">md5</a></h3><a name="#md5">
+                  <font face="Times New Roman">
+                     <p>md5 - Підраховує значення md5 для рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string md5</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#md5">
+                     <font face="Times New Roman">Підраховує значення MD5 для рядка </font><i>
+                        <font face="Courier New" size="2">str</font>
+                     </i>
+                     <font face="Times New Roman"> за допомогою </font>
+                  </a><a href="http://ds.internic.net/rfc/rfc1321.txt">
+                     <font face="Times New Roman">алгоритма RSA Data Security, Inc. MD5 Message-Digest</font>
+                  </a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#nl2br">nl2br</a></h3><a name="#nl2br">
+                  <font face="Times New Roman">
+                     <p>nl2br - Перетворює символи нового рядка у HTML-тег нового рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string nl2br</font>(string string);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає </font><i>
+                        <font face="Courier New" size="2">string</font>
+                     </i>
+                     <font face="Times New Roman"> із '&lt;BR&gt;' перед кожним символом нового рядка. </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+                  <p>( nl<font face="Times New Roman">2br є скорочення від new lines to BR) </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+               </a>
+               <p><a name="#nl2br">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#htmlspecialchars"><b>htmlspecialchars()</b></a>
+                  <font face="Times New Roman"> та </font><a href="#htmlentities"><b>htmlentities()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#ord">ord</a></h3><a name="#ord">
+                  <font face="Times New Roman">
+                     <p>Ord - Повертає ASCII-значення символу </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int ord</font>(string string);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#ord">
+                     <font face="Times New Roman">Повертає числове значення (ASCII-значення) першого символу рядка
+                     </font><i>
+                        <font face="Courier New" size="2">string</font>
+                     </i>
+                     <font face="Times New Roman">. Ця функція доповнює функцію </font>
+                  </a><a href="#chr"><b>chr()</b></a>. </p>
+               <table cellspacing="0" border="0" width="80%">
+                  <tbody>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <b>
+                              <font face="Times New Roman">
+                                 <p>Приклад 1. ord() </p>
+                              </font>
+                           </b>
+                           <font face="Courier New" size="2">
+                              <p>if (ord($str) == 10) {</p>
+                              <p>echo("The first character of \$str is a line feed.\n");</p>
+                           </font>
+                           <p>
+                              <font face="Courier New" size="2">}</font>
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+               <font face="Times New Roman"></font>
+               <p>
+                  <font face="Times New Roman">Також див.: </font><a href="#chr"><b>chr()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#parse_str">parse_str</a></h3><a name="#parse_str">
+                  <font face="Times New Roman">
+                     <p>parse_str - розбиває рядок на змінні. </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">void parse_str</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Розглядає рядок </font><i>
+                        <font face="Courier New" size="2">str</font>
+                     </i>
+                     <font face="Times New Roman"> , нібито він є рядком запиту у URL, знаходить у ньому та встановлює
+                        змінні
+                        поточного середовища. </font>
+                  </p>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. Using parse_str()</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>$str = "first=value&amp;second[]=this+works&amp;second[]=another";</p>
+                                 <p>parse_str($str);</p>
+                                 <p>echo $first; /* prints "value" */</p>
+                                 <p>echo $second[0]; /* prints "this works" */</p>
+                              </font>
+                              <p>
+                                 <font face="Courier New" size="2">echo $second[1]; /* prints "another" */</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <p></p>
+                  <hr>
+                  <p></p>
+               </a>
+               <h3><a name="#parse_str"></a><a name="#print">print</a></h3><a name="#print">
+                  <font face="Times New Roman">
+                     <p>print - виводить рядок </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">print</font>(string arg);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Виводить рядок </font><i>
+                        <font face="Courier New" size="2">arg </font>
+                     </i>
+                     <font face="Times New Roman">у результуючу сторінку скрипта.</font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+               </a>
+               <p><a name="#print">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#echo"><b>echo()</b></a>, <a href="#printf"><b>printf()</b></a>, <a
+                     href="#flush"><b>flush()</b></a> </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#printf">printf</a></h3><a name="#printf">
+                  <p>
+                     <font face="Times New Roman">printf - видає форматований рядок </font>
+                  </p>
+                  <h5>Опис</h5>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int printf</font>(string format, mixed [args]...);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#printf">
+                     <font face="Times New Roman">Видає рядок згідно з параметром (підставою) </font><i>
+                        <font face="Courier New" size="2">format</font>
+                     </i>
+                     <font face="Times New Roman">, яка розглядається у описі функції </font>
+                  </a><a href="#sprintf"><b>sprintf()</b></a>. </p>
+               <font face="Times New Roman"></font>
+               <p>
+                  <font face="Times New Roman">Також див.: </font><a href="#print"><b>print()</b></a>, <a
+                     href="#sprintf"><b>sprintf()</b></a>
+                  <font face="Times New Roman">, та </font><a href="#flush"><b>flush()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#quoted_printable_decode">quoted_printable_decode</a></h3><a
+                  name="#quoted_printable_decode">
+                  <font face="Times New Roman">
+                     <p>quoted_printable_decode - Транслює рядок у лапках у 8-бітний рядок </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string quoted_printable_decode</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#quoted_printable_decode">
+                     <font face="Times New Roman">Ця функція повертає 8-бітний рядок, відповідний декодованому рядку у
+                        лапках.
+                        Ця функція така ж як </font>
+                  </a><a href="#imap-qprint"><b>imap_qprint()</b></a>
+                  <font face="Times New Roman">, за винятком того, що вона не вимагає наявності IMAP модуля. </font>
+               </p>
+               <font face="Times New Roman">
+               </font>
+               <p>
+                  <font face="Times New Roman">Подробиці див. у rfc2045. Кодування згідно з </font><i>
+                     <font face="Courier New">base64</font>
+                  </i>
+                  <font face="Courier New"> </font>
+                  <font face="Times New Roman">надійніше.</font>
+               </p>
+               <font face="Times New Roman">
+               </font>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#quotemeta">quotemeta</a></h3><a name="#quotemeta">
+                  <font face="Times New Roman">
+                     <p>QuoteMeta - захищає деякі символи </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int quotemeta</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає str із символами </font>
+                     <font face="Courier New" size="2">\</font>
+                     <font face="Times New Roman"> перед кожним символом із цих: </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+                  <font face="Courier New" size="2">
+                     <p>. \\ + * ? [ ^ ] ( $ )</p>
+                  </font>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#quotemeta">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#addslashes"><b>addslashes()</b></a>, <a href="#htmlentities"><b>htmlentities()</b></a>,
+                  <a
+                     href="#htmlspecialchars"><b>htmlspecialchars()</b></a>, <a href="#nl2br"><b>nl2br()</b></a>
+                  <font face="Times New Roman">, та </font><a href="#stripslashes"><b>stripslashes()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#rawurldecode">rawurldecode</a></h3><a name="#rawurldecode">
+                  <font face="Times New Roman">
+                     <p>rawurldecode - декодує URL-кодований рядок </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string rawurldecode</font>(string str);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Повертає рядок str, у якому сполука із символу відсотка (%) та наступних 2-х шістнадцяткових
+                        цифр
+                        заміняється відповідним буквеним символом. Наприклад, рядок </p>
+                  </font>
+                  <font face="Courier New" size="2">
+                     <p>foo%20bar%40baz буде змінено на foo bar@baz</p>
+                  </font>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#rawurldecode">
+                     <font face="Times New Roman">Також див. </font>
+                  </a><a href="#rawurlencode"><b>rawurlencode()</b></a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#rawurlencode">rawurlencode</a></h3><a name="#rawurlencode">
+                  <font face="Times New Roman">
+                     <p>rawurlencode - URL-кодує рядок згідно з RFC1738 </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string rawurlencode</font>(string str);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Повертає рядок, у якому усі не буквено-цифрові символи, крім - _ . замінюються на знак відсотка
+                        (%) із
+                        наступними двома шестнадцятковими цифрами. Це кодування, описане в RFC1738, використовується для
+                        захисту символів від інтерпретації їх як особливих роздільників URL, та для захисту URL от
+                        перекручення системами передавання даних із перетворенням символів (як деякі e-mail системи).
+                        Наприклад, якщо ви бажаєте включити пароль у ftp URL: </p>
+                  </font>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. rawurlencode()</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>echo '&lt;A HREF="ftp://user:', rawurlencode ('foo @+%/'),</p>
+                              </font>
+                              <p>
+                                 <font face="Courier New" size="2">'@ftp.my.com/x.txt"&gt;';</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman">
+                     <p>Чи якщо передаєте інформацію як частину URL: </p>
+                  </font>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 2. rawurlencode()</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>echo '&lt;A HREF="http://x.com/department_list_script/',</p>
+                              </font>
+                              <font face="Courier New" size="2"></font>
+                              <p>
+                                 <font face="Courier New" size="2">rawurlencode ('sales та marketing/Miami'), '"&gt;';
+                                 </font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#rawurlencode">
+                     <font face="Times New Roman">Також див. </font>
+                  </a><a href="#rawurldecode"><b>rawurldecode()</b></a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#setlocale">setlocale</a></h3><a name="#setlocale">
+                  <font face="Times New Roman">
+                     <p>setlocale - Установлює локальну інфоормацію</p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string setlocale</font>(string category, string locale);
+                  </p>
+                  <i>
+                     <font face="Courier New" size="2"></font>
+                  </i>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2"><i>category</i></font>
+                     <font face="Times New Roman"> є рядок, що визначає категорії функцій, на які вплине рядок locale:
+                     </font>
+                  </p>
+                  <font face="Times New Roman">
+
+                  </font>
+               </a>
+               <ul><a name="#setlocale">
+                     <font face="Times New Roman">
+                        <li>LC_ALL для всіх нижченаведених </li>
+                        <li>LC_COLLATE для порівняння рядків - зараз не обробляються PHP (це переклад версії 3.0) </li>
+                     </font>
+                  </a>
+                  <li><a name="#setlocale">
+                        <font face="Times New Roman">LC_CTYPE для класифікації та перекладання символів, наприклад:
+                        </font>
+                     </a><a href="#strtoupper"><b>strtoupper()</b></a> </li>
+                  <font face="Times New Roman">
+                     <li>LC_MONETARY для localeconv() - зараз не оброблюється PHP </li>
+                     <li>LC_NUMERIC для десяткового роздільника </li>
+                  </font>
+                  <li>
+                     <font face="Times New Roman">LC_TIME для дати та часу, що виводить функція </font><a
+                        href="#strftime"><b>strftime()</b></a>
+                  </li>
+               </ul>
+
+               <font face="Times New Roman"></font>
+               <p>
+                  <font face="Times New Roman">Якщо </font><i>
+                     <font face="Courier New" size="2">locale</font>
+                  </i>
+                  <font face="Times New Roman"> є порожнім рядком </font>
+                  <font face="Courier New" size="2">""</font>
+                  <font face="Times New Roman">, то категорії визначать значення змінних оточення с такими само іменами,
+                     як у
+                     вищенаведених _категорій, чи з "LANG". </font>
+               </p>
+               <font face="Times New Roman">
+               </font>
+               <p>
+                  <font face="Times New Roman">Якщо locale рівна нулю чи </font>
+                  <font face="Courier New" size="2">"0"</font>
+                  <font face="Times New Roman">, то функція нічого не змінює та повертає рядок із поточними
+                     налаштуваннями.
+                  </font>
+               </p>
+               <font face="Times New Roman">
+                  <p>Setlocale повертає нові значення locale, чи false, якщо locale не підтримується операційною
+                     системою,
+                     указаний locale не існує чи категорії вказані з помилкою.</p>
+               </font>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#soundex">soundex</a></h3><a name="#soundex">
+                  <font face="Times New Roman">
+                     <p>soundex - вичислює soundex ключ для рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string soundex</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Вичислює soundex ключ для </font><i>
+                        <font face="Courier New" size="2">str</font>
+                     </i>.
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Ключ soundex має таку властивість, що слова, схожі у вимові, мають однаковий soundex ключ, це
+                        може
+                        бути використане при пошуку в базах даних, якщо ви знаєте вимову, але не знаєте написання. Ця
+                        soundex
+                        функція повертає рядок довжиною 4 символи, який починається з букви. </p>
+                     <p>Ця функція описана Дональдом Кнутом у книзі "The Art Of Computer Programming, vol. 3: Sorting та
+                        Searching", Addison-Wesley (1973), pp. 391-392. </p>
+                  </font>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. Soundex</p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>soundex("Euler") == soundex("Ellery") == 'E460';</p>
+                                 <p>soundex("Gauss") == soundex("Ghosh") == 'G200';</p>
+                                 <p>soundex("Knuth") == soundex("Kant") == 'H416';</p>
+                                 <p>soundex("Lloyd") == soundex("Ladd") == 'L300';</p>
+                              </font>
+                              <p>
+                                 <font face="Courier New" size="2">soundex("Lukasiewicz") == soundex("Lissajous") ==
+                                    'L222';
+                                 </font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <p></p>
+                  <hr>
+                  <p></p>
+               </a>
+               <h3><a name="#soundex"></a><a name="#sprintf">sprintf</a></h3><a name="#sprintf">
+                  <font face="Times New Roman">
+                     <p>sprintf - Повертає форматований рядок </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">sprintf</font>(string format, mixed [args]...);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає рядок, оброблений згідно з рядком-формою </font><i>
+                        <font face="Courier New" size="2">format</font>
+                     </i>
+                     <font face="Times New Roman">. У mixed [args] містяться змінні, що будуть підставлені у рядок-форму
+                        згідно з вказівками перетворення.</font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+               </a>
+               <p><a name="#sprintf">
+                     <font face="Times New Roman">У рядку-формі format містяться: звичайні символи (окрім %), що
+                        копіюються
+                        безпосередньо у рядок-результат, та вказівки перетворення, кожна з яких виконує притаманні їй
+                        дії. Це
+                        стосується як </font><b>sprintf()</b>
+                     <font face="Times New Roman"> так і </font>
+                  </a><a href="#printf"><b>printf()</b></a> </p>
+               <font face="Times New Roman">
+                  <p>Кожна вказівка перетворення починається із символу % та складається з таких елементів у зазначеному
+                     порядку: </p>
+               </font>
+               <ol>
+                  <font face="Times New Roman">
+
+                  </font>
+                  <li>
+                     <font face="Times New Roman">Необов'язковий. Це може бути символ пропуску чи </font>
+                     <font face="Courier New" size="2">0</font>
+                     <font face="Times New Roman"> (символ нуля). За замовчуванням заповнюється символами пропуску. Якщо
+                        вказуємо інший символ, то перед ним треба вставити одинарну лапку (</font>
+                     <font face="Courier New" size="2">'</font>).
+                  </li>
+                  <font face="Times New Roman"></font>
+                  <li>
+                     <font face="Times New Roman">Необов'язкова вказівка <i>вирівнювання</i>, щоб розташувати змінну у
+                        полі
+                        ліворуч чи праворуч. Ця вказівка дозволяє отримати рівний стовпчик при застосуванні декількох
+                        функцій
+                     </font>
+                     <font face="Courier New" size="2">sprintf</font>
+                     <font face="Times New Roman"> підряд. Мовчки змінна виводиться праворуч, якщо поставити символ "-
+                        ", то
+                        ліворуч. </font>
+                  </li>
+                  <font face="Times New Roman">
+                     <li>Необов'язкова вказівка ширини, щоб задати мінімальну ширину поля у, яке буде виводитися рядок.
+                        Ширина
+                        задається числом символів.</li>
+                  </font>
+                  <li>
+                     <font face="Times New Roman">Необов'язкова вказівка <i>точності</i>, що вказує скільки десяткових
+                        знаків
+                        числа вивести. Ця вказівка діє лише на тип double. (Ще одна корисна функція для формованого
+                        виводу
+                        чисел </font><a href="#number-format"><b>number_format()</b></a>.)
+                  </li>
+                  <i>
+                     <font face="Times New Roman"></font>
+                  </i>
+                  <font face="Times New Roman">
+                     <li><i>Вказівка типу</i>, що показує як опрацьовувати змінну. Можливі вказівки: </li>
+                  </font>
+               </ol>
+               <font face="Times New Roman">
+               </font>
+               <table cellspacing="0" border="0" width="80%">
+                  <tbody>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">%</font>
+                              <font face="Times New Roman"> - вивести символ відсотка. Змінна не потрібна. </font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">b</font>
+                              <font face="Times New Roman"> - опрацювати змінну як integer та вивести як двійкове число.
+                              </font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">c</font>
+                              <font face="Times New Roman"> - опрацювати змінну як integer та вивести як символ із ASCII
+                                 значенням.</font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">d</font>
+                              <font face="Times New Roman"> - опрацювати змінну як integer та вивести як десяткове
+                                 число.
+                              </font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">f</font>
+                              <font face="Times New Roman"> - опрацювати змінну як double та вивести як число з рухомою
+                                 комою.
+                              </font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">o</font>
+                              <font face="Times New Roman"> - опрацювати змінну як integer та вивести як вісімкове
+                                 число.
+                              </font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">s</font>
+                              <font face="Times New Roman"> - опрацювати та вивести змінну як рядок. </font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">x</font>
+                              <font face="Times New Roman"> - опрацювати змінну як integer та вивести як шестнадцяткове
+                                 число
+                                 (з малими літерами). </font>
+                           </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">X</font>
+                              <font face="Times New Roman"> - опрацювати змінну як integer та вивести як шестнадцяткове
+                                 число
+                                 (з великими літерами). </font>
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+               <font face="Times New Roman"></font>
+               <p>
+                  <font face="Times New Roman">Також див.: </font><a href="#printf"><b>printf()</b></a>, <a
+                     href="#number-format"><b>number_format()-</b></a>
+               </p>
+               <b>
+                  <font face="Times New Roman">
+                     <p>Приклади:</p>
+                  </font>
+               </b>
+               <table cellspacing="0" border="0" width="80%">
+                  <tbody>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <b>
+                              <font face="Times New Roman">
+                                 <p>Приклад 1. sprintf: числа з нулями</p>
+                              </font>
+                           </b>
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">$isodate = sprintf("%04d-%02d-%02d", $year, $month,
+                                 $day);
+                              </font>
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+
+               <table cellspacing="0" border="0" width="80%">
+                  <tbody>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <b>
+                              <font face="Times New Roman">
+                                 <p>Пример 2. sprintf: формування грошової одиниці</p>
+                              </font>
+                           </b>
+                           <font face="Courier New" size="2">
+                              <p>$money1 = 68.75;</p>
+                              <p>$money2 = 54.35;</p>
+                              <p>$money = $money1 + $money2;</p>
+                              <p>// echo $money will output "123.1";</p>
+                           </font>
+                           <font face="Courier New" size="2">
+                              <p>$formatted = sprintf ("Усього %01.2f", $money);</p>
+                           </font>
+                           <p>
+                              <font face="Courier New" size="2">// echo $formatted will output "Усього 123.10"</font>
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strchr">strchr</a></h3><a name="#strchr">
+                  <font face="Times New Roman">
+                     <p>strchr - Знаходить першу появу символу. </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strchr</font>(string haystack, string needle);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#strchr">
+                     <font face="Times New Roman">Ця функція є псевдонімом для функції </font>
+                  </a><a href="#strstr"><b>strstr()</b></a>
+                  <font face="Times New Roman">, та цілком тотожна їй.</font>
+               </p>
+               <font face="Times New Roman">
+               </font>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strcmp">strcmp</a></h3><a name="#strcmp">
+                  <font face="Times New Roman">
+                     <p>strcmp - Двійкове порівняння рядків (безпечне) </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int strcmp</font>(string str1, string str2);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає число менше нуля, якщо </font><i>
+                        <font face="Courier New" size="2">str1</font>
+                     </i>
+                     <font face="Times New Roman"> менша ніж </font><i>
+                        <font face="Courier New" size="2">str2</font>
+                     </i>
+                     <font face="Times New Roman">; число більше нуля, якщо </font><i>
+                        <font face="Courier New" size="2">str1</font>
+                     </i>
+                     <font face="Times New Roman"> більша ніж </font><i>
+                        <font face="Courier New" size="2">str2</font>
+                     </i>
+                     <font face="Times New Roman">, та 0, якщо вони рівні. Порівнюються числові коди абетки.</font>
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Це порівняння враховує малі та великі літери.</p>
+                     <b>
+                        <p>Приклади:</p>
+                     </b>
+                     <p>фіва = фіва<br>
+                        фівб &gt; фіва<br>
+                        ФІВА &lt; фіва<br>
+                        цей довгий рядок &lt; я<br>
+                        фіваa &gt; фіва</p>
+                  </font>
+               </a>
+               <p><a name="#strcmp">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#ereg"><b>ereg()-</b></a>, <a href="#substr"><b>substr()</b></a>
+                  <font face="Times New Roman">, та </font><a href="#strstr"><b>strstr()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strcspn">strcspn</a></h3><a name="#strcspn">
+                  <font face="Times New Roman">
+                     <p>strcspn - Повертає довжину початкового сегмента, що не має вказаних символів </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int strcspn</font>(string str1, string str2);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає довжину початкового сегмента рядка </font><i>
+                        <font face="Courier New" size="2">str1</font>
+                     </i>
+                     <font face="Times New Roman">, що не містить будь-які символи з </font><i>
+                        <font face="Courier New" size="2">str2</font>
+                     </i>.
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#strcspn">
+                     <font face="Times New Roman">Також див. </font>
+                  </a><a href="#strspn"><b>strspn()</b></a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#stripslashes">stripslashes</a></h3><a name="#stripslashes">
+                  <font face="Times New Roman">
+                     <p>StripSlashes - вилучає символи \ із рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string stripslashes</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає рядок, у якому вилучені символи \. (Замість </font>
+                     <font face="Courier New" size="2">\</font>
+                     <font face="Times New Roman">А буде А й так далі). Подвійні \\ замінюються на \. </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+               </a>
+               <p><a name="#stripslashes">
+                     <font face="Times New Roman">Також див. </font>
+                  </a><a href="#addslashes"><b>addslashes()</b></a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strlen">strlen</a></h3><a name="#strlen">
+                  <font face="Times New Roman">
+                     <p>strlen - Повертає довжину рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int strlen</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає число символів у рядку </font><i>
+                        <font face="Courier New" size="2">str</font>
+                     </i>.
+                  </p>
+                  <p></p>
+                  <hr>
+                  <p></p>
+               </a>
+               <h3><a name="#strlen"></a><a name="#strpos">strpos</a></h3><a name="#strpos">
+                  <font face="Times New Roman">
+                     <p>strpos - Знаходить першу появу вказаного рядочка у рядку . </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int strpos</font>(string skyrta, string golka, int [offset]);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#strpos">
+                     <font face="Times New Roman">Повертає номер позиції першої появи рядочка golka у рядку skyrta. На
+                        відміну
+                        від </font>
+                  </a><a href="#strrpos"><b>strrpos()</b></a>
+                  <font face="Times New Roman">, ця функція може розглядати рядок як параметр golka, тож увесь рядок
+                     буде
+                     використаний. </font>
+               </p>
+               <font face="Times New Roman">
+                  <p>Якщо golka не знайдена, то повертається false. </p>
+                  <p>Якщо golka не є рядком, то вона перетворюється у десяткове число та розглядається як числове
+                     значення
+                     символу. </p>
+               </font>
+               <p>
+                  <font face="Times New Roman">Необов'язковий параметр </font><i>offset</i>
+                  <font face="Times New Roman"> дозволяє визначити, з якого символу у рядку skyrta</font><i> </i>
+                  <font face="Times New Roman">починати пошук. Позиція все одно повертається відносно початку рядка
+                     skyrta.
+                  </font>
+               </p>
+               <font face="Times New Roman">
+               </font>
+               <p>
+                  <font face="Times New Roman">Також див.: </font><a href="#strrpos"><b>strrpos()</b></a>, <a
+                     href="#strrchr"><b>strrchr()</b></a>, <a href="#substr"><b>substr()</b></a>
+                  <font face="Times New Roman">, та </font><a href="#strstr"><b>strstr()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strrchr">strrchr</a></h3><a name="#strrchr">
+                  <font face="Times New Roman">
+                     <p>strrchr - Повертає частину рядка від останнього заданого символу у рядку </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strrchr</font>(string skyrta, string golka);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Знаходить номер позиції останньої появи символу golka у рядку skyrta та повертає частину рядка
+                        від
+                        цієї позиції до кінця.</p>
+                     <p>Якщо golka не знайдена, то повертається false. </p>
+                     <p>Якщо golka є рядок, то використовується перший символ рядка. </p>
+                     <p>Якщо golka не є рядком, то вона перетворюється у число та розглядається як числове значення
+                        символу.
+                     </p>
+                  </font>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. strrchr() </p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>// отримати останню теку з $PATH</p>
+                              </font>
+                              <font face="Courier New" size="2">
+                                 <p>$dir = substr( strrchr( $PATH, ":" ), 1 );</p>
+                              </font>
+                              <font face="Courier New" size="2">
+                                 <p>// отримати усе після останнього символу нового рядка</p>
+                              </font>
+                              <font face="Courier New" size="2">
+                                 <p>$text = "Line 1\nLine 2\nLine 3";</p>
+                                 <p>$last = substr( strrchr( $text, 10 ), 1 );</p>
+                              </font>
+                              <font face="Courier New" size="2"></font>
+                              <p>
+                                 <font face="Courier New" size="2">( у $last буде "Line 3" )</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#strrchr">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#substr"><b>substr()</b></a>
+                  <font face="Times New Roman"> и </font><a href="#strstr"><b>strstr()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strrev">strrev</a></h3><a name="#strrev">
+                  <font face="Times New Roman">
+                     <p>strrev - Перевертає рядок </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strrev</font>(string string);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає рядок </font><i>
+                        <font face="Courier New" size="2">string </font>
+                     </i>
+                     <font face="Times New Roman">прочитаний ззаду наперед</font><i>
+                        <font face="Courier New">.</font>
+                     </i>
+                  </p><i>
+                     <font face="Courier New">
+                     </font>
+                  </i>
+                  <p></p>
+                  <hr>
+                  <p></p>
+               </a>
+               <h3><a name="#strrev"></a><a name="#strrpos">strrpos</a></h3><a name="#strrpos">
+                  <font face="Times New Roman">
+                     <p>strrpos - Знаходить останню появу заданого символу у рядку </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int strrpos</font>(string skyrta, char golka);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Повертає номер позиції останньої появи символу golka у рядку skyrta. golka має бути символом.
+                        Якщо
+                        golka є рядок, то використовується перший символ рядка. </p>
+                     <p>Якщо golka не знайдена, то повертається false. </p>
+                     <p>Якщо golka не є рядком, то вона перетворюється у десяткове число та розглядається як </p>
+                     <p>числове значення символу. </p>
+                  </font>
+               </a>
+               <p><a name="#strrpos">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strpos"><b>strpos()</b></a>, <a href="#strrchr"><b>strrchr()</b></a>, <a
+                     href="#substr"><b>substr()</b></a>
+                  <font face="Times New Roman">, та </font><a href="#strstr"><b>strstr()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strspn">strspn</a></h3><a name="#strspn">
+                  <font face="Times New Roman">
+                     <p>strspn - повертає довжину початкового сегмента, символи якого є у зразку </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">int strspn</font>(string str1, string str2);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає довжину початкового сегмента </font><i>
+                        <font face="Courier New" size="2">str1</font>
+                     </i>
+                     <font face="Times New Roman">, який містить лише символи з </font><i>
+                        <font face="Courier New" size="2">str2</font>
+                     </i>.
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#strspn">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strcspn"><b>strcspn()</b></a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strstr">strstr</a></h3><a name="#strstr">
+                  <font face="Times New Roman">
+                     <p>strstr - Знаходить першу появу рядочка у рядку </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strstr</font>(string skyrta, string golka);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Повертає частину рядка skyrta від першої появи рядочка golka та до кінця. </p>
+                     <p>Якщо параметр golka не найдений, то повертається false. </p>
+                     <p>Якщо параметр golka не є рядком, то він перетворюється у ціле число та розглядається як числове
+                        значення символу. </p>
+                  </font>
+               </a>
+               <p><a name="#strstr">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strrchr"><b>strrchr()</b></a>, <a href="#substr"><b>substr()</b></a>
+                  <font face="Times New Roman">, и </font><a href="#ereg"><b>ereg()-</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strtok">strtok</a></h3><a name="#strtok">
+                  <font face="Times New Roman">
+                     <p>strtok - Видає чергове слово з рядка. </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strtok</font>(string arg1, string arg2);
+                  </p>
+                  <b></b>
+                  <p><b>strtok()</b>
+                     <font face="Times New Roman"> використовується для розділення рядка. Тобто рядок типа "Це рядок для
+                        прикладу" ви можете розділити на окремі слова, якщо вкажете пробіл як роздільник. </font>
+                  </p>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. strtok() </p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2">
+                                 <p>$string = " Це рядок для прикладу";</p>
+                              </font>
+                              <font face="Courier New" size="2">
+                                 <p>$tok = strtok($string," ");</p>
+                                 <p>while($tok) {</p>
+                                 <p>echo "Word=$tok&lt;br&gt;";</p>
+                                 <p>$tok = strtok(" ");</p>
+                              </font>
+                              <p>
+                                 <font face="Courier New" size="2">}</font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman">
+                     <p>Майте на увазі, що рядок для розділення arg1 вказується лише при першому виклику функції strtok.
+                        Для
+                        видачі чергового слова функції strtok потрібен лише роздільник arg2, бо функція пам'ятає останню
+                        позицію. Щоб почати заново чи для розділення нового рядка потрібно викликати strtok із
+                        параметром
+                        рядка arg1. Можна вставити декілька символів роздільника в параметр arg2, рядок буде розділятися
+                        при
+                        виявленні будь-якого з цих символів.. </p>
+                     <p>Зверніть увагу на те, що слово у рядку може бути рівним "0". Це буде означати false в умовних
+                        виразах,
+                        наприклад, вищенаведений while($tok) завершиться на слові 0.</p>
+                  </font>
+               </a>
+               <p><a name="#strtok">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#chunk_split"><b>chunk_split()</b></a>
+                  <font face="Times New Roman"> и </font><a href="#explode"><b>explode()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strtolower">strtolower</a></h3><a name="#strtolower">
+                  <font face="Times New Roman">
+                     <p>strtolower - Змінює прописні (великі) букви на рядкові (малі) </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strtolower</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає рядок </font><i>
+                        <font face="Courier New" size="2">string</font>
+                     </i>
+                     <font face="Times New Roman"> з усіма буквами, перекладеними у нижній регістр</font>
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Пам'ятайте, що абетка визначається поточним оточенням (локаль). Перевірте, як обробляються букви
+                        є, ї
+                        чи букви з умлаутами.</p>
+                  </font>
+               </a>
+               <p><a name="#strtolower">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strtoupper"><b>strtoupper()</b></a>
+                  <font face="Times New Roman"> и </font><a href="#ucfirst"><b>ucfirst()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strtoupper">strtoupper</a></h3><a name="#strtoupper">
+                  <font face="Times New Roman">
+                     <p>strtoupper - Змінює малі літери на великі</p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strtoupper</font>(string string);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Повертає рядок </font><i>
+                        <font face="Courier New" size="2">string</font>
+                     </i>
+                     <font face="Times New Roman">з усіма літерами, переведеними у верхній регістр.</font>
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Пам'ятайте, що абетка визначається поточним оточенням (локаль).</p>
+                  </font>
+               </a>
+               <p><a name="#strtoupper">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strtolower"><b>strtolower()</b></a>
+                  <font face="Times New Roman"> та </font><a href="#ucfirst"><b>ucfirst()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#str_replace">str_replace</a></h3><a name="#str_replace">
+                  <font face="Times New Roman">
+                     <p>str_replace - замінює вказані рядочки іншими </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string str_replace</font>(string pagane, string garne, string
+                     skyrta);
+                  </p>
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#str_replace">
+                     <font face="Times New Roman">Ця функція замінює всі рядочки pagane на рядочок garne у рядку skyrta.
+                        Якщо
+                        вам не потрібні складні заміни, завжди використовуйте цю функцію замість </font>
+                  </a><a href="#ereg-replace"><b>ereg_replace()-</b></a>. </p>
+               <table cellspacing="0" border="0" width="80%">
+                  <tbody>
+                     <tr>
+                        <td valign="MIDDLE">
+                           <b>
+                              <font face="Times New Roman">
+                                 <p>Приклад 1. str_replace() </p>
+                              </font>
+                           </b>
+                           <font face="Courier New" size="2"></font>
+                           <p>
+                              <font face="Courier New" size="2">$bodytag = str_replace("%body%", "black", "&lt;body
+                                 text=%body%&gt;");</font>
+                           </p>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+               <font face="Times New Roman">
+                  <p>Ця функція двійково-безпечна. </p>
+               </font>
+               <p>
+                  <font face="Times New Roman">Також див.: </font><a href="#ereg-replace"><b>ereg_replace()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#strtr">strtr</a></h3><a name="#strtr">
+                  <font face="Times New Roman">
+                     <p>strtr - замінює вказані символи </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string strtr</font>(string str, string from, string to);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Ця функція переглядає рядок </font><i>
+                        <font face="Courier New" size="2">str</font>
+                     </i>
+                     <font face="Times New Roman"> та міняє кожен символ із рядка </font><i>
+                        <font face="Courier New" size="2">from</font>
+                     </i>
+                     <font face="Times New Roman"> на символ із рядка </font><i>
+                        <font face="Courier New" size="2">to</font>
+                     </i>
+                     <font face="Times New Roman">, який стоїть у той же позиції.</font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+                  <p>
+                     <font face="Times New Roman">Якщо рядки </font><i>
+                        <font face="Courier New" size="2">from</font>
+                     </i>
+                     <font face="Times New Roman"> та </font><i>
+                        <font face="Courier New" size="2">to</font>
+                     </i>
+                     <font face="Times New Roman"> мають різну довжину, то додаткові символи довшого рядка не
+                        використовуються. </font>
+                  </p>
+                  <table cellspacing="0" border="0" width="80%">
+                     <tbody>
+                        <tr>
+                           <td valign="MIDDLE">
+                              <b>
+                                 <font face="Times New Roman">
+                                    <p>Приклад 1. strtr() </p>
+                                 </font>
+                              </b>
+                              <font face="Courier New" size="2"></font>
+                              <p>
+                                 <font face="Courier New" size="2">$addr = strtr($addr, "дец", "aao"); </font>
+                              </p>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+                  <font face="Times New Roman"></font>
+               </a>
+               <p><a name="#strtr">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#ereg-replace"><b>ereg_replace()</b></a>. </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#substr">substr</a></h3><a name="#substr">
+                  <font face="Times New Roman">
+                     <p>substr - Повертає частину рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string substr</font>(string string, int vid, int [skilky]);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Ця функція повертає частину рядка </font><i>
+                        <font face="Courier New" size="2">string</font>
+                     </i>
+                     <font face="Times New Roman">, яка визначається підставами vid (початок) та skilky (довжина).
+                        <br>Якщо підстава vid додатна, то рахуємо з початку рядка
+                     </font><i>
+                        <font face="Courier New" size="2">string</font>
+                     </i>
+                     <font face="Times New Roman">. Починаємо рахувати з 0. <br>Приклади:
+                        <br>substr( "0123456789", 1 ) дає :123456789
+                        <br>substr( "0123456789", 2 ) дає :23456789
+                        <br><br>Якщо підстава vid від'ємна, то рахуємо з кінця рядка
+                     </font><i>
+                        <font face="Courier New" size="2">string</font>
+                     </i>
+                     <font face="Times New Roman">. Починаємо рахувати з 1. <br>Приклади:
+                        <br>substr( "0123456789", -1 ) дає :9
+                        <br>substr( "0123456789", -2 ) дає :89
+                        <br><br>Якщо підстава skilky вказана і вона додатна, то вона визначає скільки символів увійдуть
+                        у
+                        здобуток від початку, який визначила підстава vid. Та не більше, ніж залишилося до кінця рядка.
+                        <br>Приклади:
+                        <br>substr( "0123456789", 2, 3 ) дає :234
+                        <br>substr( "0123456789", 5, 8 ) дає :56789
+                        <br>substr( "0123456789", -1, 2 ) дає :9
+                        <br>substr( "0123456789", -2, 2 ) дає :89
+                        <br>substr( "0123456789", -3, 2 ) дає :78
+                        <br>substr( "0123456789", -3, 4 ) дає :789
+                        <br>substr( "0123456789", -3, 44 ) дає :789
+                        <br>substr( "0123456789", -4, 3 ) дає :678
+                        <br><br>Якщо підстава skilky вказана і вона від'ємна, то вона вказує скільки символів від кінця
+                        рядка
+                        string не увійдуть у здобуток. <br>Приклади:
+                        <br>substr("0123456789", 4, -1) дає :45678
+                        <br>substr("0123456789", 4, -2) дає :4567
+                        <br>substr("0123456789", 4, -3) дає :456
+                        <br>substr("0123456789",4, -4) дає :45
+                        <br>substr("0123456789",4, -8) дає :
+                        <br>substr("0123456789", -4, -1) дає :678
+                        <br>substr("0123456789", -4, -2) дає :67
+                        <br>substr("0123456789", -4, -3) дає :6
+                        <br>substr("0123456789",-4, -4) дає :
+                        <br>substr("0123456789",-4, -8) дає :
+                     </font>
+                  </p>
+               </a>
+               <p><a name="#substr">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strrchr"><b>strrchr()</b></a>
+                  <font face="Times New Roman"> и </font><a href="#ereg"><b>ereg()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#trim">trim</a></h3><a name="#trim">
+                  <font face="Times New Roman">
+                     <p>trim - Відсікає пробіли с початку та з кінця рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string trim</font>(string str);
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Ця функція відсікає пробіли з початку й з кінця рядка та повертає обрубаний рядок. </p>
+                  </font>
+               </a>
+               <p><a name="#trim">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#chop"><b>chop()</b></a>
+                  <font face="Times New Roman"> и </font><a href="#ltrim"><b>ltrim()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#ucfirst">ucfirst</a></h3><a name="#ucfirst">
+                  <font face="Times New Roman">
+                     <p>ucfirst - Робить великою першу літеру рядка </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string ucfirst</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Робить великим перший символ рядка </font><i>
+                        <font face="Courier New" size="2">str</font>
+                     </i>
+                     <font face="Times New Roman">, якщо цей символ є літерою. </font>
+                  </p>
+                  <font face="Times New Roman">
+                     <p>Треба пам'ятати, що абетка визначається поточним оточенням (локаллю). </p>
+                     <p>Наприклад, в англійській локалі символ "є" не вважається літерою.</p>
+                  </font>
+               </a>
+               <p><a name="#ucfirst">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strtoupper"><b>strtoupper()</b></a>
+                  <font face="Times New Roman"> и </font><a href="#strtolower"><b>strtolower()</b></a>.
+               </p>
+               <p></p>
+               <hr>
+               <p></p>
+               <h3><a name="#ucwords">ucwords</a></h3><a name="#ucwords">
+                  <font face="Times New Roman">
+                     <p>ucwords - Робить великими перші символи кожного слова у рядку. </p>
+                     <h5>Опис</h5>
+                  </font>
+                  <font face="Courier New" size="2"></font>
+                  <p>
+                     <font face="Courier New" size="2">string ucwords</font>(string str);
+                  </p>
+                  <font face="Times New Roman"></font>
+                  <p>
+                     <font face="Times New Roman">Робить великими перші символи кожного слова у рядку </font><i>
+                        <font face="Courier New" size="2">str</font>
+                     </i>, <font face="Times New Roman">якщо цей символ є літерою. </font>
+                  </p>
+                  <font face="Times New Roman">
+                  </font>
+               </a>
+               <p><a name="#ucwords">
+                     <font face="Times New Roman">Також див.: </font>
+                  </a><a href="#strtoupper"><b>strtoupper()</b></a>, <a href="#strtolower"><b>strtolower()</b></a>
+                  <font face="Times New Roman"> та </font><a href="#ucfirst"><b>ucfirst()</b></a>
+               </p>
+            </font>
+
+            <br><br>
+            <!-- content end begin -->
+         </td>
+      </tr>
+
+      <!-- <h2>addslashes</h2>
+      AddSlashes - Повертає той же рядок із захищеними (маскованими) службовими символами.<br>
+
+      <pre><code>
+         string addslashes(string str);
+      </code></pre>
+      У рядку str додає зворотну похилу риску (\) перед символами, що мають бути захищеними у запитах до баз даних.<br>
+      Це символи: ('), ("), (\) та NUL .<br>
+      Також див. stripslashes(), htmlspecialchars() та quotemeta().<br>
+      <br>
+      <hr>
+
+      <h2>chop</h2>
+      Chop - Відсікає білі символи (символи пропуску, whitespaces) у кінці рядка<br>
+      <pre><code>
+         string chop(string str);
+      </code></pre>
+      Повертає рядок без кінцевих білих символів, символ нового рядка включно.<br>
+      Білі символи це " ", "\n", "\r", "\t", "\v", "\0"
+      <br>
+      Example 1. chop()<br>
+      <pre><code>
+         $trimmed = Chop($line);
+      </code></pre>
+      Також див. trim().<br><br>
+      <hr>
+
+      <h2>chr</h2>
+      Chr - Повертає вказаний символ<br>
+      <pre><code>
+         string chr(int ascii);
+      </code></pre>
+
+      Функція <a href="https://www.php.net/manual/en/function.chr" target="_blank">Chr</a> приймає аргументом
+      <i>ASCII</i>-код символу і повертає відповідний цьому коду фактичний символ. Наведемо приклад використання функції
+      для отримання символу з кодом 45:
+      <pre><code>&lt;?php<br>echo chr(45); // -</code></pre>
+
+      <pre><code>
+         $str .= chr(27); /* додає символ ESC у кінець $str */
+      </code></pre>
+
+      /* Часто корисніше інша функція */<br>
+      <pre><code>
+         $str = sprintf("The string ends in escape: %c", 27);
+      </code></pre>
+      Ця функція доповнює функцію ord(). Також див. у sprintf() форматуючий рядок з %c.<br>
+      <hr>
+
+      <h2>chunk_split</h2>
+      chunk_split - Розбиває рядок на менші частини<br>
+      <pre><code>
+         string chunk_split(string string, int [kusen] , string [end] );
+      </code></pre>
+      Після кожних kusen символів функція вставляє рядок end . kusen за замовчанням дорівнює 76, end за замовчанням =
+      "\r\n". Функція повертає новій рядок, первісний залишається недоторканим.<br>
+      Годиться, наприклад, для перетворення результату функції base64_encode до вимог RFC 2045.<br>
+      Example 1. chr_replace()<br>
+      # format $data using RFC 2045 semantics<br>
+      <pre><code>
+         $new_string = chunk_split(base64_encode($data));
+      </code></pre>
+      Ця функція значно швидше, ніж ereg_replace().
+      <hr>
+      <h2>
+         convert_cyr_string
+      </h2>
+      convert_cyr_string - Переводить з одної кириличної абетки до іншої<br>
+      string convert_cyr_string(string str, string z, string do);<br>
+      Ця функція змінює одне стандартне числове відображення кириличної абетки на інше.<br>
+      Змінні z та do є символами, які визначають, із якого на який стандарт змінюємо.<br>
+      Підтримуються стандарти:<br>
+
+      k - koi8-r<br>
+      w - windows-1251<br>
+      i - iso8859-5<br>
+      a - x-cp866<br>
+      d - x-cp866<br>
+      m - x-mac-cyrillic<br>
+      <hr>
+
+      <h2>crypt</h2>
+      crypt - шифрує рядок методом DES<br>
+      string crypt(string shovaty, [string jak]);<br>
+      Шифрує рядок стандартною методою UNIX DES. shovaty - рядок, який треба відобразити, jak - 2-символьний рядок, що
+      змінює алгоритм шифрування. Див. документацію UNIX для додаткової інформації.<br>
+      Якщо параметр (підстава) jak відсутня, то PHP згенерує її випадковим чином.<br>
+      Деякі операційні системи підтримують декілька типів таємничення. В дійсності, інколи замість методи DES
+      використовується метода MD5. Тип шифрування встановлюється параметром jak. Під час установлення PHP виявляє, які
+      методи таємного відображення має операційна системи, та буде підтримувати підставу jak для інших методів
+      таємничення. Якщо програміст не вкаже підставу jak, то PHP створить ключ для прийнятого у системі методу таємного
+      відображення, чи то 2-символьний ключ для DES, чи то 12-символьний ключ для MD5. PHP підтримує сталу на ім'я
+      CRYPT_SALT_LENGTH, яка вкаже вам, який ключ застосовує ваша операційна система.
+      <br>
+      При застосуванні методу DES результат функції містить ключ у двох перших символах.
+      <br>
+      Немає функції для зворотного перетворення у первісний рядок, бо метод цього не потребує.
+      <hr>
+
+      <h2>echo</h2>
+      echo - виводить у результуючу сторінку один чи декілька рядків<br>
+      echo(string arg1, string [argn]...);<br>
+      Додає до результуючої сторінки всі параметри.<br>
+
+      echo() не є функцією - це мовна конструкція, тому дужки не обов'язкові.<br>
+      Приклад 1. echo<br>
+      echo "Hello World";<br>
+      Також див.: print(), printf(), flush()<br>
+      <hr>
+
+      <h2>explode</h2>
+      explode - Розкладає рядок в елементи масиву<br>
+      array explode(string separator, string string);<br>
+      Повертає масив, що містить в елементах частини, які були відокремлені у первісному рядку рядочками separator.<br>
+      <pre><code>
+         $pizza = "piece1 piece2 piece3 piece4 piece5 piece6";
+         <br>
+         $pieces = explode(" ", $pizza);
+      </code></pre>
+      Також див.: chunk_split() та implode().
+      <br>
+      <hr>
+      <h2>flush</h2>
+      flush - виштовхує вміст усіх буферів у мережу та до оглядача<br>
+      void flush(void);<br>
+      Виштовхує вміст буфера виводу PHP та усіх інших буферів, що використовує PHP (CGI, web-сервер i т.д.). Це є
+      ефективна можливість видати усе накопичене в буферах оглядачу.<br>
+      <hr>
+      <h2>get_meta_tags</h2>
+      get_meta_tags - Копіює вміст мета-тегів у двоколонкову таблицю (асоціативний масив)<br>
+      array get_meta_tags(string filename, int [use_include_path]);
+      <br>
+      Відкриває файл filename, обробляє його рядок за рядком та копіює мета-теги.
+      <br>
+      Приклад 1. Мета Теги
+      <br>
+      <pre><code>
+         < meta name="author" content="name"><br>
+
+         < meta name="tags" content="php3 documentation"><br>
+
+         < /head> <!- parsing stops here ->
+      </code></pre>
+      (Зверніть увагу на символи закінчення рядків, PHP3 використовує OS-залежну функцію для перегляду рядків, тому
+      тексти з MAC оброблюються неправильно на Unix.)<br>
+
+      Значення властивості name стає ключем, значення властивості content стає значенням масиву, який повертає функція,
+      тому ви можете використовувати типові функції щоб переглядати цей масив чи окремі елементи.<br>
+
+      Спеціальні символи, якщо містяться в значенні властивості name, замінюються на символ '_', інші перетворюються у
+      нижній регістр (малі літери).<br>
+
+      Якщо параметр use_include_path встановлений у 1, то PHP3 буде намагатися відкрити файл по стандартному include
+      шляху.<br>
+      <hr>
+      <h2>htmlentities</h2>
+      htmlentities - Перетворює всі можливі символи у коди HTML.
+      <br>
+      string htmlentities(string string);<br>
+
+      Ця функція ідентична htmlspecialchars() , за винятком того, що всі символи, що мають код HTML, замінюються на цей
+      HTML код.<br>
+
+      PHP 3.0 використовує кодову таблицю ISO-8859-1.<br>
+
+      Також див.: htmlspecialchars() та nl2br().
+      <br>
+      <hr>
+
+      <h2>htmlspecialchars</h2>
+      htmlspecialchars - Перетворює у коди HTML символи & " <><br>
+         string htmlspecialchars(string string);<br>
+
+         Деякі символи мають особливо значення у HTML, тож, якщо такі є, їх слід замінити кодами HTML. Ця функція
+         повертає рядки з такими замінами.<br>
+
+         Ця функція корисна для вилучення розмітки HTML у тексті, що надійшов від користувача. (дошки повідомлень, книги
+         відвідувачів).<br>
+
+         PHP 3.0 робить такі заміни:<br>
+
+         '&' (амперсанд) стає '&amp;'<br>
+         '"' (подвоєні лапки) стає '&quot;'<br>
+         '<' (знак менше) стає '&lt;' <br>
+            '>' (знак більше) стає '&gt;'<br>
+            Майте на увазі, що ця функція не заміняє нічого іншого. Для повної обробки див. функцію htmlentities().<br>
+
+            Також див.: htmlentities() та nl2br().<br>
+            <hr>
+
+            <h2>implode</h2>
+            implode - Створює рядок з елементів масиву.<br>
+            string implode(array pieces, string glue);<br>
+            Повертає рядок з усіма елементами масиву у тому ж порядку, із рядком glue проміж елементами.<br>
+
+            Приклад 1. implode()<br>
+
+            $colon_separated = implode($array, ":");<br>
+
+            Також див.: explode(), join(), та chunk_split().<br>
+            <hr>
+
+            <h2>join</h2>
+            join - Створює рядок з елементів масиву<br>
+            string join(array pieces, string glue);<br>
+
+            join() є псевдонимом функції implode(), и цілком їй тотожна.
+            <hr>
+
+            <h2>ltrim</h2>
+            ltrim - Відсікає недруковані (білі) символи на початку рядка<br>
+            string ltrim(string str);<br>
+
+            Ця функція повертає рядок без початкових білих символів, символ нового рядка включно.<br>
+
+            Білі символи це " ", "\n", "\r", "\t", "\v", "\0"<br>
+
+            Також див.: chop() та trim().<br>
+            <hr>
+
+
+            <h2>md5</h2>
+            <p>md5 - Підраховує значення md5 для рядка</p>
+            string md5(string str);<br>
+
+            Підраховує значення MD5 для рядка str за допомогою алгоритма RSA Data Security, Inc. MD5 Message-Digest.<br>
+            <hr>
+
+            <h2>nl2br</h2>
+            nl2br - Перетворює символи нового рядка у HTML-тег нового рядка<br>
+            string nl2br(string string);<br>
+
+            Повертає string із '< BR>' перед кожним символом нового рядка.<br>
+
+               ( nl2br є скорочення від new lines to BR)<br>
+
+               Також див.: htmlspecialchars() та htmlentities().<br>
+               <hr>
+               ================================ -->
+
+
+
+
+      <h2>Рядки як масиви</h2>У мові програмування РНР рядки розглядаються як масиви, елементами яких є
+      символи.
+      Перший
+      елемент позначається індексом 0, другий – 1 і т.д.
+      <pre><code>&lt;?php<br>$str = 'PHP';<br>echo $str[0]; // P<br>echo $str[1]; // H<br>echo $str[2]; // P</code></pre>
+      Результатом роботи скрипта буде рядок «РНР».<h2>UTF-8. Розширення mbstring</h2>Сьогодні кодування
+      <i>UTF-8</i> є
+      базовим для додатків. Перехід на <i>UTF-8</i> не тільки дозволяє використовувати в одному документі
+      тексти
+      різними
+      мовами, але й дозволяє розширити кодування при появі нових символів. Починаючи з РНР 7 символи кодування
+      <i>UTF-8</i> можуть бути задані за допомогою спеціального синтаксису, в рядках вказується послідовність
+      <i>\u</i>,
+      після якої слідує шістнадцятковий код символу у фігурних дужках:
+      <pre><code>&lt;?php<br>echo "\u{0410}"; // A</code></pre>У <i>UTF-8</i> англійські символи займають один
+      байт, а
+      українські – два. Якщо звернутися до <i>UTF-8</i> рядка, як до масиву символів, використовуючи квадратні
+      дужки, у
+      разі англійської мови буде отримано символ, а в разі української – лише половина символу:
+      <pre><code>&lt;?php<br>$str = "Hello world";<br>echo "{$str[0]}&lt;br /&gt;"; // H<br>$str = "Привіт світ!";<br>echo "{$str[0]}&lt;br /&gt;"; // �</code></pre>
+      Для вирішення проблеми, як правило, підключають розширення <i>Mbstring</i>, що підтримує роботу з
+      багатобайтними
+      кодуваннями, використовують функції <i>Mbstring</i> безпосередньо, або налаштовують РНР таким чином, щоб
+      стандартні рядкові функції РНР замінювалися mbstring-аналогами. Як підключити бібліотеку Mbstring можна
+      дізнатися
+      із статті: <a href="blogs/9151" target="_blank">Встановлення вебсервера Apache 2.4 з модулем
+         PHP 8</a>.<h2>Функції для роботи із символами</h2>Щоб дізнатися довжину рядка використовується функція
+      <a
+         href="https://www.php.net/manual/en/function.strlen" target="_blank">Strlen</a>, яка приймає єдиним
+      аргументом
+      рядок символів. Ця функція часто використовується спільно з іншими функціями, а також під час роботи з
+      посимвольним представленням рядка. У наступному прикладі в циклі <i>For</i> виводиться рядок <i>$str</i>,
+      що
+      містить слово <i>Hello</i>. Скрипт опирається на той факт, що елемент <i>$str[0]</i> містить перший
+      символ
+      рядка,
+      <i>$str[1]</i> другий і т. д. до кінця рядка:
+      <pre><code>&lt;?php<br>$str = 'Hello';<br>for ($i = 0; $i &lt; strlen($str); $i++) {<br>    echo $str[$i];<br>}</code></pre>
+
+      Функція <a href="https://www.php.net/manual/en/function.ord"
+         target="_blank">Ord</a> виконує дію, зворотню функції <i>Chr</i> - повертає <i>ASCII</i>-код символу,
+      переданого їй як аргумент:
+      <pre><code>&lt;?php<br>echo ord('-'); // 45</code></pre>Якщо параметр <i>$str</i> функції <i>Ord</i>
+      містить
+      більше одного символу, ASCII-код буде повернено лише для першого.<h2>Пошук у рядку</h2>Функція <a
+         href="https://www.php.net/manual/en/function.substr" target="_blank">Substr</a> повертає частину рядка
+      (підрядок). Аргументами функції передається вихідний рядок, з якого вирізається текст, номер символу, з
+      якого
+      здійснюється початок підрядка і довжина рядка, що повертається в символах. Якщо довжина не вказана, то
+      повертається вся частина рядка, що залишилася.
+      <pre><code>&lt;?php<br>$str = 'Hello, World!';<br>echo substr($str, 0, 5); // Hello<br>echo substr($str, 6); // World!</code></pre>
+      Функція <a href="https://www.php.net/manual/en/function.strpos" target="_blank">Strpos</a> повертає
+      позицію
+      входження підрядка в рядок. У першому аргументі функції передається рядок, у якому здійснюється пошук,
+      другим
+      аргументом вказується символ пошуку. Також третій необов’язковий параметр дозволяє задати позицію,
+      починаючи
+      з
+      якої здійснюватиметься пошук. Якщо рядок не знайдено, повертається <i>False</i>.
+      <pre><code>&lt;?php<br>echo strpos('Hello, world!', ','); // 5</code></pre>
+      <h2>Заміна у тексті</h2>Функції заміни здійснюють перетворення рядків, пов’язані із заміною одних
+      підрядоків
+      на
+      інші, а також видаленням підрядків. Найчастіше використовують функцію <a
+         href="https://www.php.net/manual/en/function.str-replace" target="_blank">Str_replace</a>, яка
+      дозволяє
+      замінити підрядок у тексті іншим підрядком. Аргументами функції виступають шукане значення, значення
+      заміни
+      та
+      рядок, в якому замінюються всі входження. Одним з найпоширеніших завдань є заміна тегів форматування в
+      стилі
+      <i>bbCode</i> їх НТМL-еквівалентами:
+      <pre><code>&lt;?php<br>$str = '[і]Текст[/і] курсивом';<br>$str = str_replace('[і]', '&lt;і&gt;', $str);<br>$str = str_replace('[/і]', '&lt;/і&gt;', $str);<br>echo $str; // Текст курсивом<br></code></pre>
+      Результатом роботи прикладу буде заміна всіх символів і <i>&lt;i&gt;</i> і <i>&lt;/i&gt;</i>
+      відповідно.<br><br>Крім підрядків, функція <i>Str_replace</i> замість параметрів пошуку та заміни може
+      приймати
+      масиви з рівною кількістю елементів. Елемент масиву пошуку замінюється на відповідний елемент масиву
+      заміни.
+      Якщо
+      необхідно з’ясувати, скільки замін було здійснено в рядку, у цій функції можна вказати необов’язковий
+      останній
+      четвертий параметр, у який після завершення роботи функції буде поміщено кількість здійснених
+      замін.<br><br>Функція <a href="https://www.php.net/manual/en/function.trim" target="_blank">Trim</a>
+      видаляє
+      початкові та кінцеві пробільні символи з початку та кінця рядка і приймає як аргумент рядок. Найчастіше
+      даних
+      символів буває недостатньо, тому у другому необов’язковому параметрі наводиться список символів, які слід
+      вважати
+      пробільними.<h2>Робота з НТМL-кодом</h2>Оскільки спочатку РНР розроблялася як мова для Web-проектування,
+      тому
+      серед рядкових функцій є кілька спеціально призначених для обробки мови розмітки HTML.<br><br>Для
+      виведення
+      даних
+      з нового рядка застосовується спеціальний НТМL-тег <i>&lt;br /&gt;</i>, оскільки браузери інтерпретують
+      переводи
+      рядків як звичайний пробіловий символ. Для вирішення завдання заміни звичайних переводів рядків у
+      НТМL-еквівалент
+      РНР надає спеціальну функцію <a href="https://www.php.net/manual/en/function.nl2br"
+         target="_blank">Nl2br</a>.<br><br>Особливість функції <i>Nl2br</i> в тому, що тег <i>&lt;br /&gt;</i>
+      вставляється поруч із символом переводу рядка, а не замінює його собою. Така поведінка функції може бути
+      не
+      зручною, якщо текст призначений для підстановки у JavaScript cpипт. У цьому випадку зручніше
+      користуватися
+      функцією <i>Str_replace</i>.<br><br>Функція <a
+         href="https://www.php.net/manual/en/function.htmlspecialchars"
+         target="_blank">Htmlspecialchars</a> дозволяє перетворити НТМL-код у безпечне представлення.
+      Застосування
+      цієї
+      функції гарантує, що будь-який введений користувачем код (РНР, JavaScript тощо) буде відображений, але не
+      виконуватиметься. Таким чином, функцію слід застосовувати, якщо необхідно вивести у браузері якийсь код
+      або
+      убезпечити введення користувача.<br><br>Іноді зручніше взагалі видалити НТМL-теги з тексту. Для цього
+      призначена
+      спеціальна функція <a href="https://www.php.net/manual/en/function.strip-tags"
+         target="_blank">Strip_tags</a>, яка
+      видаляє з рядка всі теги, крім тих, які вказуються в другому параметрі функції.<h2>Форматний вивід</h2>
+      Для
+      форматного виводу призначено функцію <a href="https://www.php.net/manual/en/function.printf"
+         target="_blank">Printf</a>. Аргументами функції є рядок форматування та змінні, що визначаються рядком
+      форматування. Ця функція дозволяє здійснювати вивід у зручну і потрібну для вас форму, наприклад, можна
+      використовувати для виведення певної кількості символів після коми для грошових одиниць, де обов’язковою
+      вимогою є
+      два знаки після коми.<h2>Об’єднання та розбиття рядків</h2>Для розбивки рядка за певним роздільником
+      призначено
+      функцію <a href="https://www.php.net/manual/en/function.explode" target="_blank">Explode</a>, яка
+      повертає
+      масив
+      рядків, кожен з яких відповідає фрагменту вихідного рядка між роздільниками. Можна задати максимальну
+      кількість
+      елементів у результуючому масиві, і, відповідно, в останньому елементі буде зберігатися значення частини
+      рядка, що
+      залишилася. Наведемо приклад використання функції:
+      <pre><code>&lt;?php<br>$str = 'Red,Green,Yellow';<br>echo '&lt;pre&gt;';<br>print_r(explode(',', $str));</code></pre>
+      Результатом виконання буде масив:
+      <pre><code>Array<br>(<br>    [0] =&gt; Red<br>    [1] =&gt; Green<br>    [2] =&gt; Yellow<br>)</code></pre>
+      Функція
+      <a href="https://www.php.net/manual/en/function.implode" target="_blank">Implode</a> є зворотною функцією
+      <i>Explode</i> і здійснює об’єднання елементів масиву в рядок:
+      <pre><code>&lt;?php<br>$str = ['Red,Green,Yellow'];<br>print_r(implode(',', $str)); // Red,Green,Yellow</code></pre>
+      Часто в HTML потрібно обмежити кількість символів на одному рядку, тобто занадто довге слово або речення
+      може
+      порушити дизайн сторінки. Для цього призначено функцію <a
+         href="https://www.php.net/manual/en/function.wordwrap"
+         target="_blank">Wordwrap</a>, яка здійснює перенесення на задану кількість символів з використанням
+      символу
+      розриву рядка. Але використовувати її для кодування <i>UTF-8</i> не рекомендується, оскільки можливим є
+      неправильний результат роботи.<h2>Серіалізація об’єктів та масив</h2>Пара функцій <a
+         href="https://www.php.net/manual/en/function.serialize" target="_blank">Serialize</a> і <a
+         href="https://www.php.net/manual/en/function.unserialize" target="_blank">Unserialize</a> дозволяють
+      здійснювати упаковку та розпакування масивів та об’єктів.<br><br>Як аргумент функція <i>Serialize</i>
+      приймає
+      масив або об’єкт, повертаючи його як закодований рядок. Симетрична їй функція <i>Unserialize</i> приймає
+      як
+      аргумент закодований рядок, повертаючи масив чи об’єкт. Продемонструємо приклад використання обох
+      функцій:
+      <pre><code>&lt;?php<br>$array = [1, 2, 'a', 'b', 'c'];<br>// Упаковуємо масив у рядок<br>$str = serialize($array);<br>echo "$str&lt;br /&gt;";<br>// Виймаємо масив з рядка<br>$arr = unserialize($str);<br>echo '&lt;pre&gt;';<br>print_r($arr);</code></pre>
+      Результатом роботи прикладу будуть наступні рядки:
+      <pre><code>a:5:{i:0;i:1;i:1;i:2;i:2;s:1:"a";i:3;s:1:"b";i:4;s:1:"c";}<br>Array<br>(<br>    [0] =&gt; 1<br>    [1] =&gt; 2<br>    [2] =&gt; a<br>    [3] =&gt; b<br>    [4] =&gt; c<br>)</code></pre>
+      <h2>JSON-формат</h2>Процедура серіалізації має кілька недоліків. При спробі серіалізувати вже
+      серіалізовані
+      дані,
+      відновити рядок за допомогою функції <i>Unserialize</i> може не вийти. Тому для збереження масиву в рядок
+      частіше
+      вдаються до формату <i>JSON</i>, який останніми роками набув великої популярності серед Web-розробників.
+      Формат є
+      об’єктом <i>JavaScript</i>. Однією з переваг цього формату є його легке сприйняття людиною. Формат
+      дозволяє
+      задавати рядкові, числові значення, організовувати вкладені структури, аналогічні до асоціативних масивів
+      РНР.<br><br>У мові <i>JavaScript</i>, <i>JSON</i> може використовуватися безпосередньо як об’єкт мови.
+      Завдяки
+      цьому формат інтенсивно застосовується для асинхронних АJАХ-запитів. У РНР доступні дві функції для
+      роботи з
+      JSON:
+      <a href="https://www.php.net/manual/en/function.json-encode" target="_blank">Json_encode</a> та <a
+         href="https://www.php.net/manual/en/function.json-decode"
+         target="_blank">Json_decode</a>.<br><br>Функція
+      <i>Json_encode</i> перетворює змінну, яка вказана в параметрі функції, в послідовність <i>JSON</i>.
+      <pre><code>&lt;?php<br>$arr = [<br>    'color' =&gt; 'Жовтий',<br>    'num' =&gt; [<br>        '123',<br>        '456'<br>    ]<br>];<br>echo json_encode($arr);</code></pre>
+      Результат роботи скрипту з наведеного вище прикладу:
+      <pre><code>{"color":"\u0416\u0435\u043b\u0442\u044b\u0439","num":["123","456"]}</code></pre>За
+      замовчуванням
+      функція <i>Json_encode</i> кодує символи <i>UTF-8</i> у послідовність <i>\uXXXX</i>. Щоб запобігти такому
+      кодуванню, потрібно налаштувати роботу функції за допомогою другого параметра, який може приймати певні
+      константи
+      <i>JSON</i>. Нам потрібна константа <i>JSON_UNESCAPED_UNICODE</i> для того, щоб запобігти кодуванню
+      <i>UTF-8</i>,
+      який і так чудово обробляється всіма іншими мовами, включаючи JavaScript.
+      <pre><code>echo json_encode($arr, JSON_UNESCAPED_UNICODE); //{"color":"Жовтий","num":["123","456"]}</code></pre>
+      Для перетворення JSON-рядка в масив РНР призначена функція <i>Json_decode</i>, яка приймає як параметр
+      JSON-рядок
+      і повертає асоціативний масив РНР, якщо значення другого параметра функції виставлено в <i>True</i>:
+      <pre><code>&lt;?php<br>$str = '{"color":"Жовтий","num":["123","456"]}';<br>print_r(json_decode($str, true));</code></pre>
+      Результат виконання прикладу виглядає так:
+      <pre><code>Array<br>(<br>    [color] =&gt; Жовтий<br>    [num] =&gt; Array<br>        (<br>            [0] =&gt; 123<br>            [1] =&gt; 456<br>        )<br><br>)</code></pre>
+      Якщо значення цього параметра виставлено в <i>False</i> або не вказано, повертається об’єкт.<br><br>
+   </div>
+
+
+   <div class="task">
+      <br>
+      Завдання:<br>
+      1) замінити текст в змінній на інший<br>
+      2) зробити пошук у рядку<br>
+      3) розбити текст в масив<br>
+      3) обєднати масив в рядок<br>
+      4) спробувати json_decode і json_encode<br>
+      5) пройтись по вивченному матеріалові
+      <br>
+      <br>
+   </div>
+
+</body>
+
+</html>
