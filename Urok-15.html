@@ -1,0 +1,2590 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Фільтрування та перевірка даних в PHP</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <style>
+      .hljs {
+         display: block;
+         overflow-x: auto;
+         padding: 0.5em;
+         background: #002b36;
+         color: #839496;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="post-content">
+      У значній більшості випадків мову РНР використовують для створення Wеb-додатків, що призводить до обов’язкового
+      вивчення проблем безпеки. Програміст не може бути впевнений у доброзичливості користувачів, тому необхідно
+      перевіряти всі вхідні дані, що надходять від них. РНР надає функції фільтрації та перевірки, за допомогою яких
+      можна проконтролювати введену інформацію користувача.<br><a data-fancybox="gallery"
+         href="assets/img/filtruvanya-ta-perevirka-danuh-v-php.jpg" alt="Фільтрування та перевірка даних в PHP"
+         title="Фільтрування та перевірка даних в PHP">
+         <img src="assets/img/filtruvanya-ta-perevirka-danuh-v-php.jpg" alt="Фільтрування та перевірка даних в PHP"
+            title="Фільтрування та перевірка даних в PHP">
+      </a><br>
+
+      Фільтрування та перевірка даних є дуже важливими процесами в PHP, оскільки це допомагає забезпечити безпеку та
+      надійність веб-додатків. У цьому уроці ми розглянемо декілька методів фільтрування та перевірки даних в PHP разом
+      з прикладами.<br>
+
+      <h3>Фільтрування URL-адрес</h3>
+      Для фільтрування URL-адрес використовуйте функцію filter_var() з параметром FILTER_VALIDATE_URL. Це допоможе
+      перевірити, чи вірно введений URL-адрес. Наприклад:<br>
+      <pre>
+         <code>
+            < ?php
+            $url = "https://example.com";
+            if (filter_var($url, FILTER_VALIDATE_URL)) {
+               echo "Це дійсний URL-адрес";
+            } else {
+               echo "Неправильний URL-адрес";
+            }
+         </code>
+      </pre>
+
+
+      При розробці програм існують два підходи для обробки даних, що надходять від користувача:
+      <i>фільтрація</i> та <i>перевірка</i> введення на відповідність умові. <br>
+      Перевірка використовується визначення відповідності даних певним критеріям. Наприклад, застосування
+      FILTER_VALIDATE_EMAIL дозволяє перевірити, чи є введені дані адресою email, однак самі дані при цьому залишаться
+      недоторканими.
+      <br>
+      Очистка використовується для вилучення даних небажаних конструкцій. Наприклад, застосування FILTER_SANITIZE_EMAIL
+      видаляє всі символи, які не повинні містити email-адресу. Тобто перевірки даних не відбувається.
+      <br>
+      <br>
+      Крім того, можна використовувати різні прапори, як для перевірки, так і для очищення, для більш тонкого
+      налаштування відповідно до ваших потреб. Наприклад, передача прапора FILTER_FLAG_PATH_REQUIRED при фільтрації URL
+      встановить необхідною умовою наявність шляху посилання (наприклад, /foo в http://example.org/foo
+      <br>
+      <br>
+
+      Як приклад фільтрації можна навести типовий
+      спосіб обробки <i>GET</i> параметра, наприклад цілісного ідентифікатора користувача <i>Id</i>. Для того, щоб
+      гарантувати, що <i>$_GET['id']</i> містить число, а не рядок, ми можемо явно перетворити його на ціле число:
+      <pre><code>$id = intval($_GET['id'])</code></pre>Цей процес відкидання всіх невідповідних даних називається
+      <i>фільтруванням</i> чи очищенням даних (<i>sanitize</i>). Також для фільтрації даних використовуються функції <a
+         href="https://www.php.net/manual/en/function.htmlspecialchars" target="_blank">Htmlspecialchars</a> та <a
+         href="https://www.php.net/manual/en/function.strip-tags" target="_blank">Strip_tags</a>.<br>
+
+      <h3>htmlspecialchars</h3>
+      <pre>
+         <code>
+            htmlspecialchars(
+               string $string,
+               int $flags = ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401,
+               ?string $encoding = null,
+               bool $double_encode = true
+            ): string
+         </code>
+      </pre>
+
+      <br>
+      <br>
+
+      <h3>filter_var_array</h3>
+      <pre>
+         <code>
+            filter_var_array(array $array, array|int $options = FILTER_DEFAULT, bool $add_empty = true): array|false|null
+         </code>
+      </pre>
+
+      Ця функція корисна для отримання багатьох значень без повторного виклику filter_var()<br>
+      Параметри<br>
+      array
+      Масив із рядковими ключами, що містять дані для фільтрування.<br>
+      options
+      Масив, що визначає аргументи. Дійсним ключем є рядок , що містить назву змінної, а дійсним значенням є або тип
+      фільтра , або масив , який необов’язково визначає фільтр, прапорці та параметри. Якщо значення є масивом, дійсними
+      ключами є filter те, що вказує тип фільтра , flagsу якому вказуються будь-які прапорці, що застосовуються до
+      фільтра, і optionsвказуються будь-які параметри, які застосовуються до фільтра. Перегляньте приклад нижче для
+      кращого розуміння.<br><br>
+
+      Цей параметр також може бути цілим числом, що містить константу фільтра . Тоді всі значення у вхідному масиві
+      фільтруються цим фільтром.<br><br>
+      add_empty
+      Додайте відсутні ключі nullдо значення, що повертається.<br>
+      Повернуті значення<br>
+      Масив, що містить значення запитаних змінних у разі успіху чи false невдачі. Значення масиву буде false, якщо
+      фільтр не вдається або nullякщо змінна не встановлена.<br>
+
+      <pre>
+         <code>
+               $data = array(
+                  'product_id'    => 'libgd%3Cscript%3E',
+                     'component'     => '10',
+                        'versions'      => '2.0.33',
+                           'testscalar'    => array('2', '23', '10', '12'),
+                              'testarray'     => '2',
+               );
+      
+                     $args = array(
+                        'product_id'   => FILTER_SANITIZE_ENCODED,
+                        'component'    => array('filter'    => FILTER_VALIDATE_INT,
+                           'flags'     => FILTER_FORCE_ARRAY,
+                           'options'   => array('min_range' => 1, 'max_range' => 10)
+                        ),
+                        'versions'     => FILTER_SANITIZE_ENCODED,
+                        'doesnotexist' => FILTER_VALIDATE_INT,
+                        'testscalar'   => array(
+                           'filter' => FILTER_VALIDATE_INT,
+                           'flags'  => FILTER_REQUIRE_SCALAR,
+                        ),
+                        'testarray'    => array(
+                           'filter' => FILTER_VALIDATE_INT,
+                           'flags'  => FILTER_FORCE_ARRAY,
+                        )
+      
+                     );
+      
+                     $myinputs = filter_var_array($data, $args);
+      
+                     var_dump($myinputs);
+               echo "\n";
+         </code>
+      </pre>
+
+      Наведений вище приклад виведе:
+      <pre>
+         <code>
+            array(6) { 
+               ["product_id"]=> 
+                  string(17) "libgd%3Cscript%3E" 
+               ["component"]=> 
+                  array(1) { 
+                  [0]=> 
+                  int(10) 
+                  } 
+               ["versions"] => 
+                  string(6) "2.0.33" 
+               ["doesnotexist"]=> 
+                  NULL 
+               ["testscalar"]=> 
+                  bool(false) 
+               ["testarray"]=> 
+                  array(1) { 
+                  [0]=> 
+                  int(2 ) 
+                  } 
+             }
+         </code>
+      </pre>
+
+
+
+      <h3>filter_list</h3>
+      filter_list — повертає список усіх підтримуваних фільтрів<br>
+      Ця функція не має параметрів.<br>
+      Повертає масив назв усіх підтримуваних фільтрів, пустий масив, якщо таких фільтрів немає. Індекси цього масиву не
+      є ідентифікаторами фільтрів, їх можна отримати за допомогою filter_id() з імені.<br>
+
+      <pre>
+         <code>
+            print_r(filter_list());
+         </code>
+      </pre>
+
+      Наведений вище приклад виведе щось подібне до:<br>
+
+      <pre>
+         <code>
+            Array
+            (
+               [0] => int
+               [1] => boolean
+               [2] => float
+               [3] => validate_regexp
+               [4] => validate_url
+               [5] => validate_email
+               [6] => validate_ip
+               [7] => string
+               [8] => stripped
+               [9] => encoded
+               [10] => special_chars
+               [11] => unsafe_raw
+               [12] => email
+               [13] => url
+               [14] => number_int
+               [15] => number_float
+               [16] => magic_quotes
+               [17] => callback
+            )
+         </code>
+      </pre>
+
+
+      <br>
+      <br>
+      <h3>filter_input</h3>
+      filter_input — отримує конкретну зовнішню змінну за назвою та додатково фільтрує її<br>
+      <pre>
+         <code>
+            filter_input(
+               int $type,
+               string $var_name,
+               int $filter = FILTER_DEFAULT,
+               array|int $options = 0
+            ): mixed
+         </code>
+      </pre>
+      Параметри<br>
+      type
+      Один із INPUT_GET, INPUT_POST, INPUT_COOKIE, INPUT_SERVERабо INPUT_ENV.<br>
+      var_name
+      Ім'я змінної, яку потрібно отримати.<br>
+      filter
+      Ідентифікатор фільтра, який потрібно застосувати. На сторінці довідника Типи фільтрів перелічено доступні
+      фільтри.<br><br>
+
+      Якщо опущено, FILTER_DEFAULTбуде використано, що еквівалентно FILTER_UNSAFE_RAW. Це призведе до того, що за
+      замовчуванням фільтрація не виконуватиметься.<br><br>
+
+      options
+      Асоціативний масив опцій або порозрядна диз'юнкція прапорів. Якщо фільтр приймає параметри, прапорці можна вказати
+      в полі «прапорці» масиву.<br><br>
+
+      Повернуті значення<br>
+      Значення запитуваної змінної в разі успіху, falseякщо фільтр не вдається або nullякщо var_nameзмінна не
+      встановлена. FILTER_NULL_ON_FAILUREЯкщо використовується прапорець , він повертається false, якщо змінна не
+      встановлена ​​та nullякщо фільтр не працює.
+      <br><br>
+      <pre>
+         <code>
+            $search_html = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_SPECIAL_CHARS);
+            $search_url = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_ENCODED);
+            echo "You have searched for $search_html.\n";
+            echo "< a href='?search=$search_url'>Search again.< / a>";
+         </code>
+      </pre>
+
+      Наведений вище приклад виведе щось подібне до:<br>
+      <pre>
+         <code>
+            Ви шукали мене & син. 
+            < a href='?search=Me%20%26%20son'>Пошук знову.< / a>
+         </code>
+      </pre>
+
+      <h3>filter_input_array</h3>
+      filter_input_array — отримує зовнішні змінні та додатково фільтрує їх<br>
+      <pre>
+         <code>
+            filter_input_array(int $type, array|int $options = FILTER_DEFAULT, bool $add_empty = true): array|false|null
+         </code>
+      </pre>
+      Ця функція корисна для отримання багатьох значень без повторного виклику filter_input() .<br>
+
+      Параметри <br>
+      type
+      Один із INPUT_GET, INPUT_POST, INPUT_COOKIE, INPUT_SERVERабо INPUT_ENV.<br>
+      options
+      Масив, що визначає аргументи. Дійсним ключем є рядок , що містить назву змінної, а дійсним значенням є або тип
+      фільтра , або масив , який необов’язково визначає фільтр, прапорці та параметри. Якщо значення є масивом, дійсними
+      ключами є filterте, що вказує тип фільтра , flagsу якому вказуються будь-які прапорці, що застосовуються до
+      фільтра, і optionsвказуються будь-які параметри, які застосовуються до фільтра. Перегляньте приклад нижче для
+      кращого розуміння.<br><br>
+
+      Цей параметр також може бути цілим числом, що містить константу фільтра . Тоді всі значення у вхідному масиві
+      фільтруються цим фільтром.<br><br>
+      add_empty
+      Додайте відсутні ключі nullдо значення, що повертається.<br><br>
+      Повернуті значення<br>
+      Масив, що містить значення запитаних змінних у разі успіху. Якщо вхідний масив, позначений як type, не
+      заповнюється, функція повертає, nullякщо FILTER_NULL_ON_FAILURE прапор не задано, або falseв іншому випадку. Для
+      інших невдач falseповертається.<br><br>
+
+      Значення масиву буде false, якщо фільтр не вдається або nullякщо змінна не встановлена. FILTER_NULL_ON_FAILURE Або
+      якщо використовується прапорець , він повертається false, якщо змінна не встановлена ​​та nullякщо фільтр не
+      працює. Якщо add_emptyпараметр дорівнює false, для невстановлених змінних не буде додано елемент масиву.<br><br>
+      <pre>
+         <code>
+            /* data actually came from POST
+            $_POST = array(
+               'product_id' => 'libgd%3Cscript%3E',
+               'component'  => array('10'),
+               'version'    => '2.0.33',
+               'testarray'  => array('2', '23', '10', '12'),
+               'testscalar' => '2',
+            );
+            */
+
+            $args = array(
+               'product_id'   => FILTER_SANITIZE_ENCODED,
+               'component'    => array('filter'    => FILTER_VALIDATE_INT,
+                                       'flags'     => FILTER_REQUIRE_ARRAY, 
+                                       'options'   => array('min_range' => 1, 'max_range' => 10)
+                                       ),
+               'version'      => FILTER_SANITIZE_ENCODED,
+               'doesnotexist' => FILTER_VALIDATE_INT,
+               'testscalar'   => array(
+                                       'filter' => FILTER_VALIDATE_INT,
+                                       'flags'  => FILTER_REQUIRE_SCALAR,
+                                       ),
+               'testarray'    => array(
+                                       'filter' => FILTER_VALIDATE_INT,
+                                       'flags'  => FILTER_REQUIRE_ARRAY,
+                                       )
+
+            );
+
+            $myinputs = filter_input_array(INPUT_POST, $args);
+
+            var_dump($myinputs);
+            echo "\n";
+         </code>
+      </pre>
+
+      Наведений вище приклад виведе:<br>
+      <pre>
+         <code>
+            array(6) { 
+               ["product_id"]=> 
+               string(17) "libgd%3Cscript%3E" 
+               ["component"]=> 
+               array(1) { 
+                 [0]=> 
+                 int(10) 
+               } 
+               ["version"] => 
+               string(6) "2.0.33" 
+               ["doesnotexist"]=> 
+               NULL 
+               ["testscalar"]=> 
+               int(2) 
+               ["testarray"]=> 
+               array(4) { 
+                 [0]=> 
+                 int(2 ) 
+                 [1]=> 
+                 int(23) 
+                 [2]=> 
+                 int(10) 
+                 [3]=> 
+                 int(12) 
+               } 
+             }
+         </code>
+      </pre>
+
+      <h3>filter_id</h3>
+      filter_id — повертає ідентифікатор фільтра, що належить до названого фільтра
+
+      <pre>
+         <code>
+            filter_id(string $name): int|false
+         </code>
+      </pre>
+
+      Параметри<br>
+      name
+      Назва фільтра, який потрібно отримати.<br>
+      Повернуті значення<br>
+      ID фільтра в разі успіху або false якщо фільтр не існує.<br><br>
+
+      <pre>
+         <code>
+            $filters = filter_list();
+
+            foreach($filters as $filter_name) {
+
+               echo $filter_name .": ".filter_id($filter_name) ."< br>";
+
+            }
+         </code>
+      </pre>
+
+      <pre>
+         <ode>
+            Will result in:
+            boolean: 258
+            float: 259
+            validate_regexp: 272
+            validate_url: 273
+            validate_email: 274
+            validate_ip: 275
+            string: 513
+            stripped: 513
+            encoded: 514
+            special_chars: 515
+            unsafe_raw: 516
+            email: 517
+            url: 518
+            number_int: 519
+            number_float: 520
+            magic_quotes: 521
+            callback: 1024
+         </ode>
+      </pre>
+
+      <h3>filter_has_var</h3>
+      filter_has_var — Перевіряє, чи існує змінна вказаного типу
+
+      <pre>
+         <code>
+            filter_has_var(int $input_type, string $var_name): bool
+         </code>
+      </pre>
+
+      Параметри<br>
+      input_type
+      Один із INPUT_GET, INPUT_POST, INPUT_COOKIE, INPUT_SERVERабо INPUT_ENV.
+      <br><br>
+      var_name
+      Ім'я змінної для перевірки.<br>
+
+      Повернуті значення<br>
+      Повертається true в разі успіху чи falseневдачі.
+
+      <pre>
+         <code>
+            $_GET['test'] = 1;
+            echo filter_has_var(INPUT_GET, 'test') ? 'Yes' : 'No';
+         </code>
+      </pre>
+
+
+
+      <h3>FILTER_CALLBACK</h3>
+      FILTER_CALLBACK є одним з фільтрів, який дозволяє застосовувати користувацьку функцію до значення. Це дуже
+      корисний фільтр, коли потрібно змінити значення або виконати певні операції над ним.<br>
+      Для того, щоб використовувати фільтр FILTER_CALLBACK, спочатку потрібно створити користувацьку функцію, яка буде
+      приймати значення та повертати його змінену версію.<br>
+      Ось приклад створення такої функції:<br>
+      <pre>
+         <code>
+            function my_callback($value) {
+               // Виконуємо якісь операції зі значенням
+               $new_value = $value * 2;
+               // Повертаємо змінене значення
+               return $new_value;
+             }
+         </code>
+      </pre>
+
+      Після того, як ми створили користувацьку функцію, ми можемо застосувати фільтр FILTER_CALLBACK до значення. Ось
+      приклад:<br>
+
+      <pre>
+         <code>
+            $value = "10";
+            // Застосовуємо фільтр FILTER_CALLBACK та передаємо йому користувацьку функцію
+            $new_value = filter_var($value, FILTER_CALLBACK, array("options" => "my_callback"));
+
+            echo $new_value; // Виводить 20
+         </code>
+      </pre>
+
+      У цьому прикладі ми застосовуємо фільтр FILTER_CALLBACK до значення "10". Ми передаємо йому параметри у вигляді
+      масиву, де ключ "options" містить ім'я нашої користувацької функції "my_callback".<br><br>
+
+      Після виконання цього коду, змінна $new_value буде містити нове значення "20", яке повертає наша користувацька
+      функція.<br><br>
+
+      У цілому, FILTER_CALLBACK дозволяє вам змінювати значення, виконувати операції з ним та вирішувати складні задачі
+      обробки даних у вашому PHP-коді.<br><br>
+
+
+      <h3>FILTER_VALIDATE_DOMAIN</h3>
+      FILTER_VALIDATE_DOMAIN - це фільтр PHP, який дозволяє перевірити чи є доменна назва валідною. Цей фільтр можна
+      використовувати для перевірки введених користувачем доменних імен перед їх використанням у програмі.<br>
+
+      Ось приклад використання фільтра FILTER_VALIDATE_DOMAIN:<br>
+
+      <pre>
+         <code>
+            $domain = "example.com";
+
+            if (filter_var($domain, FILTER_VALIDATE_DOMAIN)) {
+            echo "Доменна назва '$domain' валідна.";
+            } else {
+            echo "Доменна назва '$domain' не валідна.";
+            }
+         </code>
+      </pre>
+
+      У цьому прикладі ми використовуємо фільтр FILTER_VALIDATE_DOMAIN для перевірки чи є значення змінної $domain
+      валідною доменною назвою. Якщо доменна назва є валідною, програма виведе повідомлення "Доменна назва '$domain'
+      валідна.", якщо ні - виведе повідомлення "Доменна назва '$domain' не валідна.".<br><br>
+
+      Важливо зазначити, що FILTER_VALIDATE_DOMAIN не перевіряє, чи є доменна назва існуючою або доступною для
+      реєстрації. Він лише перевіряє, чи є доменна назва синтаксично валідною. Наприклад, доменна назва "example.com" є
+      валідною, але необов'язково доступною для реєстрації.<br><br>
+
+      Також важливо зазначити, що FILTER_VALIDATE_DOMAIN не підтримує IDN-доменні імена (доменні імена, які містять
+      символи, що не є ASCII). Для перевірки IDN-доменних імен можна використовувати функцію idn_to_ascii().<br><br>
+
+      У цілому, FILTER_VALIDATE_DOMAIN дозволяє перевірити чи є доменна назва валідною перед її використанням у
+      програмі. Використання цього фільтру може допомогти у підвищенні безпеки та якості вашого PHP-коду.<br><br>
+
+      <h3>FILTER_VALIDATE_IP</h3>
+      FILTER_VALIDATE_IP - це фільтр PHP, який дозволяє перевірити чи є IP-адреса валідною. Цей фільтр можна
+      використовувати для перевірки введених користувачем IP-адрес перед їх використанням у програмі.<br><br>
+
+      Ось приклад використання фільтра FILTER_VALIDATE_IP:<br><br>
+      <pre>
+         <code>
+            if (filter_var($ip, FILTER_VALIDATE_IP)) {
+               echo "IP-адреса '$ip' валідна.";
+             } else {
+               echo "IP-адреса '$ip' не валідна.";
+             }
+         </code>
+      </pre>
+
+      У цьому прикладі ми використовуємо фільтр FILTER_VALIDATE_IP для перевірки чи є значення змінної $ip валідною
+      IP-адресою. Якщо IP-адреса є валідною, програма виведе повідомлення "IP-адреса '$ip' валідна.", якщо ні - виведе
+      повідомлення "IP-адреса '$ip' не валідна.".<br><br>
+
+      Важливо зазначити, що FILTER_VALIDATE_IP підтримує як IPv4, так і IPv6 адреси. Якщо IP-адреса є валідною IPv4
+      адресою, то фільтр поверне значення змінної $ip, а якщо IP-адреса є валідною IPv6 адресою, то фільтр поверне
+      значення вигляду "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx", де "x" - шістнадцяткові цифри.<br><br>
+
+      Також важливо зазначити, що FILTER_VALIDATE_IP не перевіряє, чи існує IP-адреса у мережі. Він лише перевіряє, чи є
+      IP-адреса синтаксично валідною. Наприклад, IP-адреса "192.168.1.1" є валідною, але необов'язково доступною в
+      мережі.<br><br>
+
+      У цілому, FILTER_VALIDATE_IP дозволяє перевірити чи є IP-адреса валідною перед її використанням у програмі.
+      Використання цього фільтру може допомогти у підвищенні безпеки та якості вашого PHP-коду.<br><br>
+
+
+      <h3>FILTER_VALIDATE_MAC</h3>
+      FILTER_VALIDATE_MAC - це фільтр PHP, який дозволяє перевірити чи є MAC-адреса валідною. MAC-адрес (Media Access
+      Control address) - це унікальний ідентифікатор мережевої картки, який використовується для ідентифікації пристроїв
+      у мережі.<br><br>
+
+      Ось приклад використання фільтра FILTER_VALIDATE_MAC:<br><br>
+      <pre>
+         <code>
+            $mac = "00:11:22:33:44:55";
+
+            if (filter_var($mac, FILTER_VALIDATE_MAC)) {
+            echo "MAC-адреса '$mac' валідна.";
+            } else {
+            echo "MAC-адреса '$mac' не валідна.";
+            }
+         </code>
+      </pre>
+      У цьому прикладі ми використовуємо фільтр FILTER_VALIDATE_MAC для перевірки чи є значення змінної $mac валідною
+      MAC-адресою. Якщо MAC-адреса є валідною, програма виведе повідомлення "MAC-адреса '$mac' валідна.", якщо ні -
+      виведе повідомлення "MAC-адреса '$mac' не валідна.".<br><br>
+
+      Важливо зазначити, що FILTER_VALIDATE_MAC перевіряє лише формат MAC-адреси, а не її фактичну наявність у мережі.
+      Формат MAC-адреси повинен бути вигляду "xx:xx:xx:xx:xx:xx", де "x" - шістнадцяткові цифри. Він також може приймати
+      значення, розділені символами "-".<br><br>
+
+      Також важливо зазначити, що FILTER_VALIDATE_MAC підтримує лише 48-бітові MAC-адреси, які є стандартом Ethernet.
+      Інші типи мережі можуть використовувати інші формати MAC-адрес.<br><br>
+
+      У цілому, FILTER_VALIDATE_MAC дозволяє перевірити чи є MAC-адреса валідною перед її використанням у програмі.
+      Використання цього фільтру може допомогти у підвищенні безпеки та якості вашого PHP-коду.<br><br>
+
+
+      <h3>FILTER_VALIDATE_REGEXP</h3>
+      FILTER_VALIDATE_REGEXP - це фільтр PHP, який дозволяє перевірити чи відповідає значення змінної заданому
+      регулярному виразу.<br>
+
+      Ось приклад використання фільтра FILTER_VALIDATE_REGEXP:<br>
+
+      <pre>
+         <code>
+            $email = "example@example.com";
+
+            if (filter_var($email, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/")))) {
+            echo "Email '$email' валідний.";
+            } else {
+            echo "Email '$email' не валідний.";
+            }
+         </code>
+      </pre>
+
+      У цьому прикладі ми використовуємо фільтр FILTER_VALIDATE_REGEXP для перевірки чи є значення змінної $email
+      валідним електронним адресом. Ми задаємо регулярний вираз за допомогою параметра "options", який містить масив з
+      ключем "regexp" і значенням, що відповідає регулярному виразу для перевірки електронної адреси. Якщо електронна
+      адреса є валідною, програма виведе повідомлення "Email '$email' валідний.", якщо ні - виведе повідомлення "Email
+      '$email' не валідний.".<br><br>
+
+      Важливо зазначити, що FILTER_VALIDATE_REGEXP перевіряє значення змінної лише на відповідність регулярному виразу.
+      Цей фільтр не перевіряє чи існує електронна адреса насправді. Тому, використання цього фільтру не гарантує безпеки
+      вашої програми.<br><br>
+
+
+      <h3>FILTER_VALIDATE_URL</h3>
+
+      FILTER_VALIDATE_URL - це фільтр PHP, який дозволяє перевірити чи є значення змінної валідною URL-адресою.<br><br>
+
+      Ось приклад використання фільтра FILTER_VALIDATE_URL:<br><br>
+
+      <pre>
+         <code>
+            $url = "https://www.example.com";
+
+            if (filter_var($url, FILTER_VALIDATE_URL)) {
+            echo "URL '$url' валідний.";
+            } else {
+            echo "URL '$url' не валідний.";
+            }
+         </code>
+      </pre>
+
+      У цьому прикладі ми використовуємо фільтр FILTER_VALIDATE_URL для перевірки чи є значення змінної $url валідною
+      URL-адресою. Якщо URL-адреса є валідною, програма виведе повідомлення "URL '$url' валідний.", якщо ні - виведе
+      повідомлення "URL '$url' не валідний.".<br><br>
+
+      Важливо зазначити, що FILTER_VALIDATE_URL не гарантує, що URL-адреса насправді існує або є доступною. Цей фільтр
+      перевіряє лише формат URL-адреси на валідність. Тому, використання цього фільтру не гарантує безпеки вашої
+      програми.<br><br>
+
+      У цілому, FILTER_VALIDATE_URL дозволяє перевірити чи є значення змінної валідною URL-адресою. Використання цього
+      фільтру може допомогти у підвищенні безпеки та якості вашої програми.<br><br>
+
+      Також, варто зазначити, що FILTER_VALIDATE_URL підтримує різні схеми URL, такі як http, https, ftp, file та
+      інші.<br><br>
+
+
+      <h3>FILTER_SANITIZE_URL</h3>
+      FILTER_SANITIZE_URL - це фільтр PHP, який призначений для видалення небезпечних символів з URL-адреси.<br><br>
+
+      Ось приклад використання фільтра FILTER_SANITIZE_URL:<br><br>
+      <pre>
+         <code>
+            $url = "https://www.example.com/index.php?id=1&name=John Doe";
+
+            $sanitized_url = filter_var($url, FILTER_SANITIZE_URL);
+
+            echo "Оригінальний URL: $url<br>";
+            echo "Очищений URL: $sanitized_url";
+         </code>
+      </pre>
+
+      У цьому прикладі ми використовуємо фільтр FILTER_SANITIZE_URL для видалення небезпечних символів з URL-адреси,
+      зберігаючи лише допустимі символи. Потім, ми виводимо на екран оригінальний URL та очищений URL.<br>
+
+      В результаті виконання цієї програми, ми отримаємо наступний результат:<br>
+
+      <pre>
+         <code>
+            Оригінальний URL: https://www.example.com/index.php?id=1&name=John Doe
+            Очищений URL: https://www.example.com/index.php?id=1&name=John%20Doe
+         </code>
+      </pre>
+
+      Як ми можемо побачити, фільтр FILTER_SANITIZE_URL видалив пробіли з URL-адреси та замінив їх на "%20", щоб зробити
+      URL-адресу валідною.<br><br>
+
+      Важливо зазначити, що фільтр FILTER_SANITIZE_URL не гарантує безпеки вашої програми. Він призначений лише для
+      видалення небезпечних символів з URL-адреси. Тому, перед використанням очищеної URL-адреси важливо перевірити її
+      на валідність за допомогою фільтра FILTER_VALIDATE_URL.<br><br>
+
+      У цілому, FILTER_SANITIZE_URL дозволяє видалити небезпечні символи з URL-адреси, що може допомогти у підвищенні
+      безпеки та якості вашої програми.<br><br>
+
+      <h3>Попередньо визначені константи</h3>
+      <div id="filter.constants" class="appendix">
+         <h1>
+            <font style="vertical-align: inherit;">
+               <font style="vertical-align: inherit;">Попередньо визначені константи </font>
+            </font><a class="genanchor" href="#filter.constants">
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">¶</font>
+               </font>
+            </a>
+         </h1>
+
+         <p class="simpara">
+            <font style="vertical-align: inherit;">
+               <font style="vertical-align: inherit;">
+                  Наведені нижче константи визначені цим розширенням і будуть доступні лише тоді, коли розширення
+                  скомпільоване в PHP або динамічно завантажується під час виконання.
+               </font>
+            </font>
+         </p>
+         <dl>
+
+            <dt id="constant.input-post">
+               <strong><code>INPUT_POST</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <a href="reserved.variables.post.php" class="link">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Змінні POST</font>
+                     </font>
+                  </a>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> .
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.input-get">
+               <strong><code>INPUT_GET</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <a href="reserved.variables.get.php" class="link">
+                     <font style="vertical-align: inherit;"></font>
+                  </a>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">Отримати змінні
+                     </font><a href="reserved.variables.get.php" class="link">
+                        <font style="vertical-align: inherit;">GET .</font>
+                     </a>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.input-cookie">
+               <strong><code>INPUT_COOKIE</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <a href="reserved.variables.cookies.php" class="link">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Змінні COOKIE</font>
+                     </font>
+                  </a>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> .
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.input-env">
+               <strong><code>INPUT_ENV</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <a href="reserved.variables.environment.php" class="link">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Змінні ENV</font>
+                     </font>
+                  </a>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> .
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.input-server">
+               <strong><code>INPUT_SERVER</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <a href="reserved.variables.server.php" class="link">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">СЕРВЕРНІ</font>
+                     </font>
+                  </a>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> змінні.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.input-session">
+               <strong><code>INPUT_SESSION</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <a href="reserved.variables.session.php" class="link">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Змінні SESSION</font>
+                     </font>
+                  </a>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> . </font>
+                     <font style="vertical-align: inherit;">(ще не реалізовано)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.input-request">
+               <strong><code>INPUT_REQUEST</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <a href="reserved.variables.request.php" class="link">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">ЗМІННІ ЗАПИТУ</font>
+                     </font>
+                  </a>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> . </font>
+                     <font style="vertical-align: inherit;">(ще не реалізовано)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-none">
+               <strong><code>FILTER_FLAG_NONE</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Без прапорів.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-require-scalar">
+               <strong><code>FILTER_REQUIRE_SCALAR</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Прапорець, який використовується для потреби скаляра як вхідних даних
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-require-array">
+               <strong><code>FILTER_REQUIRE_ARRAY</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Вимагати масив як вхідні дані.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-force-array">
+               <strong><code>FILTER_FORCE_ARRAY</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Завжди повертає масив.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-null-on-failure">
+               <strong><code>FILTER_NULL_ON_FAILURE</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        У разі помилки використовуйте NULL замість FALSE.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-int">
+               <strong><code>FILTER_VALIDATE_INT</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        ID фільтра "int".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-bool">
+               <strong><code>FILTER_VALIDATE_BOOL</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Псевдонім </font>
+                  </font><strong><code>FILTER_VALIDATE_BOOLEAN</code></strong>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-boolean">
+               <strong><code>FILTER_VALIDATE_BOOLEAN</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор "логічного" фільтра.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-float">
+               <strong><code>FILTER_VALIDATE_FLOAT</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        ID фільтра "float".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-regexp">
+               <strong><code>FILTER_VALIDATE_REGEXP</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "validate_regexp".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-url">
+               <strong><code>FILTER_VALIDATE_URL</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "validate_url".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-domain">
+               <strong><code>FILTER_VALIDATE_DOMAIN</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "validate_domain". </font>
+                     <font style="vertical-align: inherit;">(Доступно з PHP 7.0.0)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-email">
+               <strong><code>FILTER_VALIDATE_EMAIL</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "validate_email".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-ip">
+               <strong><code>FILTER_VALIDATE_IP</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "validate_ip".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-validate-mac">
+               <strong><code>FILTER_VALIDATE_MAC</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "validate_mac_address".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-default">
+               <strong><code>FILTER_DEFAULT</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра за замовчуванням ("unsafe_raw"). </font>
+                     <font style="vertical-align: inherit;">Це еквівалентно
+                     </font>
+                  </font><strong><code>FILTER_UNSAFE_RAW</code></strong>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-unsafe-raw">
+               <strong><code>FILTER_UNSAFE_RAW</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "unsafe_raw".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-string">
+               <strong><code>FILTER_SANITIZE_STRING</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        ID фільтра "рядок". </font>
+                     <font style="vertical-align: inherit;">( </font>
+                  </font><em class="emphasis">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Застаріло</font>
+                     </font>
+                  </em>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> з PHP 8.1.0, замість цього використовуйте </font>
+                  </font><span class="function"><a href="function.htmlspecialchars.php" class="function">
+                        <font style="vertical-align: inherit;">
+                           <font style="vertical-align: inherit;">htmlspecialchars()</font>
+                        </font>
+                     </a></span>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> .)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-stripped">
+               <strong><code>FILTER_SANITIZE_STRIPPED</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор "знятого" фільтра. </font>
+                     <font style="vertical-align: inherit;">( </font>
+                  </font><em class="emphasis">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Застаріло</font>
+                     </font>
+                  </em>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> з PHP 8.1.0, замість цього використовуйте </font>
+                  </font><span class="function"><a href="function.htmlspecialchars.php" class="function">
+                        <font style="vertical-align: inherit;">
+                           <font style="vertical-align: inherit;">htmlspecialchars()</font>
+                        </font>
+                     </a></span>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> .)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-encoded">
+               <strong><code>FILTER_SANITIZE_ENCODED</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор "закодованого" фільтра.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-special-chars">
+               <strong><code>FILTER_SANITIZE_SPECIAL_CHARS</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "special_chars".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-email">
+               <strong><code>FILTER_SANITIZE_EMAIL</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        ID фільтра "електронна пошта".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-url">
+               <strong><code>FILTER_SANITIZE_URL</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "url".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-number-int">
+               <strong><code>FILTER_SANITIZE_NUMBER_INT</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "number_int".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-number-float">
+               <strong><code>FILTER_SANITIZE_NUMBER_FLOAT</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "number_float".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-magic-quotes">
+               <strong><code>FILTER_SANITIZE_MAGIC_QUOTES</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "magic_quotes". </font>
+                     <font style="vertical-align: inherit;">( </font>
+                  </font><em class="emphasis">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">ЗАСТАРЕЛО</font>
+                     </font>
+                  </em>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> з PHP 7.3.0 і
+                     </font>
+                  </font><em class="emphasis">
+                     <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">ВИЛУЧЕНО</font>
+                     </font>
+                  </em>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;"> з PHP 8.0.0, використовуйте </font>
+                  </font><strong><code>FILTER_SANITIZE_ADD_SLASHES</code></strong>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">натомість.)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-sanitize-add-slashes">
+               <strong><code>FILTER_SANITIZE_ADD_SLASHES</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Ідентифікатор фільтра "add_slashes". </font>
+                     <font style="vertical-align: inherit;">(Доступно з PHP 7.3.0)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-callback">
+               <strong><code>FILTER_CALLBACK</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        ID фільтра "зворотний дзвінок".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-allow-octal">
+               <strong><code>FILTER_FLAG_ALLOW_OCTAL</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Дозволити вісімкове позначення ( </font>
+                  </font><code class="literal">0[0-7]+</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">) у фільтрі "int".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-allow-hex">
+               <strong><code>FILTER_FLAG_ALLOW_HEX</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Дозволити шістнадцяткове позначення ( </font>
+                  </font><code class="literal">0x[0-9a-fA-F]+</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">) у фільтрі "int".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-strip-low">
+               <strong><code>FILTER_FLAG_STRIP_LOW</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Видаляйте символи зі значенням ASCII менше 32.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-strip-high">
+               <strong><code>FILTER_FLAG_STRIP_HIGH</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Видаляйте символи зі значенням ASCII більше 127.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-strip-backtick">
+               <strong><code>FILTER_FLAG_STRIP_BACKTICK</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Видаляє зворотні символи.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-encode-low">
+               <strong><code>FILTER_FLAG_ENCODE_LOW</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Кодуйте символи зі значенням ASCII менше 32.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-encode-high">
+               <strong><code>FILTER_FLAG_ENCODE_HIGH</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Кодуйте символи зі значенням ASCII більше 127.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-encode-amp">
+               <strong><code>FILTER_FLAG_ENCODE_AMP</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Закодувати </font>
+                  </font><code class="literal">&amp;</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-no-encode-quotes">
+               <strong><code>FILTER_FLAG_NO_ENCODE_QUOTES</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Не кодуйте </font>
+                  </font><code class="literal">'</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">і </font>
+                  </font><code class="literal">"</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">.
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-empty-string-null">
+               <strong><code>FILTER_FLAG_EMPTY_STRING_NULL</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        (Поки що без користі.)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-allow-fraction">
+               <strong><code>FILTER_FLAG_ALLOW_FRACTION</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Дозволити дробову частину у фільтрі "number_float".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-allow-thousand">
+               <strong><code>FILTER_FLAG_ALLOW_THOUSAND</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Дозволити роздільник тисяч ( </font>
+                  </font><code class="literal">,</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">) у фільтрі "number_float".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-allow-scientific">
+               <strong><code>FILTER_FLAG_ALLOW_SCIENTIFIC</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Дозволити наукову нотацію ( </font>
+                  </font><code class="literal">e</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">, </font>
+                  </font><code class="literal">E</code>
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">) у фільтрі "number_float".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-path-required">
+               <strong><code>FILTER_FLAG_PATH_REQUIRED</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Вимагати шлях у фільтрі "validate_url".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-query-required">
+               <strong><code>FILTER_FLAG_QUERY_REQUIRED</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Вимагати запит у фільтрі "validate_url".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-scheme-required">
+               <strong><code>FILTER_FLAG_SCHEME_REQUIRED</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Вимагати схему у фільтрі "validate_url". </font>
+                     <font style="vertical-align: inherit;">(Застаріло з PHP 7.3.0 і видалено з PHP 8.0.0, як це вже
+                        передбачено у фільтрі.)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-host-required">
+               <strong><code>FILTER_FLAG_HOST_REQUIRED</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Вимагати хост у фільтрі "validate_url". </font>
+                     <font style="vertical-align: inherit;">(Застаріло з PHP 7.3.0 і видалено з PHP 8.0.0, як це вже
+                        передбачено у фільтрі.)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-hostname">
+               <strong><code>FILTER_FLAG_HOSTNAME</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Вимагайте, щоб імена хостів починалися з буквено-цифрового символу та містили лише
+                        буквено-цифрові символи або дефіси. </font>
+                     <font style="vertical-align: inherit;">(Доступно з PHP 7.0.0)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-ipv4">
+               <strong><code>FILTER_FLAG_IPV4</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Дозволити лише адресу IPv4 у фільтрі "validate_ip".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-ipv6">
+               <strong><code>FILTER_FLAG_IPV6</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Дозволити лише адресу IPv6 у фільтрі "validate_ip".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-no-res-range">
+               <strong><code>FILTER_FLAG_NO_RES_RANGE</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Заборонити зарезервовані адреси у фільтрі "validate_ip".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-no-priv-range">
+               <strong><code>FILTER_FLAG_NO_PRIV_RANGE</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Заборонити приватні адреси у фільтрі "validate_ip".
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+
+            <dt id="constant.filter-flag-email-unicode">
+               <strong><code>FILTER_FLAG_EMAIL_UNICODE</code></strong>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">
+                     ( </font>
+               </font><span class="type">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">int</font>
+                  </font>
+               </span>
+               <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"> )
+                  </font>
+               </font>
+            </dt>
+
+            <dd>
+
+               <span class="simpara">
+                  <font style="vertical-align: inherit;">
+                     <font style="vertical-align: inherit;">
+                        Приймає символи Unicode у локальній частині фільтра "validate_email". </font>
+                     <font style="vertical-align: inherit;">(Доступно з PHP 7.1.0)
+                     </font>
+                  </font>
+               </span>
+            </dd>
+
+
+         </dl>
+
+      </div>
+
+
+      <br>Іноді необхідно
+      перевірити дані користувача, наприклад, чи є вони числом. Для цього можна скористатися таким рішенням:
+      <pre><code>if (!is_int($_GET['id']))
+                        exit('Ідентифікатор має бути числом');
+                     </code></pre>Цей процес явної
+      перевірки значення відповідність називається перевіркою (<i>validate</i>). Як правило, перевірці дані піддаються
+      на етапі введення їх користувачем, наприклад через НТМL-форму, а фільтрації - при виведенні на
+      сторінку.<br><br>Для фільтрації змінних за допомогою певного фільтра існує функція <a
+         href="https://www.php.net/manual/en/function.filter-var" target="_blank">Filter_var</a>, яка отримує значення
+      та фільтрує його відповідно до правила. Якщо змінна успішно проходить перевірку, функція повертає її як результат,
+      інакше повертається <i>False</i>.<br><br>Наведемо приклад перевірки двох електронних адрес:
+      <pre><code>&lt;?php<br>$correct = 'example@gmail.com';<br>$wrong   = 'example@//gmail.com';<br>echo 'Правильна = '.filter_var($correct, FILTER_VALIDATE_EMAIL);<br>echo 'Неправильна = '.filter_var($wrong, FILTER_VALIDATE_EMAIL);</code></pre>
+      Потрібно обережно використовувати функцію <i>Filter_var</i>, оскільки вона не коректно працює з кириличними
+      доменними іменами.<br><br>Результатом роботи прикладу буде успішний вивід значення коректної адреси та
+      <i>False</i> для адреси, з двома <i>//</i> слешами в доменному імені.<br><br>Функції <i>Filter_var</i> в параметрі
+      була передана константа <i>FILTER_VALIDATE_EMAIL</i>, відповідальна за перевірку електронної адреси. Усі
+      константи, які може приймати функція <i>Filter_var</i> – парні: одна відповідає за перевірку, інша – за
+      фільтрацію. Щоб видалити всі небажані символи з електронної адреси, можна скористатися константою
+      <i>FILTER_SANITIZE_EMAIL</i>:
+      <pre><code>&lt;?php<br>echo filter_var($correct, FILTER_SANITIZE_EMAIL);</code></pre>Результатом роботи скрипта
+      буде видалення всіх некоректних символів з електронної адреси.<br><br>Електронна адреса - далеко не єдиний тип
+      даних, які може перевіряти та фільтрувати описувана функція. Також можна перевіряти значення типу <i>Boolean</i>,
+      <i>Float</i>, <i>Int</i>, IP адреси, <i>URL</i> та інші дані.<br><br>Фільтри очищення даних (<i>sanitize</i>)
+      використовуються при виведенні даних на сторінку та здійснюють операції видалення певних символів та тегів,
+      кодування рядка у формат <i>URL</i>, екранування НТМL-символів та інших операціях.<br><br>Функція
+      <i>Filter_var</i> допускає створення своїх механізмів перевірки. Для активації цього режиму як фільтр слід
+      використовувати <i>FILTER_CALLBACK</i>. У параметрах <i>Options</i> слід передати ім’я функції, яка виконуватиме
+      фільтрацію. Наведемо приклад, який очищає рядок від НТМL-тегів за допомогою функції <a
+         href="https://www.php.net/manual/en/function.strip-tags" target="_blank">Strip_tags</a>:
+      <pre><code>&lt;?php<br>function filterTags($value) {<br>    return strip_tags($value);<br>}<br>$str = '&lt;h1&gt;Заголовок&lt;/h1&gt;<br>&lt;p&gt;Перший параграф&lt;/p&gt;';<br>echo filter_var($str, FILTER_CALLBACK, ['options' =&gt; 'filterTags']);</code></pre>
+      Результатом роботи програми будуть рядки, в яких вилучено всі теги.<br><br>Необов’язково визначати окрему функцію
+      зворотного виклику, особливо якщо вона більше ніде не використовуватиметься. У прикладі вище, замість функції
+      зворотного виклику <i>FilterTags</i> можна скористатися анонімною функцією:
+      <pre><code>&lt;?php<br>function filterTags($value) {<br>    return strip_tags($value);<br>}<br>$str = '&lt;h1&gt;Заголовок&lt;/h1&gt;<br>&lt;p&gt;Перший параграф&lt;/p&gt;';<br>echo filter_var($str, FILTER_CALLBACK,<br>    [<br>        'options' =&gt; function ($value) {<br>                       return strip_tags($value);<br>                     }<br>    ]<br>);<br></code></pre>
+      <h2>Фільтрування зовнішніх даних</h2>Зовнішні дані приходять у скрипт через один із суперглобальних масивів:
+      <i>$_GET</i> - дані, що надійшли через метод <i>GET</i>; <i>$_POST</i> – дані, що надійшли через метод
+      <i>POST</i>; <i>$_COOKIE</i> – дані, що надійшли з <i>COOKIE</i>; <i>$_SERVER</i> - дані, встановлені
+      Wеb-сервером; <i>$_ENV</i> - змінні оточення, встановлені процесом Wеb-сервером. Крім цього списку доводиться мати
+      справу з додатковими суперглобальними масивами: <i>$_FILES</i> - завантажені на сервер файли; <i>$_SESSION</i> –
+      дані сесії; <i>$_REQUEST</i> - об’єднання перелічених вище даних.<br><br>Для фільтрації даних з суперглобальних
+      масивів призначена спеціальна функція <a href="https://www.php.net/manual/en/function.filter-input"
+         target="_blank">Filter_input</a>, яка приймає у параметрах одну з констант <i>INPUT_GET</i>, <i>INPUT_POST</i>,
+      <i>INPUT_COOKIE</i>, <i>INPUT_SERVER</i>, <i>INPUT_ENV</i>, відповідних суперглобальним масивам, ключ параметра в
+      суперглобальному масиві, який потрібно або перевірити на відповідність умовам, або фільтрувати і фільтр. Також
+      можна передати асоціативний масив з додатковими параметрами, де вони необхідні.<br><br>
+   </div>
+
+   <br>
+   <br>
+
+   <div class="task">
+      <br>
+      Завдання:<br>
+      1) Повторити пройдений матеріал<br>
+      2) Зробити два файла. В одному буде включена строга типізація данних , а в другому ні. В двох файлах створити
+      функцію , яка буде
+      приймати цілі числа. Викликати створену функцію і передати в неї ціле число і число з плаваючою точкою. Подивитись
+      на результат на двох сторінках.<br>
+      3) Завдання завантажити на гіт.
+      <br>
+      <br>
+   </div>
+
+   <!-- <script>hljs.highlightAll();</script> -->
+</body>
+
+</html>
