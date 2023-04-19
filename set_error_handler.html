@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Стандарти, стилі та правила оформлення коду PHP</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <style>
+      .hljs {
+         display: block;
+         overflow-x: auto;
+         padding: 0.5em;
+         background: #002b36;
+         color: #839496;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="post-content">
+      set_error_handler() - це функція PHP, яка дозволяє встановити користувацьку функцію-обробник для обробки помилок,
+      що виникають в процесі виконання скрипта. Функція-обробник викликається автоматично при виникненні помилки і
+      дозволяє вивести повідомлення про помилку або виконати іншу дію для її виправлення.<br>
+
+      Синтаксис функції set_error_handler() такий:
+
+      <pre>
+         <code>
+            set_error_handler ( callable $error_handler [, int $error_types = E_ALL | E_STRICT ] ) : mixed
+         </code>
+      </pre>
+
+      Перший параметр - це ім'я користувацької функції-обробника, яка буде викликана при виникненні помилки. Ця функція
+      повинна мати чотири параметри: $errno (код помилки), $errstr (текстовий опис помилки), $errfile (назва файлу, в
+      якому сталася помилка) та $errline (номер рядка в файлі, де сталася помилка).<br>
+      Другий параметр визначає типи помилок, при яких буде викликана функція-обробник. За замовчуванням встановлено
+      E_ALL | E_STRICT, що означає, що будуть оброблятися всі типи помилок.<br>
+      Приклад використання функції set_error_handler():<br>
+      <pre>
+         <code>
+            function customErrorHandler($errno, $errstr, $errfile, $errline) {
+               echo "Error: [$errno] $errstr - $errfile:$errline";
+           }
+           
+           set_error_handler("customErrorHandler");
+           
+           // Викликати неіснуючу функцію, щоб викликати помилку
+           myUndefinedFunction();
+         </code>
+      </pre>
+
+      У цьому прикладі ми встановлюємо функцію customErrorHandler() як функцію-обробник помилок за допомогою
+      set_error_handler(). При виклику неіснуючої функції myUndefinedFunction() буде викликана функція-обробник, яка
+      виведе повідомлення про помилку.<br>
+      Важливо зауважити, що функція-обробник повинна бути визначена до виникнення помилки. Якщо функція-обробник
+      визначена після виникнення помилки, то вона не буде викликана. Тому, рекомерендується визначати функцію-обробник
+      на початку скрипта перед виконанням будь-яких інших операцій.<br>
+      set_error_handler() також повертає попередню функцію-обробник помилок, якщо така існує. Це дозволяє зберегти
+      попередню поведінку обробки помилок, якщо потрібно.<br>
+
+      Наприклад, у наступному прикладі ми спочатку зберігаємо попередню функцію-обробник помилок, а потім встановлюємо
+      свою функцію-обробник:
+
+      <pre>
+      <code>
+      function customErrorHandler($errno, $errstr, $errfile, $errline) {
+         echo "Error: [$errno] $errstr - $errfile:$errline";
+      }
+      
+      $previousErrorHandler = set_error_handler("customErrorHandler");
+      
+      // Викликати неіснуючу функцію, щоб викликати помилку
+      myUndefinedFunction();
+      
+      // Відновлюємо попередню функцію-обробник
+      set_error_handler($previousErrorHandler);
+      </code>
+   </pre>
+
+      У цьому прикладі ми зберігаємо попередню функцію-обробник помилок у змінну $previousErrorHandler, а потім
+      встановлюємо свою функцію-обробник за допомогою set_error_handler(). При виклику неіснуючої функції
+      myUndefinedFunction() буде викликана функція-обробник customErrorHandler(). Після цього ми можемо повернути
+      попередню функцію-обробник за допомогою set_error_handler($previousErrorHandler).<br>
+
+      Таким чином, функція set_error_handler() дозволяє встановлювати користувацьку функцію-обробник для обробки помилок
+      в PHP. Це може бути корисним для виведення повідомлень про помилки, логування помилок або для іншої дії для
+      виправлення помилок.
+
+   </div>
+
+   <br>
+   <br>
+
+   <!-- <div class="task">
+      <br>
+      Завдання:<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div> -->
+
+   <!-- <script>hljs.highlightAll();</script> -->
+</body>
+
+</html>
