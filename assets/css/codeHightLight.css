@@ -1,0 +1,25 @@
+/* code hight light */
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #002b36;
+    background-color: #01252e;
+    color: #839496;
+ }
+
+ .hljs-number {
+    color: #fff;
+ }
+
+ .hljs-title {
+    color: #fff;
+ }
+
+ .hljs-variable {
+    color: green;
+ }
+
+ .hljs-string {
+    color: #fff;
+ }
