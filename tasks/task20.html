@@ -1,0 +1,119 @@
+https://php.apartner.pro/Urok-15.html
+
+Задача 1: Перевірка наявності параметру запиту
+
+Напишіть функцію, яка перевіряє наявність параметру запиту з використанням функції filter_has_var() в PHP. Функція повинна приймати два параметри: $name - назва параметру та $type - тип параметру (наприклад, INPUT_GET або INPUT_POST). Функція повинна повертати true, якщо параметр присутній в запиті та false, якщо його немає.
+
+Задача 2: Фільтрація параметрів запиту
+
+Напишіть функцію, яка фільтрує параметри запиту з використанням функції filter_has_var() в PHP. Функція повинна приймати три параметри: $name - назва параметру, $type - тип параметру та $filter - тип фільтра. Функція повинна повертати значення параметру після застосування відповідного фільтра (наприклад, FILTER_SANITIZE_STRING для фільтрації рядків).
+
+Задача 3: Фільтрація масиву з використанням FILTER_CALLBACK
+
+Напишіть функцію, яка фільтрує масив з використанням фільтра FILTER_CALLBACK в PHP. Функція повинна приймати два параметри: масив $array та функцію $callback, яка буде застосовуватися до кожного елемента масиву. Функція повинна повертати новий масив, в якому кожен елемент буде результатом виклику функції $callback.
+
+
+Задача 4: Фільтрація рядка з використанням FILTER_CALLBACK
+
+Напишіть функцію, яка фільтрує рядок з використанням фільтра FILTER_CALLBACK в PHP. Функція повинна приймати два параметри: рядок $string та функцію $callback, яка буде застосовуватися до рядка. Функція повинна повертати новий рядок, в якому кожний символ буде результатом виклику функції $callback.
+
+
+Задача 5: перевірка домену з використанням фільтра FILTER_VALIDATE_DOMAIN
+
+Напишіть скрипт на PHP, який приймає доменне ім'я від користувача і перевіряє його на правильність використовуючи фільтр FILTER_VALIDATE_DOMAIN.
+
+
+Задача 6:
+перевірка IP-адреси з використанням фільтра FILTER_VALIDATE_IP
+
+Напишіть скрипт на PHP, який перевіряє правильність введеної IP-адреси за допомогою фільтра FILTER_VALIDATE_IP.
+
+Задача 7
+визначення типу IP-адреси з використанням фільтра FILTER_VALIDATE_IP
+
+Напишіть скрипт на PHP, який перевіряє тип IP-адреси (IPv4 або IPv6) за допомогою фільтра FILTER_VALIDATE_IP.
+
+
+
+++++++++++++
+
+Задача 1:
+
+function check_request_param($name, $type) {
+    if (filter_has_var($type, $name)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Перевірити, чи є параметр 'id' в запиті GET
+if (check_request_param('id', INPUT_GET)) {
+    echo "Параметр 'id' знайдено в запиті GET.";
+} else {
+    echo "Параметр 'id' не знайдено в запиті GET.";
+}
+
+
+Задача 2:
+function filter_request_param($name, $type, $filter) {
+    $value = filter_input($type, $name, $filter);
+    return $value;
+}
+
+// Фільтрувати параметр 'name' типу INPUT_POST з фільтром FILTER_SANITIZE_STRING
+$name = filter_request_param('name', INPUT_POST, FILTER_SANITIZE_STRING);
+
+
+Задача 3:
+
+function filter_array($array, $callback) {
+    return filter_var_array($array, FILTER_CALLBACK, ['options' => $callback]);
+}
+
+// Фільтрувати масив $my_array з функцією $my_callback
+$filtered_array = filter_array($my_array, $my_callback);
+
+Задача 4:
+
+function filter_string_callback($string, $callback) {
+    $filtered_string = filter_var($string, FILTER_CALLBACK, array('options' => $callback));
+    return $filtered_string;
+}
+
+$original_string = "Hello, World!";
+$filtered_string = filter_string_callback($original_string, 'strtolower');
+echo $filtered_string; // виведе "hello, world!"
+
+Задача 5:
+
+$domain = $_POST['domain'];
+if (filter_var($domain, FILTER_VALIDATE_DOMAIN)) {
+    echo "Домен {$domain} є правильним.";
+} else {
+    echo "Домен {$domain} не є правильним.";
+}
+
+Задача 6
+
+$ip = $_POST['ip'];
+if (filter_var($ip, FILTER_VALIDATE_IP)) {
+    echo "IP-адреса {$ip} є правильною.";
+} else {
+    echo "IP-адреса {$ip} не є правильною.";
+}
+
+Задача 7
+
+$ip = $_POST['ip'];
+if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+    echo "IP-адреса {$ip} є IPv4.";
+} elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+    echo "IP-адреса {$ip} є IPv6.";
+} else {
+    echo "IP-адреса {$ip} не є ні IPv4, ні IPv6.";
+}
+
+
+
+
