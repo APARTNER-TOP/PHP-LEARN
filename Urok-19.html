@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>PHP Математичні функції</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+      У PHP є велика кількість математичних функцій, які дозволяють виконувати різноманітні математичні операції. У
+      цьому уроці ми розглянемо такі функції як пошук мінімуму та максимуму, генерація випадкових чисел та округлення.
+
+      Пошук мінімуму та максимуму
+      Для пошуку мінімуму та максимуму в PHP є дві функції: min() та max(). Вони дозволяють знайти мінімальне та
+      максимальне значення з масиву чисел.
+
+      Приклад використання функції min():
+
+      <pre>
+         <code>
+            $numbers = array(4, 2, 8, 5, 1);
+            $min = min($numbers);
+            echo "Мінімальне число: " . $min;
+         </code>
+      </pre>
+
+      Приклад використання функції max():
+
+      <pre>
+         <code>
+            $numbers = array(4, 2, 8, 5, 1);
+            $max = max($numbers);
+            echo "Максимальне число: " . $max;
+         </code>
+      </pre>
+
+      Генерація випадкових чисел
+      У PHP є функція rand(), яка дозволяє генерувати випадкові числа. Функція приймає два параметри: мінімальне та
+      максимальне значення.
+
+      Приклад використання функції rand():
+
+      <pre>
+         <code>
+            $randomNumber = rand(1, 100);
+            echo "Випадкове число: " . $randomNumber;
+         </code>
+      </pre>
+
+      Округлення
+      У PHP є декілька функцій для округлення чисел: round(), ceil() та floor(). Функція round() дозволяє округлити
+      число до заданої кількості знаків після коми. Функції ceil() та floor() дозволяють округлити число до ближчого
+      цілого вище або нижче.
+
+      Приклад використання функції round():
+
+      <pre>
+         <code>
+            $number = 3.14159265359;
+            $roundedNumber = round($number, 2);
+            echo "Округлене число: " . $roundedNumber;
+         </code>
+      </pre>
+
+      Якщо число має бути округлене вгору до найближчого цілого числа, ви можете використати функцію ceil().
+
+      Приклад використання функції ceil():
+
+      <pre>
+         <code>
+            $number = 3.14159265359;
+            $ceiledNumber = ceil($number);
+            echo "Округлене число: " . $ceiledNumber;
+         </code>
+      </pre>
+
+      Функція floor() використовується для округлення чисел до меншого цілого числа. Синтаксис функції:
+
+      <pre>
+         <code>
+            floor(float $number) : float
+         </code>
+      </pre>
+
+      Приклад використання функції floor():
+
+      <pre>
+         <code>
+            $number = 123.456789;
+            $flooredNumber = floor($number); // $flooredNumber = 123
+         </code>
+      </pre>
+
+      Функція number_format()
+
+      Функція number_format() використовується для форматування чисел з роздільниками тисяч і знаками після коми.
+      Синтаксис функції:
+
+      <pre>
+         <code>
+            number_format(float $number, int $decimals = 0, string $decPoint = ".", string $thousandsSep = ",") : string
+         </code>
+      </pre>
+
+      <pre>
+         <code>
+            $number = 1234567.891234;
+            $formatted_number = number_format($number, 2, '.', ',');
+            echo $formatted_number;
+         </code>
+      </pre>
+
+      У цьому прикладі:
+
+      Перший параметр - число, яке необхідно сформатувати.
+      Другий параметр - кількість знаків після коми.
+      Третій параметр - символ, який буде використаний як десятковий роздільник.
+      Четвертий параметр - символ, який буде використаний як роздільник для розрядів.
+      Ця функція може бути корисною для форматування чисел для відображення користувачам або для експорту даних у
+      формати, що вимагають певного формату чисел.
+
+      Результат виводу:
+
+      <pre>
+         <code>
+            1,234,567.89
+         </code>
+      </pre>
+
+
+      Ще одна корисна функція - abs() для отримання модуля числа.
+
+      <pre>
+         <code>
+            $number = -123;
+            $abs = abs($number);
+            echo $abs; // 123
+         </code>
+      </pre>
+
+      Також існують функції для розрахунку тригонометричних функцій, логарифмів, експоненти та інших математичних
+      операцій.
+
+      Наприклад, для обчислення синуса кута в радіанах можна використовувати функцію sin():
+
+      <pre>
+         <code>
+            $angle = pi() / 2; // 90 градусів в радіанах
+            $sin = sin($angle); // 1
+         </code>
+      </pre>
+
+      Або для обчислення натурального логарифму числа - функцію log():
+
+      <pre>
+         <code>
+            $number = 10;
+            $log = log($number); // 2.302585092994
+         </code>
+      </pre>
+
+      У цьому уроці ми розглянули декілька основних математичних функцій мови PHP. Ці функції дозволяють здійснювати
+      різноманітні математичні операції над числами. Знання цих функцій є необхідним для розробки складних алгоритмів та
+      обробки даних в програмуванні.
+      <br><br>
+
+      Надіюся, що цей урок був корисним для вас, і ви зможете успішно працювати з математичні функціями у своїх
+      PHP-проектах.
+      Успіхів вам у навчанні!
+      <br><br>
+
+
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>
