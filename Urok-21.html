@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>PHP Керування файлами та каталогами</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+      <h2>PHP Керування файлами та каталогами</h2>
+      Переміщення файлу<br>
+      Для переміщення файлу використовується функція rename() :<br>
+
+      <pre>
+         <code>
+            if ( ! rename( "hello.txt", "subdir/hello.txt" ) ) {
+               echo "Помилка переміщення файлу";
+            } else {
+               echo "Файл переміщено";
+            }
+         </code>
+      </pre>
+
+      Якщо у каталозі файлу hello.txt є підкаталог subdir , то файл буде в нього переміщений. Якщо файл успішно
+      переміщено, функція поверне значення true.<br>
+
+      <h2>
+         Копіювання файлу
+      </h2><br>
+
+      Для копіювання файлу використовується функція copy() . Вона приймає ім’я файлу, що копіюється, та ім’я копії
+      файлу. Якщо копіювання пройшло успішно, повертає значення true:
+
+      <pre>
+         <code>
+            if ( copy( "hello.txt", "hello_copy.txt" ) ) {
+               echo "Копію файлу створено";
+           } else {
+               echo "Помилка копіювання файлу";
+           }
+         </code>
+      </pre>
+
+      <h2>Видалення файлу</h2>
+
+      Для видалення файлу застосовується функція unlink , яка приймає ім’я файлу та повертає значення true при успішному
+      видаленні файлу:
+
+      <pre>
+         <code>
+            if ( unlink( "hello_copy.txt" ) ) {
+               echo "Файл видалений";
+            } else {
+               echo "Помилка видалення файлу";
+            }
+         </code>
+      </pre>
+
+      <h2>Створення каталогу</h2>
+
+      Для створення каталогу використовується функція mkdir() :
+
+      <pre>
+         <code>
+            if ( mkdir( "newdir" ) ) {
+               echo "Каталог створено";
+            } else {
+               echo "Помилка під час створення каталогу";
+            }
+         </code>
+      </pre>
+
+      У цьому випадку mkdir створює новий каталог “newdir” у поточному каталозі. Якщо створення пройде успішно, то
+      функція повертає значення true, інакше false<br>
+
+      Для створення нової папки в кореневому каталозі можна використовувати вираз mkdir("/newdir").
+
+      <h2>Видалення каталогу</h2>
+
+      Для видалення каталогу використовується функція rmdir() . Її використання аналогічне mkdir():<br>
+      <pre>
+         if ( rmdir( "newdir" ) ) {
+            echo "Каталог видалено";
+         } else {
+            echo "Помилка при видаленні каталогу";
+         }
+      </pre>
+
+      <h2>Операції з каталогами</h2>
+
+      Для отримання абсолютного шляху до поточного каталогу використовується функція getcwd() , яка повертає шлях у
+      вигляді рядка:
+
+      <pre>
+         <code>
+            $path = getcwd();
+            echo $path;  // C:\localhost
+         </code>
+      </pre>
+
+      Функція opendir() відкриває певний каталог для зчитування з нього інформації про файли та каталоги. У разі
+      успішного відкриття каталогу функція повертає дескриптор відкритого каталогу. Після закінчення роботи з каталогом
+      його треба закрити функцією closedir() .<br>
+
+      Для зчитування імені окремого файлу у відкритому каталозі використовується функція readdir() .<br>
+
+      Тепер об’єднаємо ці функції та виведемо на сторінку всі файли та підкаталоги з поточного каталогу:
+
+      <pre>
+         <code>
+            $dir = getcwd(); // отримуємо поточний каталог
+            
+            if ( is_dir( $dir ) ) // чи є шлях каталогом
+            {
+               if ( $dh = opendir( $dir ) ) // відкриваємо каталог
+               {
+                  // зчитуємо по одному файл або підкаталогу
+                  // поки не дійдемо до кінця
+                  while ( ( $file = readdir( $dh ) ) !== false ) {
+                        // пропускаємо символи .. та .
+                        if ( $file == '.' || $file == '..' ) {
+                           continue;
+                        }
+                        // якщо каталог чи файл
+                        if ( is_dir( $file ) ) {
+                           echo "каталог: $file <br>";
+                        } else {
+                           echo "файл:    $file <br>";
+                        }
+                  }
+                  closedir( $dh ); // закриваємо каталог
+               }
+            }
+         </code>
+      </pre>
+
+
+      Надіюся, що цей урок був корисним для вас, і ви зможете успішно працювати з керуванням файлами та каталогами у
+      своїх
+      PHP-проектах.
+      Успіхів вам у навчанні!
+      <br><br>
+
+
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>
