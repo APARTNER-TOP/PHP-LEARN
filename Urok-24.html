@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Як зробити перенаправлення (редирект) в PHP</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+      <h2>Як зробити перенаправлення (редирект) в PHP</h2>
+      Досить часто при роботі з PHP-скриптами потрібно автоматично перенаправляти відвідувачів на іншу сторінку (або
+      інший сайт), наприклад після успішного заповнення форми. У сьогоднішньому уроці ми розглянемо практичне рішення
+      питання перенаправлення (редиректу) на інші сторінки або сайти в PHP. На щастя, перенаправлення з використанням
+      PHP – це досить просте завдання.<br>
+      Для перенаправлення ви можете використовувати функцію header() в PHP. Ця функція відправляє необроблений
+      HTTP-заголовок в браузер. В результаті браузер перенаправляє користувача на сторінку, яка визначена в цьому новому
+      HTTP-заголовку. Вам потрібно лише подбати про те, щоб функція header() викликалася перед відправкою будь-якого
+      фактичного виводу. Це означає, що ви не можете використовувати перед функцією HTML-теги, функції echo або print.
+      Іншими словами цю функцію необхідно використовувати перед оголошенням < !doctype...><br>
+
+         Нижче наведено приклад використання перенаправлення в PHP:
+         <pre>
+         <code>
+            header('Location:https://apartner.pro');
+         </code>
+      </pre>
+
+         Якщо ви запустите цей код, браузер перенаправить вас на сайт apartner.pro. Однак не забувайте, що код після
+         цієї функції буде виконаний! Тому, щоб заощадити ресурси, ви повинні викликати функцію die() після
+         перенаправлення, як показано нижче:
+
+         <pre>
+         <code>
+            header('Location:https://apartner.pro');
+            die();
+         </code>
+      </pre>
+
+         Єдине, що вам потрібно зробити, це змінити URL-адресу всередині параметра Location («пункт призначення»).<br>
+         Якщо ви напишете echo до перенаправлення, тоді ви отримаєте наступну помилку:
+
+         <pre>
+         <code>
+            Warning: Cannot modify header information – headers already sent by…
+            Попередження: неможливо змінити інформацію заголовка – заголовки вже відправлено ...
+         </code>
+      </pre>
+
+         Щоб уникнути цієї помилки, ви можете використовувати вихідну буферизацію PHP наступним чином:
+
+         <pre>
+         <code>
+            ob_start();
+            echo "Test";
+            header('Location:https://apartner.pro');
+            ob_end_flush();
+         </code>
+      </pre>
+
+         Також, в якості обхідного шляху, ви можете використовувати вивід JavaScript з PHP, використовуючи echo:
+
+         <pre>
+         <code>
+               echo '< script type="text/javascript">window.location = "https://apartner.pro" < / script >';
+         </code >
+      </pre >
+
+                     або так:
+
+         <pre>
+                     <code>
+                        echo '< script type="text/javascript">window.location.replace("https://apartner.pro");< /script>';
+                     </code>
+                  </pre>
+
+         <h2>Редирект з Index (.html і .php) на корінь сайту</h2>
+         Головна сторінка сайту може бути доступна двома способами: "http://example.com" або
+                  "http://example.com/index.html"(або ".php").Для пошукових систем дані сторінки є дублями, хоча вони цілком
+         вміють їх обробляти.Але краще не надіятися на алгоритми пошукових систем, та самостійно налаштувати редирект,
+                     який перенаправлятиме з "http://example.com/index.html" або "http://example.com/index.php" на головну сторінку
+         сайту "http://example.com/".< br >
+                     Вирішити цю проблему можна за допомогою 301 редиректу на корінь сайту "/".Нам необхідно відредагувати у
+                  корені
+            сайту файл ".htaccess".Вставте після:
+
+                  <pre>
+                     <code>
+                        RewriteEngine On
+                     </code>
+                  </pre>
+
+            Наступні рядки:
+
+                  <pre>
+                     <code>
+                        RewriteCond %{THE_REQUEST} ^[A-Z]{3, 9}\ /index\.html\ HTTP/
+                        RewriteRule ^index\.html$ http://example.com/ [R=301,L]
+                        RewriteCond %{THE_REQUEST} ^[A-Z]{3, 9}\ /index\.php\ HTTP/
+                        RewriteRule ^index\.php$ http://example.com/ [R=301,L]
+                     </code>
+                  </pre>
+
+            Як видно з прикладу, якщо потрібно зробити переадресацію з "index.php", необхідно просто в коді замінити
+                  ".html" на ".php".< br >
+                     Також можна редирект здійснити засобами PHP.Для цього у файлі "index.php" необхідно додати спочатку код:
+
+                  <pre>
+                     <code>
+                        if ($_SERVER['REQUEST_URI'] == "/index.php") {
+                           header("Location: /", TRUE, 301);
+                        exit();
+              }
+                     </code>
+                  </pre>
+
+               Після виконаних операцій ваш сайт матиме лише одну індексну сторінку.
+
+
+   </div >
+                     <div class="task">
+                        <br>
+                           Завдання:<br>
+                              1) Повторити пройдений матеріал<br>
+                                 <br>
+                                    <br>
+                                    </div>
+
+                                    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
