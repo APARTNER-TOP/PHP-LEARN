@@ -1,0 +1,128 @@
+Задача 1:
+
+Створіть клас User з приватними властивостями name і age. Додайте методи setName($name) і setAge($age) для встановлення значень відповідних властивостей. Додайте метод getInfo(), який повертатиме рядок, що містить ім'я користувача та його вік.
+
+Створіть об'єкт класу User, встановіть ім'я "John" і вік 25. Виведіть результат методу getInfo(). Вивід має бути наступним форматом: "Ім'я: John, Вік: 25".
+
+
+Задача 2:
+Створіть клас Hello, який має метод greet(). Метод greet() повинен повертати рядок "Hello, world!".
+
+Створіть об'єкт класу Hello і виведіть результат виклику методу greet().
+
+Задача 3:
+
+Створіть клас Car, який має приватну статичну змінну totalCars і публічну змінну name.
+
+Клас Car також має метод setName(), який отримує назву автомобіля і збільшує значення статичної змінної totalCars на 1.
+
+Додайте метод getTotalCars(), який повертає кількість створених автомобілів (значення статичної змінної totalCars).
+
+Створіть два об'єкти класу Car з різними назвами. Виведіть кількість створених автомобілів за допомогою методу getTotalCars(). Порівняйте ці два об'єкти за допомогою оператора == і виведіть повідомлення "Об'єкти рівні" або "Об'єкти не рівні", залежно від результату порівняння.
+
+
+Задача 4:
+Створіть клас Person, який має приватні властивості name і age. Додайте методи setName($name) і setAge($age) для встановлення значень властивостей. Додайте метод getName(), який повертає ім'я об'єкта Person.
+
+Створіть об'єкт класу Person з ім'ям "John" і віком 25. Потім склонуйте цей об'єкт і змініть ім'я клонованого об'єкта на "Jane" і вік на 30.
+
+Виведіть ім'я та вік обох об'єктів, використовуючи метод getName().
+
+
+Відповідь 1: 
+
+class User {
+    private $name;
+    private $age;
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function setAge($age) {
+        $this->age = $age;
+    }
+
+    public function getInfo() {
+        return "Ім'я: " . $this->name . ", Вік: " . $this->age;
+    }
+}
+
+$user = new User();
+$user->setName("John");
+$user->setAge(25);
+echo $user->getInfo(); // Виведе "Ім'я: John, Вік: 25"
+
+
+Відповідь 2: 
+
+class Hello {
+    public function greet() {
+        return "Hello, world!";
+    }
+}
+
+$obj = new Hello();
+echo $obj->greet(); // Виведе "Hello, world!"
+
+Відповідь 3:
+
+class Car {
+    private static $totalCars = 0;
+    public $name;
+
+    public function __construct($name) {
+        $this->name = $name;
+        self::$totalCars++;
+    }
+
+    public static function getTotalCars() {
+        return self::$totalCars;
+    }
+}
+
+$car1 = new Car("BMW");
+$car2 = new Car("Mercedes");
+
+echo Car::getTotalCars(); // Виведе 2
+
+if ($car1 == $car2) {
+    echo "Об'єкти рівні";
+} else {
+    echo "Об'єкти не рівні";
+}
+
+Відповідь 4:
+
+class Person {
+    private $name;
+    private $age;
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function setAge($age) {
+        $this->age = $age;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+}
+
+$person = new Person();
+$person->setName("John");
+$person->setAge(25);
+
+$clonePerson = clone $person;
+$clonePerson->setName("Jane");
+$clonePerson->setAge(30);
+
+echo "Оригінальний об'єкт: " . $person->getName() . ", " . $person->getAge() . " років" . PHP_EOL;
+echo "Клонований об'єкт: " . $clonePerson->getName() . ", " . $clonePerson->getAge() . " років" . PHP_EOL;
+
+
+
+
+
