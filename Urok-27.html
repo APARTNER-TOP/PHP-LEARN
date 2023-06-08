@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Уроки PHP – Конструктори та деструктори</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+
+      <h2>Конструктори та деструктори</h2>
+
+      Конструктори представляють спеціальні методи, які виконуються при створенні об’єкта та є початковою ініціалізації
+      його властивостей.<br>
+
+      Для створення конструктора треба оголосити функцію з ім’ям __construct (з двома підкресленнями попереду):
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name, $age;
+               
+               function __construct( $name, $age ) 
+               {
+                  $this->name = $name;
+                  $this->age  = $age;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Name: $this->name; Age: $this->age<br>";
+               }
+            }
+            
+            $tom = new Person( "Tom", 36 );
+            $tom->displayInfo();
+            
+            $bob = new Person( "Bob", 41 );
+            $bob->displayInfo();
+         </code>
+      </pre>
+
+      Функція конструктора у разі приймає два параметра. Їх значення передаються властивостям класу. Тепер, щоб створити
+      об’єкт, нам треба передати значення для відповідних параметрів:
+      <pre>
+         <code>     	
+            $tom = new Person( "Tom", 36 );
+         </code>
+      </pre>
+
+      Висновок у браузері:
+
+      <pre>
+         <code>
+            Name: Tom; Age: 36
+            Name: Bob; Age: 41
+         </code>
+      </pre>
+
+      <h2>
+         Параметри за замовчуванням
+      </h2>
+
+      Щоб зробити конструктор гнучкішим, ми можемо позначити один або кілька параметрів як необов’язкові. Тоді під час
+      створення об’єкта необов’язково вказувати всі параметри.<br>
+      Наприклад, змінимо конструктор наступним чином:
+      <pre>
+         <code>
+            function __construct( $name = "Том", $age = 36 ) 
+            {
+               $this->name = $name;
+               $this->age  = $age;
+            }
+         </code>
+      </pre>
+
+      Таким чином, якщо не будуть задані параметри, замість них використовуватимуться значення “Том” та 36. Тепер ми
+      можемо створити об’єкт Person кількома способами:
+
+      <pre>
+         <code>
+            class Person
+            {
+               public $name, $age;
+               
+               function __construct( $name = "Том", $age = 36 )
+               {
+                  $this->name = $name;
+                  $this->age  = $age;
+               }
+               
+               function displayInfo()
+               {
+                  echo "Name: $this->name; Age: $this->age<br>";
+               }
+            }
+            
+            $tom = new Person();
+            $tom->displayInfo();
+            
+            $bob = new Person( "Bob" );
+            $bob->displayInfo();
+            
+            $sam = new Person( "Sam", 29 );
+            $sam->displayInfo();
+         </code>
+      </pre>
+
+      Висновок у браузері:
+
+      <pre>
+         <code>
+            Name: Том; Age: 36
+            Name: Bob; Age: 36
+            Name: Sam; Age: 29
+         </code>
+      </pre>
+
+      <h2>
+         Оголошення властивостей через конструктор
+      </h2>
+      Починаючи з версії PHP 8, у мові з’явилася можливість визначити властивості через список параметрів конструктора.
+      Будь-який параметр конструктора, який має модифікатор доступу, наприклад, public , автоматично представлятиме нову
+      властивість.<br>
+
+      Наприклад, визначимо властивості name та age безпосередньо через параметри конструктора:
+
+      <pre>
+         <code>
+            class Person 
+            {
+               function __construct( public $name, public $age ) 
+               {
+                  $this->name = $name;
+                  $this->age  = $age;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Name: $this->name; Age: $this->age<br>";
+               }
+            }
+            
+            $tom = new Person( "Tom", 36 );
+            $tom->displayInfo();
+         </code>
+      </pre>
+
+      Хоча в даному випадку в класі явно не визначено властивості name та age, але оскільки в списку параметрів
+      конструктора задані параметри з такими іменами і модифікатором доступу ( в даному випадку public ), то у класу
+      автоматично створюються подібні змінні.<br>
+      Можна поєднувати обидва способи оголошення змінних:
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name;
+               
+               function __construct( $name, public $age ) 
+               {
+                  $this->name = $name;
+                  $this->age  = $age;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Name: $this->name; Age: $this->age<br>";
+               }
+            }
+         </code>
+      </pre>
+
+      При такому оголошенні властивостей також можна передавати значення за промовчанням:
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name;
+               
+               function __construct( $name = "Sam", public $age = 33 ) 
+               {
+                  $this->name = $name;
+                  $this->age  = $age;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Name: $this->name; Age: $this->age<br>";
+               }
+            }
+         </code>
+      </pre>
+
+      <h2>Деструктори</h2>
+      Деструктори служать звільнення ресурсів, використовуваних програмою – звільнення відкритих файлів, відкритих
+      підключень до баз даних тощо. Деструктор об’єкта викликається самим інтерпретатором PHP після втрати останнього
+      посилання даний об’єкт у програмі.<br>
+      Деструктор визначається за допомогою функції __destruct ( два підкреслення попереду ):
+
+      <pre>
+         <code>
+            class Person
+            {
+               public $name, $age;
+               
+               function __construct( $name, $age )
+               {
+                  $this->name = $name;
+                  $this->age  = $age;
+               }
+               
+               function getInfo()
+               {
+                  echo "Name: $this->name ; Age: $this->age <br>";
+               }
+               
+               function __destruct() {
+                  echo "Виклик деструктора";
+               }
+            }
+         </code>
+      </pre>
+
+      Функція деструктора визначається без параметрів, та коли на об’єкт не залишиться посилань у програмі, він буде
+      знищений та буде викликаний деструктор.
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      Спробувати створити<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Уроки PHP – Успадкування</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+
+      <h2>Успадкування</h2>
+
+      Спадкування є одним із основних аспектів об’єктно-орієнтованого програмування. Спадкування дозволяє класу взяти
+      функціонал вже наявних класів та за необхідності перевизначити його. Якщо у нас є якийсь клас, у якому не вистачає
+      пари функцій, то набагато простіше перевизначити наявний клас, написавши кілька рядків, ніж створювати новий з
+      нуля, переписуючи купу коду.<br>
+
+      Щоб успадкувати один клас від іншого, нам потрібно застосувати оператор extends . Варто зазначити, що у PHP ми
+      можемо успадкувати клас лише від одного класу. Множинне наслідування не підтримується.<br>
+
+      Наприклад, успадкуємо клас Employee від класу Person:<br>
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name;
+               
+               function __construct( $name ) {
+                  $this->name = $name;
+               }
+               
+               function displayInfo() {
+                  echo "Iм'я: $this->name<br>";
+               }
+            }
+            
+            class Employee extends Person 
+            {
+               
+            }
+            
+            $tom = new Employee( "Tom" );
+            $tom->displayInfo();
+         </code>
+      </pre>
+
+      У разі припустимо, що клас Person представляє людини загалом, а клас Employee – працівника деякого підприємства. У
+      цьому кожен працівник представляє людини. Щоб не дублювати той самий функціонал, краще в даному випадку
+      успадкувати клас працівника – Employee від класу людини – Person. У цій парі клас Person ще називається
+      батьківським чи базовим класом, а клас – Employee – похідним класом або класом-спадкоємцем.<br>
+
+      Оскільки клас Employee успадкований від Person, для об’єктів класу Employee ми можемо використовувати функціонал
+      батьківського класу Person. Так, для створення об’єкта Employee в даному випадку викликається конструктор, який
+      визначений у класі Person та який як параметр приймає ім’я людини:
+
+      <pre>
+         <code>
+            $tom = new Employee( "Tom" );
+         </code>
+      </pre>
+
+      Також у змінної типу Employee викликається метод displayInfo, визначений у класі Person:
+
+
+      <pre>
+         <code>  	
+            $tom->displayInfo();
+         </code>
+      </pre>
+
+      <h2>Перевизначення функціоналу</h2>
+
+      Успадкувавши функціонал від батьківського класу клас-спадкоємець може додати свої властивості та методи або
+      перевизначити успадкований функціонал.<br>
+      Наприклад, змінимо клас Employee, додавши до нього дані про компанію, де працює працівник:
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name;
+               
+               function __construct( $name ) 
+               {
+                  $this->name = $name;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Ім'я: $this->name<br>";
+               }
+            }
+            
+            class Employee extends Person 
+            {
+               public $company;
+               
+               function __construct( $name, $company ) 
+               {
+                  $this->name    = $name;
+                  $this->company = $company;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Ім'я: $this->name<br>";
+                  echo "Працює у $this->company<br>";
+               }
+            }
+            
+            $tom = new Employee( "Tom", "Microsoft" );
+            $tom->displayInfo();
+         </code>
+      </pre>
+
+      Тут клас Employee додає нову властивість $company, яка зберігає компанію працівника. Також клас Employee
+      перевизначив конструктор, в який передаються дані для імені та компанії. А також перевизначено метод
+      displayInfo(). Відповідно для створення об’єкта класу Employee, тепер необхідно використовувати перевизначений у
+      класі Employee конструктор:
+
+      <pre>
+         <code>	
+            $tom = new Employee( "Tom", "Microsoft" );
+         </code>
+      </pre>
+
+      Клас-спадкоємець перевизначає конструктор батьківського класу, то створення об’єкта класу-спадкоємця необхідно
+      використовувати перевизначений у ньому конструктор.<br>
+
+      Також зміниться поведінка методу displayInfo(), який крім імені також виведе і організацію працівника:
+
+      <pre>
+         <code>
+            Ім'я: Tom 
+            Працює в Microsoft
+         </code>
+      </pre>
+
+      <h2>Виклик функціоналу батьківського класу</h2>
+
+      Якщо ми подивимося на код спадкоємця класу Employee, то можемо побачити частини коду, які повторюють код класу
+      Person. Наприклад, встановлення імені у конструкторі:
+
+      <pre>
+         <code>
+            $this->name = $name;
+         </code>
+      </pre>
+
+      Також висновок імені працівника у методі displayInfo():
+
+      <pre>
+         <code>  	
+            echo "Ім'я: $this->name<br>";
+         </code>
+      </pre>
+
+      В обох випадках йдеться про один рядок коду. Однак якщо конструктор Employee повторює установку не одного, а
+      десятка властивостей. Відповідно, якщо метод displayInfo в класі-спадкоємці повторює місто більше дій
+      батьківського класу. У цьому випадку місто раціональніше не писати код, що повторюється, в класі-спадкоємці, а
+      викликати в ньому відповідний функціонал батьківського класу.<br>
+
+      Якщо нам треба звернутися до методу батьківського класу, то ми можемо використовувати ключове слово parent , після
+      якого використовується подвійна двокрапка :: та потім метод, що викликається.<br>
+
+      Наприклад, перепишемо попередній приклад:
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name;
+               
+               function __construct( $name ) 
+               {
+                  $this->name = $name;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Ім'я: $this->name<br>";
+               }
+            }
+            class Employee extends Person 
+            {
+               public $company;
+               
+               function __construct( $name, $company ) 
+               {
+                  parent::__construct( $name );
+                  $this->company = $company;
+               }
+               
+               function displayInfo() 
+               {
+                  parent::displayInfo();
+                  echo "Працює у $this->company<br>";
+               }
+            }
+            
+            $tom = new Employee( "Tom", "Microsoft" );
+            $tom->displayInfo(); 
+         </code>
+      </pre>
+
+      Тепер у конструкторі Employee викликається конструктор базового класу:
+
+      <pre>
+         <code> 	
+            parent::__construct( $name );
+         </code>
+      </pre>
+
+      У ньому власне і відбувається встановлення імені. Так у методі displayInfo() викликається реалізація методу класу
+      Person:
+
+      <pre>
+         <code>   	
+            parent::displayInfo();
+         </code>
+      </pre>
+
+      У результаті ми отримаємо той самий результат.<br>
+
+      Варто зазначити, що насправді ключове слово parent замінює назву класу. Тобто ми також могли викликати функціонал
+      батьківського класу через ім’я цього класу:
+
+      <pre>
+         <code>
+            class Employee extends Person 
+            {
+               public $company;
+               function __construct( $name, $company )
+               {
+                  Person::__construct( $name );
+                  $this->company = $company;
+               }
+               function displayInfo()
+               {
+                  Person::displayInfo();
+                  echo "Працює у $this->company<br>";
+               }
+            }
+         </code>
+      </pre>
+
+      <h2>Оператор instanceof</h2>
+
+      Оператор instanceof дозволяє перевірити належність об’єкта певного класу. Зліва від оператора розташовується
+      об’єкт, який треба перевірити, а праворуч – назва класу. Якщо об’єкт представляє клас, оператор повертає true.
+      Наприклад:
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name;
+               
+               function __construct( $name ) 
+               {
+                  $this->name = $name;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Ім'я: $this->name<br>";
+               }
+            }
+            
+            class Employee extends Person
+            {
+               public $company;
+               
+               function __construct( $name, $company ) 
+               {
+                  Person::__construct( $name );
+                  $this->company = $company;
+               }
+               
+               function displayInfo() 
+               {
+                  Person::displayInfo();
+                  echo "Працює у $this->company<br>";
+               }
+            }
+            
+            class Manager 
+            {
+               
+            }
+            
+            $tom = new Employee( "Tom", "Microsoft" );
+            
+            $tom instanceof Employee;   // true
+            $tom instanceof Person;     // true
+            $tom instanceof Manager;    // false
+         </code>
+      </pre>
+
+      Тут змінна $tom представляє клас Employee, тому $tom instanceof Employee повертає true.<br>
+
+      Так як клас Employee успадкований від Person, то змінна $tom також є класом Person ( працівник також є людиною
+      ).<br>
+
+      А ось клас Manager змінна $tom не представляє, тому вираз $tom instanceof Manager повертає false.<br>
+
+      <h2>Заборона наслідування та оператор final</h2>
+      У прикладі вище метод displayInfo() перевизначався класом-спадкоємцем. Однак іноді виникають ситуації, коли треба
+      заборонити перевизначення методів. Для цього в класі-батьку треба вказати методи з модифікатором final :
+
+      <pre>
+         <code>
+            class Person 
+            {
+               public $name;
+               
+               function __construct( $name ) 
+               {
+                  $this->name = $name;
+               }
+               
+               final function displayInfo() 
+               {
+                  echo "Ім'я: $this->name<br>";
+               }
+            }
+            
+            class Employee extends Person 
+            {
+               public $company;
+               
+               function __construct( $name, $company ) 
+               {
+                  Person::__construct( $name );
+                  $this->company = $company;
+               }
+               
+               function displayEmployeeInfo() 
+               {
+                  Person::displayInfo();
+                  echo "Працює у $this->company<br>";
+               }
+            }
+            
+            $tom = new Employee( "Tom", "Microsoft" );
+            $tom->displayEmployeeInfo();
+         </code>
+      </pre>
+
+      У цьому випадку у всіх класах-спадкоємцях від класу Person ми вже не зможемо визначити метод із таким самим ім’ям.
+      Тому в даному випадку в класі Employee визначено новий метод – displayEmployeeInfo.<br>
+
+      Також ми можемо взагалі заборонити спадкування від класу. Для цього цей клас треба визначити з модифікатором
+      final:
+
+      <pre>
+         <code>
+            final class Person 
+            {
+               public $name;
+               
+               function __construct( $name ) 
+               {
+                  $this->name = $name;
+               }
+               
+               final function displayInfo() 
+               {
+                  echo "Ім'я: $this->name<br>";
+               }
+            }
+         </code>
+      </pre>
+
+      Тепер ми не зможемо успадкувати клас Employee (та й ніякого іншого класу) від класу Person.
+
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      Спробувати створити<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>

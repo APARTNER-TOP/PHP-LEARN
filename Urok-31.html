@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Уроки PHP – Статичні методи та властивості</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+
+      <h2>Статичні методи та властивості</h2>
+      Крім звичайних методів та властивостей з різними модифікаторами доступу клас може містити статичні методи та
+      властивості. Такі методи та властивості позначаються ключовим словом static . Статичні методи та властивості
+      здаються один раз для всього класу та відносяться до всього класу, тоді для нестатичних властивостей та методів
+      створюється окрема копія для кожного об’єкта.
+
+      <pre>
+         <code>
+            class Person
+            {
+               public $name, $age;
+               static $retirenmentAge = 65;
+               
+               function __construct( $name, $age )
+               {
+                  $this->name = $name;
+                  $this->age  = $age;
+               }
+               
+               function sayHello()
+               {
+                  echo "Привіт, мене звати $this->name<br>";
+               }
+               
+               static function printPerson( $person ) 
+               {
+                  echo "Ім'я: $person->name Вік: $person->age<br>";
+               }
+            }
+         </code>
+      </pre>
+
+      Тут визначено статичну властивість retirenmentAge, яка зберігає пенсійний вік. Якщо вік – це показник конкретної
+      людини та може відрізнятися для різних людей, то пенсійний вік зазвичай встановлюється загальний для всіх. Тому цю
+      властивість можна зробити статичною – вона відноситься до всього класу Person, а не встановлюється окремо для
+      кожного об’єкта. Для оголошення статичної властивості перед його ім’ям ставиться модифікатор static :
+
+      <pre>
+         <code>
+            static $retirenmentAge = 65;
+         </code>
+      </pre>
+
+      Також у класі визначено статичний метод printPerson(), який виводить інформацію про людину, яка як параметр
+      передається в метод. Цей метод також залежить від конкретного об’єкта класу Person, а належить до всього класу
+      Person загалом. Щоб оголосити статичний метод, також перед словом function ставиться модифікатор static :
+
+      <pre>
+         <code>
+            static function printPerson( $person )
+            {
+                echo "Ім'я: $person->name Вік: $person->age<br>";
+            }
+         </code>
+      </pre>
+
+      При зверненні до статичних методів та властивостей використовується ім’я класу та оператор :: замість операції
+      доступу ->, так як статичний метод відноситься до всього класу, а не до конкретного об’єкта цього класу.
+
+      <pre>
+         <code>
+            class Person
+            {
+                public $name, $age;
+                static $retirenmentAge = 65;
+                 
+                function __construct( $name, $age )
+                {
+                    $this->name = $name;
+                    $this->age  = $age;
+                }
+                 
+                function sayHello()
+                {
+                    echo "Привіт, мене звати $this->name<br>";
+                }
+                 
+                static function printPerson( $person ) {
+                    echo "Ім'я: $person->name Вік: $person->age<br>";
+                }
+            }
+             
+            $tom = new Person( "Tom", 36 );
+            // виклик нестатичного методу
+            $tom->sayHello();
+             
+            // виклик статичного методу
+            Person::printPerson( $tom );
+            // звернення до статичної властивості
+            echo "Пенсійний вік: " . Person::$retirenmentAge . "<br>";
+         </code>
+      </pre>
+
+      Отримаємо:
+
+      <pre>
+         <code>
+            Привіт, мене звуть Tom
+            Ім'я: Tom Вік: 36
+            Пенсійний вік 65
+         </code>
+      </pre>
+
+      Для звернення до статичних властивостей та методів усередині класу замість імені класу може застосовуватись
+      ключове слово self .
+
+      Наприклад, додамо до класу людини метод, який обчислюватиме, скільки людині залишилося до пенсії:
+
+      <pre>
+         <code>
+            class Person
+            {
+                public $name, $age;
+                static $retirenmentAge = 65;
+                 
+                function __construct( $name, $age )
+                {
+                    $this->name = $name;
+                    $this->age  = $age;
+                }
+                 
+                function sayHello()
+                {
+                    echo "Привіт, мене звати $this->name<br>";
+                }
+                 
+                static function printPerson( $person )
+                {
+                    echo "Ім'я: $person->name Вік: $person->age<br>";
+                }
+                 
+                function checkAge()
+                {
+                    if ( $this->age >= self::$retirenmentAge ) {
+                        echo "Час на пенсію<br>";
+                    } else {
+                        echo "До пенсії ще " . ( Person::$retirenmentAge - $this->age ) . " років<br>";
+                    }
+                }
+            }
+             
+            $tom = new Person( "Tom", 36 );
+            $tom->checkAge();
+         </code>
+      </pre>
+
+      Висновок програми:
+
+      <pre>
+         <code>
+            До пенсії ще 29 років
+         </code>
+      </pre>
+
+      Варто зазначити, що у статичних методах ми можемо звертатися лише до статичних властивостей та методів. Але не
+      можемо звертатися до нестатичних властивостей та методів через $this. Наприклад:
+
+      <pre>
+         <code>
+            static function printPerson( $person )
+            {
+                echo "Ім'я: $person->name Вік: $person->age<br>";
+                // у статичних методах можна звертатися до статичних методів та властивостей
+                echo "Пенсійний вік: " . self::$retirenmentAge . "<br>";
+                // але не можна звертатися до нестатичних методів та властивостей
+                // echo "Ім'я: ". $this->name . "<br>"; // так не можна
+                // $this->sayHello(); // так не можна
+            }
+         </code>
+      </pre>
+
+      Тут у статичному методі printPerson() ми можемо звернутися до статичної змінної retirenmentAge:
+
+      <pre>
+         <code>
+            echo "Пенсійний вік: " . self::$retirenmentAge . "<br>";
+         </code>
+      </pre>
+
+      Але не можемо звернутися до нестатичних властивостей та методів:
+
+      <pre>
+         <code>
+            // echo "Ім'я: ". $this->name . "<br>"; // так не можна
+            // $this->sayHello(); // так не можна
+         </code>
+      </pre>
+
+      При цьому статичні методи та властивості також можуть мати модифікатори доступу. Наприклад, змінимо клас Person
+      наступним чином:
+
+      <pre>
+         <code>
+         class Person
+         {
+            public $name;
+            private $id;
+            private static $counter = 0;
+            
+            function __construct( $name )
+            {
+               self::$counter ++;
+               $this->id   = self::$counter;
+               $this->name = $name;
+            }
+            
+            static function getCounter()
+            {
+               return self::$counter;
+            }
+            
+            function getId()
+            {
+               return $this->id;
+            }
+         }
+         
+         $tom = new Person( "Tom" );
+         $bob = new Person( "Bob" );
+         echo "$tom->name має id: " . $tom->getId() . "<br>";
+         echo "$bob->name має id: " . $bob->getId() . "<br>";
+         echo "Усього користувачів: " . Person::getCounter();
+         </code>
+      </pre>
+
+      У класі Person визначено властивість $id, що представляє ідентифікатор користувача. Та також визначено приватну
+      сттичну властивість $counter, яка зберігає загальну кількість створених користувачів. У конструкторі ми збільшуємо
+      статичну змінну на одиницю, а потім встановлюємо її значення властивості $id.
+
+      Кількість створених користувачів – це атрибут, загальний всього класу, який залежить від конкретного об’єкта.
+      Проте водночас небажано, щоб його ззовні могли довільно змінити. Тому властивість $counter визначена як приватна.
+      А щоб побачити його значення, визначено статичний метод getCounter().
+
+      Висновок програми:
+
+      <pre>
+         <code>
+            Tom має id: 1
+            Bob має id: 2
+            Усього користувачів: 2
+         </code>
+      </pre>
+
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      Спробувати створити<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>

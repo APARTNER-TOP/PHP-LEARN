@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Уроки PHP – Модифікатори доступу</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+
+      <h2>Модифікатори доступу</h2>
+
+      За допомогою спеціальних модифікаторів можна задати область видимості для властивостей та методів класу. У PHP є
+      три такі модифікатори:<br>
+      public – до властивостей та методів, оголошених з даним модифікатором, можна звертатися із зовнішнього коду та з
+      будь-якої частини програми<br>
+      protected – властивості та методи з даним модифікатором доступні з поточного класу, а також із
+      класів-спадкоємців<br>
+      private – властивості та методи з цим модифікатором доступні лише з поточного класу<br>
+      Розглянемо з прикладу. Наприклад, у нас є наступний клас:
+
+      <pre>
+         <code>
+            class Person 
+            {
+               private $privateA = "private";
+               public $publicA = "public";
+               protected $protectedA = "protected";
+               
+               private function getPrivateMethod() 
+               {
+                  echo "private method <br />";
+               }
+               
+               protected function getProtectedMethod() 
+               {
+                  echo "protected method <br />";
+               }
+               
+               public function getPublicMethod() 
+               {
+                  echo "public method <br />";
+               }
+               
+               function test() 
+               {
+                  $this->getPrivateMethod();
+                  $this->getProtectedMethod();
+                  $this->getPublicMethod();
+                     
+                  echo "$this->privateA <br />";
+                  echo "$this->protectedA <br />";
+                  echo "$this->publicA <br />";
+               }
+            }
+         </code>
+      </pre>
+
+      Клас визначає три властивості та три методи з різними модифікаторами доступу. З будь-якого методу цього класу ми
+      можемо звернутися до будь-якого методу та будь-якої властивості. Якщо метод не має модифікатора доступу, за
+      замовчуванням його видимість аналогічна модифікатору public.<br>
+
+      Тепер створимо клас, похідний від класу Person:
+
+      <pre>
+         <code>
+            class Employee extends Person
+            {
+                function test()
+                {
+                    //echo $this->privateA; // не можна, оскільки privateA - private у класі-батька
+                    echo $this->protectedA;
+                    echo $this->publicA;
+                    //$this->getPrivateMethod(); // не можна, тому що private у класі - батька
+                    $this->getProtectedMethod();
+                    $this->getPublicMethod();
+                }
+            }
+         </code>
+      </pre>
+
+      Класу-спадкоємцю доступні всі властивості та методи з модифікаторами public та protected, але недоступні методи та
+      властивості з модифікатором private.<br>
+
+      Тепер розглянемо використання класу Person у зовнішньому коді:
+
+      <pre>
+         <code>
+            $person = new Person;
+            // $person->getPrivateMethod(); // недоступно, тому що private
+            // $person->getProtectedMethod(); // недоступно, тому що protected
+            $person->getPublicMethod();
+            // echo $person->privateA; // недоступно, тому що private
+            // echo $person->protectedA; // недоступно, тому що protected
+            echo $person->publicA;
+         </code>
+      </pre>
+
+      При використанні об’єктів даного класу нам доступні лише публічні методи та властивості, а властивості та методи з
+      модифікаторами private та protected не доступні.
+
+      <h2>Доступ до методів та властивостей об’єкта</h2>
+
+      Варто зазначити, що в PHP у класі можна звертатися до змінних та методів з модифікаторами private та protected
+      об’єкта цього ж класу:
+
+      <pre>
+         <code>
+            class Account
+            {
+                 
+                private $sum = 0;
+                 
+                function __construct( $sum )
+                {
+                     
+                    $this->sum = $sum;
+                }
+                 
+                function getSumFrom( $otherAccount, $money )
+                {
+                     
+                    $otherAccount->sum -= $money;
+                    $this->sum         += $money;
+                }
+                 
+                function prinSum()
+                {
+                    echo "На рахунку $this->sum у.е.<br>";
+                }
+            }
+             
+            $acc1 = new Account( 100 );
+            $acc2 = new Account( 400 );
+         </code>
+      </pre>
+
+      Клас Account представляє умовний клас банківського рахунку. У приватній змінній $sum зберігається сума на
+      рахунку.<br>
+
+      У методі getSumFrom() як параметр отримуємо об’єкт цього ж класу Account та суму переказу. І оскільки об’єкт
+      представляє той же клас Account, то ми можемо звернутися до його властивостей та методів з модифікаторами private
+      та protected:
+
+      <pre>
+         <code>
+            $otherAccount->sum -= $money;
+         </code>
+      </pre>
+      Таким чином, виконати умовний грошовий переказ із рахунку на рахунок.
+
+
+
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      Спробувати створити<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>

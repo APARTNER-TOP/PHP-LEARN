@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Уроки PHP – Анонімні класи</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+
+      <h2>Анонімні класи</h2>
+
+      Анонімні класи – це класи, які не мають імені.<br>
+
+      Зазвичай такі класи корисні, якщо необхідно один раз створити об’єкт такого класу. І більше цей клас не
+      використовуватиметься. Наприклад:
+
+      <pre>
+         <code>
+            $person = new class {};
+         </code>
+      </pre>
+
+      Для визначення змінної аонімного класу, як у випадку зі звичайним класом, застосовується оператор new , після
+      якого йде ключове слово class та потім – тіло класу у фігурних дужках.<br>
+
+      Анонімні класи, як і звичайні класи можуть визначати властивості та методи. Наприклад:
+
+      <pre>
+         <code>
+            $person = new class {
+               public $name;
+                
+               function sayHello() 
+               {
+                   echo "Hello!<br>";
+               }
+           };
+           $person->sayHello();
+           $person->name = "Sam";
+           echo "Name: " . $person->name . "<br>";
+         </code>
+      </pre>
+
+      <pre>
+         <code>
+            Hello!
+            Name: Sam
+         </code>
+      </pre>
+
+      Також анонімні класи можуть визначати конструктори:
+
+      <pre>
+         <code>
+            $person = new class( "Bob" ) 
+            {
+               public $name;
+               
+               function __construct( $name )
+               {
+                  $this->name = $name;
+               }
+               
+               function sayHello() 
+               {
+                  echo "Hello!<br>";
+               }
+            };
+            echo "Hello, " . $person->name . "<br>"; // Hello, Bob
+         </code>
+      </pre>
+
+      При цьому виклик конструктора йде відразу після ключового слова class до фігурної дужки, що відкриває: new
+      class("Bob") {.
+
+      Подібним чином можна визначати властивості відразу в конструкторі, скоротивши цим визначення класу:
+
+      <pre>
+         <code>
+            $person = new class( "Bob", 34 ) 
+            {
+               function __construct( public $name, public $age ) 
+               {
+                  $this->name = $name;
+               }
+               
+               function displayInfo() 
+               {
+                  echo "Name: $this->name; Age: $this->age<br>";
+               }
+            };
+            $person->displayInfo();
+         </code>
+      </pre>
+
+      <pre>
+         <code>
+            Name: Bob; Age: 34
+         </code>
+      </pre>
+
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      Спробувати створити<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>
