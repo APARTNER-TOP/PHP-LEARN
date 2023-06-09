@@ -1,0 +1,107 @@
+Задача 1:
+
+Завдання: Застосування динамічного методу
+Задайте клас з назвою "Calculator", що містить публічні методи "add", "subtract", "multiply" та "divide". Напишіть додатковий метод "calculate", який приймає назву операції (наприклад, "add") та два числа, і викликає відповідний метод для виконання операції. Реалізуйте це завдання і спробуйте викликати метод "calculate" з різними операціями та значеннями для перевірки його правильності.
+
+Задача 2:
+
+Завдання: Реалізація успадкування та переписування методу
+
+Задайте батьківський клас з назвою "Animal". В цьому класі створіть захищену властивість "name" та метод "makeSound", який виводить рядок зі звуком тварини.
+
+Створіть дочірній клас з назвою "Cat", який успадковує клас "Animal". В класі "Cat" створіть метод "makeSound", який перезаписує батьківський метод "makeSound" і виводить рядок зі звуком кота.
+
+Створіть об'єкт класу "Cat" з ім'ям "Tom" і викличте метод "makeSound". Перевірте, чи виводиться рядок зі звуком кота.
+
+Задача 3:
+
+Завдання: Використання анонімного класу з різними рівнями доступу
+
+Задайте основний клас з назвою "ParentClass". В цьому класі визначіть метод "getPrivateData", який повертає приватну змінну "privateData", а також метод "processData", який викликає метод "getPrivateData" і виводить його значення.
+
+Створіть об'єкт класу "ParentClass" і викличте метод "processData". Переконайтеся, що значення приватної змінної "privateData" виводиться правильно.
+
+Замість використання окремого класу, створіть анонімний клас в методі "processData" основного класу. В анонімному класі визначте приватну змінну "privateData" зі значенням "Confidential Data" та публічний метод "getProtectedData", який повертає значення приватної змінної "privateData".
+
+В методі "processData" основного класу викличте метод "getProtectedData" анонімного класу та виведіть його значення.
+
+Очікуваний результат: "Private Data"
+
+У цьому прикладі в основному класі "ParentClass" ми визначаємо приватну змінну "privateData" та метод "processData", який використовує анонімний клас для отримання доступу до приватної змінної. У анонімному класі ми визначаємо приватну змінну "privateData" та публічний метод "getProtectedData", який повертає значення цієї приватної змінної. Виклик методу "getProtectedData" анонімного класу в методі "processData" основного класу дозволяє отримати доступ до значення приватної змінної "privateData" та вивести його.
+
+
+Задача 4
+
+Завдання: Використання статичних методів, властивостей і instanceof
+
+Задайте клас з назвою "Shape", який містить статичну змінну "count" і статичний метод "getCount". Змінна "count" початково має значення 0, а метод "getCount" повертає поточне значення "count".
+
+Створіть два дочірніх класи "Circle" і "Rectangle", які успадковують клас "Shape". У кожному з цих класів перевизначте конструктор таким чином, щоб при створенні об'єкта збільшувалась змінна "count" на 1.
+
+Викличте статичний метод "getCount" класу "Shape" і виведіть отримане значення. Переконайтеся, що значення відображає кількість створених об'єктів класів "Circle" і "Rectangle".
+
+Використайте оператор instanceof, щоб перевірити, чи об'єкт належить до певного класу. Наприклад, створіть об'єкт класу "Circle" і перевірте, чи він є екземпляром класу "Shape".
+
+
+
+Відповідь 3
+
+class ParentClass {
+    private $privateData = "Private Data";
+    
+    public function processData() {
+        $anonymousClass = new class($this->privateData) {
+            private $privateData;
+            
+            public function __construct($privateData) {
+                $this->privateData = $privateData;
+            }
+            
+            public function getProtectedData() {
+                return $this->privateData;
+            }
+        };
+        
+        echo $anonymousClass->getProtectedData();
+    }
+}
+
+$parent = new ParentClass();
+$parent->processData();
+
+Відповідь 4
+
+class Shape {
+    protected static $count = 0;
+    
+    public function __construct() {
+        self::$count++;
+    }
+    
+    public static function getCount() {
+        return self::$count;
+    }
+}
+
+class Circle extends Shape {
+    // additional code specific to Circle
+}
+
+class Rectangle extends Shape {
+    // additional code specific to Rectangle
+}
+
+echo Shape::getCount(); // Output: 0
+
+$circle = new Circle();
+echo Shape::getCount(); // Output: 1
+
+$rectangle = new Rectangle();
+echo Shape::getCount(); // Output: 2
+
+var_dump($circle instanceof Shape); // Output: bool(true)
+
+
+У цьому прикладі клас "Shape" містить статичну змінну "count" і статичний метод "getCount", які використовуються для відстеження кількості створених об'єктів. При створенні об'єктів класів "Circle" і "Rectangle", змінна "count" збільшується на 1. Виклик методу "getCount" показує поточну кількість створених об'єктів.
+
+Оператор instanceof використовується для перевірки, чи об'єкт є екземпляром певного класу. В даному випадку, використовуючи $circle instanceof Shape, ми перевіряємо, чи об'єкт $circle належить класу "Shape".
