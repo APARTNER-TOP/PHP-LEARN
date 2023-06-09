@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Уроки PHP – Інтерфейси</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <!-- hightlight -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+   <!-- and it's easy to individually load additional languages -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+   <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+   <div class="post-content">
+
+      <h2>Інтерфейси</h2>
+      Інтерфейс визначає абстрактний дизайн, якому повинен відповідати клас, що його застосовує. Інтерфейс визначає
+      методи без реалізації. А клас потім застосовує інтерфейс та реалізує ці методи. Застосування інтерфейсу гарантує,
+      що клас має певний функціонал, який описує інтерфейс.
+
+      Інтерфейс визначається за допомогою ключового слова interface , за яким слідує ім’я інтерфейсу та блок коду
+      інтерфейсу у фігурних дужках:
+
+      <pre>
+         <code>
+            interface iMessenger {}
+         </code>
+      </pre>
+
+      Тут визначено інтерфейс iMessenger.
+
+      Зазвичай ім’я інтерфейсу починається з малої літери ” i “, але це умовність.
+
+      Усередині блоку інтерфейсу у фігурних дужках визначаються сигнатури методів. Причому всі ці методи можуть бути
+      тільки публічними, тобто з модифікатором public або без модифікатора доступу ( що аналогічно модифікатору public
+      ):
+
+      <pre>
+         <code>
+            interface iMessenger
+            {
+                function send();
+            }
+         </code>
+      </pre>
+
+      Інтерфейси можуть містити лише сигнатури методів – назва функцій та список параметрів у дужках, після якого йде
+      крапка з комою.
+
+      Так було в даному випадку оголошено метод send(). Він немає реалізації – конкретну реалізацію визначить клас, який
+      реалізує цей інтерфейс.
+
+      Для реалізації класом інтерфейсу застосовується ключове слово implements , після якого вказується ім’я інтерфейсу:
+
+      <pre>
+         <code>
+            interface iMessenger
+            {
+                function send();
+            }
+             
+            class EmailMessenger implements iMessenger 
+            {
+                function send()
+                {
+                    echo "Надсилання повідомлення на e-mail";
+                }
+            }
+             
+            $outlook = new EmailMessenger();
+            $outlook->send();
+         </code>
+      </pre>
+
+      У разі клас EmailMessenger реалізує інтерфейс iMessenger. Якщо клас застосовує інтерфейс, він повинен реалізувати
+      всі методи цього інтерфейсу. Так, у даному випадку клас EmailMessenger визначає метод send() із деякою
+      реалізацією.
+
+      Інтерфейси також можуть успадковуватись від інших інтерфейсів:
+
+      <pre>
+         <code>
+            interface iMessenger
+            {
+                function send();
+            }
+             
+            interface iEmailMessenger extends iMessenger
+            {
+                  
+            }
+             
+            class SimpleEmailMessenger implements iEmailMessenger 
+            {
+                function send()
+                {
+                    echo "Надсилання повідомлення на email.";
+                }
+            }
+             
+            $outlook = new SimpleEmailMessenger();
+            $outlook->send();
+         </code>
+      </pre>
+
+      Коли нам знадобляться інтерфейси?
+
+      Інтерфейс – це договір, який говорить, що клас обов’язково реалізує певний функціонал. Та ми можемо використати це
+      у своїй програмі. Наприклад, визначимо наступний код:
+
+      <pre>
+         <code>
+            interface iMessenger 
+            {
+                function send( $message );
+            }
+             
+            function sendMessage( iMessenger $messenger, $text ) 
+            {
+                $messenger->send( $text );
+            }
+             
+            class EmailMessenger implements iMessenger 
+            {
+                function send( $message ) 
+                {
+                    echo "Надсилання повідомлення на email: $message";
+                }
+            }
+            $outlook = new EmailMessenger();
+            sendMessage( $outlook, "Hello World" );
+         </code>
+      </pre>
+
+      Для відправки повідомлення тут визначена функція sendMessage(), яка як перший параметр приймає об’єкт месандера, а
+      як другий параметр – текст, що відправляється. Причому визначення першого параметра говорить, що значення, що
+      передається цьому параметру, має реалізувати інтерфейс iMessenger. У самій функції ми знаємо, що перший параметр –
+      це об’єкт, який обов’язково реалізує інтерфейс iMessenger, тому ми можемо викликати метод send() для відправлення
+      повідомлення:
+
+      <pre>
+         <code>
+            function sendMessage( iMessenger $messenger, $text )
+            {
+                $messenger->send( $text );
+            }
+         </code>
+      </pre>
+
+      Множинне застосування інтерфейсів<br>
+      Клас може одночасно застосовувати відразу кілька інтерфейсів. У цьому випадку всі інтерфейси перераховуються через
+      кому після слова implements . А клас повинен реалізувати методи всіх інтерфейсів:
+
+      <pre>
+         <code>
+            interface iCamera 
+            {
+                function makeVideo();
+                 
+                function makePhoto();
+            }
+             
+            interface iMessenger 
+            {
+                function sendMessage( $message );
+            }
+             
+            class Mobile implements iCamera, iMessenger 
+            {
+                function makeVideo() 
+                {
+                    echo "Запис відео";
+                }
+                 
+                function makePhoto() 
+                {
+                    echo "Зйомка фото";
+                }
+                 
+                function sendMessage( $message ) 
+                {
+                    echo "Відправка повідомлення $message";
+                }
+            }
+             
+            $iphone12 = new Mobile();
+            $iphone12->makePhoto();
+         </code>
+      </pre>
+
+   </div>
+   <div class="task">
+      <br>
+      Завдання:<br>
+      Спробувати створити<br>
+      1) Повторити пройдений матеріал<br>
+      <br>
+      <br>
+   </div>
+
+   <script src="assets/js/app.js"></script>
+</body>
+
+</html>
