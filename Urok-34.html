@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки PHP – Traits aбо Трейти</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- hightlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+    <div class="post-content">
+
+        <h2>Traits aбо Трейти</h2>
+        Traits представляють групу методів, які можуть бути додані до класів. Traits дозволяють визначати блоки
+        функціоналу та багаторазово повторно використовувати у класах без необхідності ускладнювати код класів, які
+        використовують ці методи.
+
+        Traits визначаються за допомогою ключового слова trait , та назва трейту. Наприклад:
+
+        <pre>
+            <code>
+                trait Printer { }
+            </code>
+        </pre>
+
+        Traits можуть містити лише статичні та нестатичні методи:
+
+        <pre>
+            <code>
+                trait Printer
+                {
+                    public function printSimpleText( $text ) 
+                    {
+                        echo "$text<br>"; 
+                    }
+                    public function printHeaderText( $text ) 
+                    { 
+                        echo "<h2>$text<h2>"; 
+                    }
+                }
+            </code>
+        </pre>
+
+        Для застосування класів трейту застосовується оператор use , після якого вказується трейт, що додається:
+
+        <pre>
+            <code>
+                trait Printer
+                {
+                    public function printSimpleText( $text ) 
+                    {
+                        echo "$text<br>"; 
+                    }
+                    public function printHeaderText( $text ) 
+                    { 
+                        echo "<h2>$text<h2>"; 
+                    }
+                }
+                
+                class Message
+                {
+                    use Printer;
+                }
+                
+                $myMessage = new Message();
+                $myMessage->printSimpleText( "Hello World!" );
+                $myMessage->printHeaderText( "Hello PHP 8" );
+            </code>
+        </pre>
+
+        Після додавання трейту за допомогою оператора use клас може використовувати його методи, начебто вони визначені
+        в цьому класі.
+
+        Слід враховувати, що при наслідуванні методи трейту перевизначають успадковані методи з тим самим ім’ям:
+
+        <pre>
+            <code>
+                class Data 
+                {
+                    function print() 
+                    {
+                        echo "Print from Data";
+                    }
+                }
+                
+                trait Printer 
+                {
+                    function print() 
+                    {
+                        echo "Print from Printer";
+                    }
+                }
+                
+                class Message extends Data 
+                {
+                    use Printer;
+                }
+                
+                $myMessage = new Message();
+                $myMessage->print(); // Print from Printer
+            </code>
+        </pre>
+
+    </div>
+    <div class="task">
+        <br>
+        Завдання:<br>
+        Спробувати створити<br>
+        1) Повторити пройдений матеріал<br>
+        <br>
+        <br>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки PHP – Копіювання об’єктів класів</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- hightlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+    <div class="post-content">
+
+        <h2>Копіювання об’єктів класів</h2>
+
+        При присвоєнні об’єкта класу інший змінної створюється нове посилання той самий об’єкт. Наприклад:
+
+        <pre>
+            <code>
+                class Person
+                {     
+                    public $name;
+                    function __construct( $name )
+                    {         
+                        $this->name = $name;
+                    }
+                }
+                
+                $tom = new Person( "Tom" );
+                $bob = $tom;
+                $bob->name = "Bob";
+                echo $tom->name; // Bob
+            </code>
+        </pre>
+
+        В даному випадку після присвоєння $bob = $tom; обидві змінних вказуватимуть на той самий об’єкт. Тому якщо ми
+        змінимо властивість $name в однієї змінної, то ця зміна торкнеться й іншої зміни. Так як вони посилаються на той
+        самий об’єкт.
+
+        Однак така поведінка може бути небажаною, якщо ми хочемо, щоб після копіювання змінні представляли незалежні
+        один від одного об’єкти. Та для цього PHP надає оператор clone :
+
+        <pre>
+            <code>
+                class Person
+                {   
+                    public $name;
+                    
+                    function __construct( $name )
+                    {
+                        $this->name = $name;
+                    }
+                }
+                
+                $tom       = new Person( "Tom" );
+                $bob       = clone $tom; // копіюємо об'єкт із $tom у змінну $bob
+                $bob->name = "Bob";
+                echo $tom->name; // Tom
+            </code>
+        </pre>
+
+        При застосуванні оператора clone всі властивості, які являють собою примітивні типи та масиви, копіюються в
+        новий об’єкт. Однак, якщо у нас властивість класу представляє інший клас:
+
+        <pre>
+            <code>
+                class Company
+                {   
+                    public $name;
+                    
+                    function __construct( $name )
+                    {
+                        $this->name = $name;
+                    }
+                }
+                
+                class Person
+                {   
+                    public $name, $company;
+                    
+                    function __construct( $name, $company )
+                    {
+                        $this->name    = $name;
+                        $this->company = $company;
+                    }
+                }
+                
+                $microsoft = new Company( "Microsoft" );
+                $tom       = new Person( "Tom", $microsoft );
+                
+                $bob       = clone $tom;      // копіюємо об'єкт із $tom у змінну $bob
+                $bob->name = "Bob";
+            </code>
+        </pre>
+
+        Тут ми стикаємося з тією самою ситуацією, що й у першому прикладі. Клас Person містить властивість, яку
+        представляє клас Company. При клонуванні об’єкта:
+
+        <pre>
+            <code>
+                $bob = clone $tom;
+            </code>
+        </pre>
+
+        Обидві змінні $tom та $bob будуть містити посилання на той самий об’єкт Company. Відповідно, якщо через одну
+        змінну змінити властивості цього об’єкта:
+
+        <pre>
+            <code>
+                $bob->company->name = "Google";
+            </code>
+        </pre>
+
+        то зміна торкнеться й іншої змінної:
+
+        <pre>
+            <code>
+                echo $tom->company->name; // Google
+            </code>
+        </pre>
+
+        Щоб вийти із цієї ситуації, необхідно у класі визначити метод __clone . Він викликається при клонуванні і може
+        застосовуватися для клонування вкладених об’єктів:
+
+        <pre>
+            <code>
+                class Company 
+                {
+                    public $name;
+                    
+                    function __construct( $name ) {
+                        $this->name = $name;
+                    }
+                }
+                
+                class Person 
+                {
+                    public $name, $company;
+                    
+                    function __construct( $name, $company ) 
+                    {
+                        $this->name    = $name;
+                        $this->company = $company;
+                    }
+                    
+                    function __clone() 
+                    {
+                        $this->company = clone $this->company;
+                    }
+                }
+                
+                $microsoft = new Company( "Microsoft" );
+            </code>
+        </pre>
+    </div>
+    <div class="task">
+        <br>
+        Завдання:<br>
+        Спробувати створити<br>
+        1) Повторити пройдений матеріал<br>
+        <br>
+        <br>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

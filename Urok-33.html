@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки PHP – Абстрактні класи та методи</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- hightlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+    <div class="post-content">
+
+        <h2>Абстрактні класи та методи</h2>
+        Абстрактний клас представляє часткову реалізацію для класів-спадкоємців.
+
+        Абстрактний клас визначається за допомогою модифікатора abstract , який ставиться перед ім’ям класу:
+
+        <pre>
+            <code>
+                abstract class Messenger { }
+            </code>
+        </pre>
+
+        Однією з ключових особливостей абстрактних класів є те, що ми не можемо створити об’єкти абстрактного класу
+        безпосередньо за допомогою виклику його конструктора:
+
+        <pre>
+            <code>
+                abstract class Messenger { }
+                $telegram = new Messenger(); // цей рядок не працюватиме
+            </code>
+        </pre>
+
+        Абстрактні класи, як і звичайні класи, можуть визначати змінні та константи, методи та конструктори.
+
+        Але іншою особливістю абстрактних класів і те, що можуть містити абстрактні методи. Це методи, що не мають
+        реалізації. Реалізацію їм надають класи-спадкоємці. Наприклад:
+
+        <pre>
+            <code>
+                abstract class Messenger
+                {
+                    abstract function send( $message );   // абстрактний метод
+                }
+            </code>
+        </pre>
+
+        Під час визначення абстрактного методу перед словом function ставиться модифікатор abstract . А після списку
+        параметрів методу – точка з комою.
+
+        Абстрактні методи можуть бути розміщені тільки в абстрактних класах. Звичайний неабстрактний клас неспроможна
+        мати абстрактних методів.<br>
+
+        Якщо неабстрактний клас успадковується від абстрактного класу, він повинен реалізувати всі його абстрактні
+        методи.<br>
+
+        Для успадкування класом абстрактного класу, як і у випадку при успадкування, застосовується ключове слово
+        extends . Наприклад:
+
+        <pre>
+            <code>
+                abstract class Messenger
+                {
+                    protected $name;
+                     
+                    function __construct( $name )
+                    {
+                        $this->name = $name;
+                    }
+                     
+                    abstract function send( $message );
+                     
+                    function close()
+                    {
+                        echo "Вихід із месенджера...";
+                    }
+                }
+                 
+                class EmailMessenger extends Messenger 
+                {
+                    function send( $message ) 
+                    {
+                        echo "$this->name надсилає повідомлення: $message<br>";
+                    }
+                }
+                 
+                $outlook = new EmailMessenger( "Outlook" );
+                $outlook->send( "Hello PHP 8" );
+                $outlook->close();
+            </code>
+        </pre>
+
+        У разі клас EmailMessenger успадковується від абстрактного класу Messenger.
+
+        Абстрактний клас визначає абстрактний метод send(), тому клас-спадкоємець EmailMessenger зазвичай повинен надати
+        реалізацію для цього методу.
+
+        Так, у цьому випадку ми отримаємо наступний висновок:
+
+        <pre>
+            <code>
+                Outlook надсилає повідомлення: Hello PHP 8
+                Вихід із месенджера...
+            </code>
+        </pre>
+
+        Можна зауважити, що абстрактні класи схожі на інтерфейси – тому що вони обидва можуть визначати методи без
+        реалізації, що реалізуються в інших класах.
+
+        Однак абстрактні класи, як і звичайні класи, можуть мати змінні, неабстрактні методи, конструктори, а інтерфейси
+        немає. Крім того, в PHP один клас може успадковуватись тільки від одного класу, тоді як один клас може
+        застосовувати відразу кілька інтерфейсів.
+
+    </div>
+    <div class="task">
+        <br>
+        Завдання:<br>
+        Спробувати створити<br>
+        1) Повторити пройдений матеріал<br>
+        <br>
+        <br>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
