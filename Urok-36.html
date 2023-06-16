@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки PHP – Простори імен</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- hightlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+    <div class="post-content">
+
+        <h2>Простори імен</h2>
+
+        Простір імен дозволяє уникнути конфлікту імен та згрупувати функціонал. Всередині простору імен можуть бути
+        розміщені класи, інтерфейси, функції та константи.
+
+        Якщо якась конструкція ( наприклад, клас чи функція ) визначена поза будь-яким простором імен, то вважається, що
+        вона розташована у глобальному просторі імен.
+
+        <h2>Визначення просторів імен</h2>
+        Для створення простору імен застосовується директива namespace , після якої йде назва простору імен:
+
+
+        <pre>
+            <code>
+                namespace base;
+                
+                class Person 
+                {
+                    private $name;
+                    
+                    function __construct( $name ) 
+                    {
+                        $this->name = $name;
+                    }
+                }
+            </code>
+        </pre>
+
+        У разі визначено простір імен ” base ” . Зазвичай назви просторів зазначаються у нижньому регістрі. Все, що
+        розташоване нижче цієї директиви, відноситься до простору імен “base”. Тобто клас Person належить до простору
+        імен base.
+
+        Варто враховувати, що визначення простору імен має бути розташоване вище за будь-який інший код або розмітку
+        html. Наприклад:
+
+        <pre>
+            <code>
+                namespace base;
+ 
+                class Person 
+                {
+                    public $name;
+                     
+                    function __construct( $name ) 
+                    {
+                        $this->name = $name;
+                    }
+                }
+                 
+                ?>
+                < !DOCTYPE html>
+                < html >
+                < head >
+                    < title >Test< / title>
+                    < meta charset="utf-8"/>
+                < / head>
+                < body >
+                <?php
+                $tom = new Person( "Tom" );
+                echo $tom->name;
+                ?>
+                < /body >
+                < /html >
+            </code>
+        </pre>
+
+        Звернення до простору імен<br>
+        Для звернення до конструкцій із простору імен перед назвою конструкції через ” / ” вказується її простір імен.
+        Наприклад, у нас є файл Person.php :
+
+        <pre>
+            <code>
+                namespace base;
+ 
+                class Person 
+                {
+                    public $name;
+                     
+                    function __construct( $name ) 
+                    {
+                        $this->name = $name;
+                    }
+                }
+            </code>
+        </pre>
+
+        Тепер в іншому файлі підключимо цей файл та звернемося до класу Person:
+
+        <pre>
+            <code>
+                namespace work;
+ 
+                include "Person.php";
+                $tom = new \base\Person( "Tom" );
+                echo $tom->name;
+            </code>
+        </pre>
+
+        Тут визначено інший простір імен – “work”. Спочатку у ньому підключається файл “Person.php“. Потім створюємо
+        об’єкт класу Person.<br>
+        Якщо конструкції одного простору імен використовуються в іншому просторі імен (у тому числі в глобальному
+        просторі імен), перед назвою конструкції вказується назва її простору імен. Так, оскільки клас Person
+        розташований в іншому просторі імен – ” base “, перед назвою класу вказуємо його повне ім’я з урахуванням його
+        простору імен:
+
+        <pre>
+            <code>
+                $tom = new \base\Person( "Tom" );
+            </code>
+        </pre>
+
+        Зверніть увагу, що спочатку йде слєш, потім назва простору імен і потім через ” / ” назва класу ( \base\Person
+        ).
+
+        Без вказівки простору імен ми можемо використовувати конструкцію лише у тому просторі імен, у якому вона
+        визначена.
+
+        <h2>Вкладені простори імен</h2>
+
+        Одні простори імен можуть містити інші. Наприклад:
+
+        <pre>
+            <code>
+                namespace base\classes;
+ 
+                class Person 
+                {
+                    public $name;
+                     
+                    function __construct( $name ) 
+                    {
+                        $this->name = $name;
+                    }
+                }
+            </code>
+        </pre>
+
+        Тут клас Person визначений у просторі імен base\classes\. Тобто тепер для звернення до класу Person в іншому
+        просторі імен треба зазначати \base\classes\Person:
+
+        <pre>
+            <code>
+                namespace work;
+ 
+                include "Person.php";
+                 
+                $tom = new \base\classes\Person( "Tom" );
+                echo $tom->name;
+            </code>
+        </pre>
+
+        <h2>Псевдоніми</h2>
+        Якщо в одному просторі імен використовується якийсь клас з іншого простору імен, то писати щоразу повне ім’я
+        класу з урахуванням його простору імен може бути стомлюючим, крім того, перевантажує код. Наприклад:
+
+        <pre>
+            <code>
+                namespace work;
+                include "Person.php";
+                 
+                $tom = new \base\classes\Person( "Tom" );
+                echo $tom->name . "<br>";
+                $bob = new \base\classes\Person( "Bob" );
+                echo $bob->name;
+            </code>
+        </pre>
+
+        У цьому випадку ми можемо використовувати псевдоніми, які задаються як
+
+        <pre>
+            <code>
+                use повне_ім'я_класу as псевдонім;
+            </code>
+        </pre>
+
+        Конструкція use імпортує клас з іншого простору імен, а оператор as встановлює йому псевдонім.
+
+        Так, скоротимо попередній код за допомогою псевдонімів:
+
+        <pre>
+            <code>
+                namespace work;
+ 
+                include "Person.php";
+                 
+                // встановлення псевдоніму
+                use \base\classes\Person as User;
+                 
+                $tom = new User( "Tom" );
+                echo $tom->name . "<br>";
+                $bob = new User( "Bob" );
+                echo $bob->name;
+            </code>
+        </pre>
+
+        В даному випадку для класу \base\classes\Person встановлений псевдонім User, відповідно тепер для звернення до
+        класу Person ми можемо використовувати його псевдонім User.
+
+        Результат той самий, але код менший.
+
+        Можна використовувати лише конструкцію use без вказівки на псевдонім. Тоді клас можна буде використовувати на
+        його безпосередньому імені:
+
+        <pre>
+            <code>
+                namespace work;
+ 
+                include "Person.php";
+                 
+                use \base\classes\Person;
+                 
+                $tom = new Person( "Tom" );
+                echo $tom->name . "<br>";
+                $bob = new Person( "Bob" );
+                echo $bob->name;
+            </code>
+        </pre>
+
+        <h2>Підключення безлічі класів</h2>
+
+        Так само можна підключати відразу кілька класів. Наприклад, нехай у файлі Person.php є такі класи:
+
+        <pre>
+            <code>
+                namespace base\classes;
+                class Person 
+                {
+                    public $name;
+                     
+                    function __construct( $name ) 
+                    {
+                        $this->name = $name;
+                    }
+                }
+                 
+                class Employee extends Person 
+                {
+                     
+                }
+                 
+            </code>
+        </pre>
+
+        Підключення класів Person та Employee:
+
+        <pre>
+            <code>
+                namespace work;
+                include "Person.php";
+                 
+                use \base\classes\Person as User, \base\classes\Employee as Employee;
+                 
+                $tom = new User( "Tom" );
+                echo $tom->name . "<br>";
+                 
+                $sam = new Employee( "Sam" );
+                echo $sam->name;
+            </code>
+        </pre>
+
+        Визначення псевдонімів можна скоротити:
+
+        <pre>
+            <code>
+                use \base\classes\{Person as User, Employee as Employee};
+            </code>
+        </pre>
+
+        <h2>Підключення констант та функцій</h2>
+
+        Для підключення констант застосовується інструкція use const , а для підключення функцій – use function .
+
+        Наприклад, визначення файлу Person.php :
+
+        <pre>
+            <code>
+                namespace base\classes;
+ 
+                const adminName = "Odmen";
+                function printPerson( $person )
+                {
+                    echo $person->name . "<br>";
+                }
+                 
+                class Person
+                {
+                    public $name;
+                     
+                    function __construct( $name )
+                    {
+                        $this->name = $name;
+                    }
+                }
+            </code>
+        </pre>
+
+        Підключимо клас Person разом із константою adminName та функцією printPerson:
+
+        <pre>
+            <code>
+            namespace work;
+            
+            include "Person.php";
+            
+            use \base\classes\Person;
+            use const \base\classes\adminName;
+            use function \base\classes\printPerson;
+            
+            $tom = new Person( adminName );
+            
+            printPerson( $tom );  // Odmen
+            </code>
+        </pre>
+
+    </div>
+    <div class="task">
+        <br>
+        Завдання:<br>
+        Спробувати створити<br>
+        1) Повторити пройдений матеріал<br>
+        <br>
+        <br>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
