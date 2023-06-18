@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки PHP – База даних MySQL</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- hightlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+    <div class="post-content">
+
+        <h2>База даних MySQL</h2>
+
+        В сьогоднішній уроці ми розглянемо все, що потрібно знати початківцям про роботу з базою даних MySQL в PHP. Тут
+        ви знайдете докладну інформацію про те, як створити базу даних, як підключатися до бази даних, як вставляти,
+        оновлювати і видаляти дані в базі даних MySQL за допомогою PHP.<br><br>
+
+        Створення бази даних та таблиць:<br>
+
+        Для створення бази даних у MySQL використовується команда CREATE DATABASE. Наприклад, CREATE DATABASE
+        mydatabase; створить базу даних з назвою "mydatabase".
+        Для створення таблиці використовується команда CREATE TABLE. Вказується назва таблиці та стовпці разом з їх
+        типами даних. Наприклад, CREATE TABLE users (id INT, name VARCHAR(50), email VARCHAR(100)); створить таблицю
+        "users" з трьома стовпцями: "id" (ціле число), "name" (рядок до 50 символів) та "email" (рядок до 100
+        символів).<br>
+        <br>
+        Типи даних:<br><br>
+
+        INT: ціле число. Наприклад, 1, 10, -5.<br>
+        VARCHAR(n): рядок з фіксованою довжиною n. Наприклад, 'Hello', 'John Doe'.<br>
+        TEXT: довгий рядок зі змінною довжиною. Наприклад, великий текстовий блок або документ.<br>
+        DATE: дата у форматі 'рік-місяць-день'. Наприклад, '2023-06-12'.<br>
+        Інші типи даних включають BOOLEAN (логічне значення true або false), FLOAT (число з плаваючою комою), і
+        т.д.<br><br>
+
+        Вставка даних:<br>
+
+        Для вставки даних використовується команда INSERT INTO. Вказується назва таблиці та значення, які потрібно
+        вставити. Наприклад, INSERT INTO users (id, name, email) VALUES (1, 'John Doe', 'john@example.com'); вставить
+        новий рядок в таблицю "users" зі значеннями: id = 1, name = 'John Doe' та email = 'john@example.com'.<br><br>
+
+        Отримання даних та мульти-запити:<br>
+
+        Для отримання даних з бази даних використовується команда SELECT. Вказується список стовпців, які потрібно
+        отримати, та таблиця, з якої треба вибрати дані. Наприклад, SELECT id, name, email FROM users; поверне всі
+        значення стовпців id, name та email з таблиці "users".<br>
+        Мульти-запити (JOIN): Якщо дані знаходяться у різних таблицях і потрібно злити їх разом, використовуються
+        JOIN-операції. Наприклад, SELECT users.name, orders.order_number FROM users JOIN orders ON users.id =
+        orders.user_id; поверне імена користувачів та номери замовлень, злиті з таблиць "users" та "orders" за умовою
+        users.id = orders.user_id.<br><br>
+
+        Маніпуляція з даними:<br>
+
+        Для оновлення даних використовується команда UPDATE. Вказується таблиця, яку треба оновити, та нові значення
+        стовпців. Наприклад, UPDATE users SET name = 'Jane Doe' WHERE id = 1; оновить значення стовпця "name" на 'Jane
+        Doe' для рядка з id = 1 в таблиці "users".<br>
+        Для видалення даних використовується команда DELETE FROM. Вказується таблиця та умова, за якою потрібно видалити
+        дані. Наприклад, DELETE FROM users WHERE id = 1; видалить рядок з id = 1 з таблиці "users".<br><br>
+
+        <h2>
+            Створення тестової бази даних
+        </h2>
+
+        У цьому розділі ми створимо базу даних MySQL з назвою test, яка буде містити одну таблицю під назвою users.
+        Нижче представлений SQL-код, який створює базу даних, таблицю і вставляє деякі дані за замовчуванням. Ви можете
+        використовувати SQL-запит в інструменті по роботі з базами даних – <a
+            href="https://php.apartner.pro/phpMyAdmin.html">phpMyAdmin</a>.
+
+        <pre>
+            <code>
+                CREATE DATABASE if NOT EXISTS `test`;
+                USE test;
+                CREATE TABLE `users` (
+                 `id` INT(11) NOT NULL AUTO_INCREMENT,
+                 `name` VARCHAR(100) DEFAULT NULL,
+                 `age` SMALLINT(6) DEFAULT NULL,
+                 `city` VARCHAR(100) DEFAULT NULL,
+                 PRIMARY KEY  (`id`)
+                ) ENGINE=INNODB DEFAULT CHARSET=latin1;
+                INSERT  INTO `users`(`id`,`name`,`age`,`city`) VALUES (1,'Ivan',25,'Kyiv');
+                INSERT  INTO `users`(`id`,`name`,`age`,`city`) VALUES (2,'Petro',37,'Kharkiv');
+                INSERT  INTO `users`(`id`,`name`,`age`,`city`) VALUES (3,'Galina',19,'Zaporizhzhia');
+                INSERT  INTO `users`(`id`,`name`,`age`,`city`) VALUES (4,'Stepan',24,'Lviv');
+                INSERT  INTO `users`(`id`,`name`,`age`,`city`) VALUES (5,'Natasha',20,'Odesa');
+            </code>
+        </pre>
+
+        <h2>Підключення до бази даних MySQL за допомогою PHP</h2>
+
+        Щоб використовувати будь-яку базу даних в PHP (або іншими мовами програмування), вам спочатку потрібно
+        з’єднатися з сервером бази даних. Підключення до бази даних MySQL в PHP вимагає наявності певної інформації. Вам
+        необхідно отримати наступні дані для встановлення з’єднання:<br>
+
+        Ім’я хоста (hostname)<br><br>
+        Ім’я користувача бази даних (username)<br>
+        Ім’я бази даних (database)<br>
+        Пароль (password)<br>
+        <br>
+
+        Для підключення до бази даних спочатку необхідно підключитися до сервера бази даних MySQL, а на наступному кроці
+        вибрати необхідну базу даних. Звичайно, якщо з’єднання з сервером не вдалося, то немає сенсу продовжувати
+        сценарій, тому ми обриваємо підключення. Давайте подивимося, як це виглядає в PHP:<br>
+
+        <pre>
+            <code>
+                $db_handle = mysqli_connect("localhost", "username", "password");
+                if($db_handle === false){
+                die("ПОМИЛКА: Неможливо підключитися. " . mysqli_connect_error());
+                }
+                echo "Підключення до сервера пройшло успішно! <br>";
+                mysqli_select_db($db_handle, "test") or die(mysqli_error());
+                echo "База даних була обрана!";
+                mysqli_close($db_handle);
+            </code>
+        </pre>
+
+        Як ви можете бачити, функція mysqli_connect() встановлює з’єднання з сервером MySQL, і в якості наступного кроку
+        ми можемо обрати базу даних за допомогою функції mysqli_select_db().<br>
+
+        ВАЖЛИВО! Зверніть увагу, що ми використовуємо mysqli_connect() замість mysql_connect(), оскільки останнє
+        розширення застаріло починаючи з версії PHP 5.5.0 і було видалено в PHP 7.0.0.<br>
+
+        Якщо ви виконаєте наведений вище скрипт, ви повинні побачити наступне (за умови, що ваші дані для підключення
+        коректні):
+
+        <b>Підключення до сервера пройшло успішно! База даних була обрана!</b>
+
+        <h2>Закриття з’єднання з базою даних</h2>
+
+        Перш ніж продовжимо, ми хочемо згадати одну важливу деталь. Мається на увазі закриття з’єднання з базою даних.
+        Починаючи з PHP 4, вам не потрібно закривати з’єднання з базою даних, як описано вище. Це робиться автоматично
+        збирачем сміття PHP. Однак рекомендується закривати з’єднання з базою даних, щоб звільняти ресурси і пам’ять. Ви
+        можете закрити з’єднання з базою даних MySQL, викликавши функцію mysqli_close(). Ця функція закриває фактичне
+        з’єднання з базою даних.
+
+        <h2>Отримання даних за допомогою PHP з бази даних MySQL</h2>
+
+        Тепер прийшов час зробити щось більш цікаве. Наприклад, давайте спробуємо витягти дані з нашої таблиці. Для
+        цього спочатку потрібно відкрити з’єднання і вибрати відповідну базу даних, як і раніше. Наступним кроком є
+        ​​відправка SQL-запиту – в даному випадку оператора SELECT – в базу даних. Тепер спробуйте отримати всі записи з
+        MySQL бази. Приклад SQL-запиту для цього:
+
+        <pre>
+            <code>
+                SELECT * FROM users;
+            </code>
+        </pre>
+
+        Нам потрібно надіслати цю команду на сервер і зберегти відповідь. Ми можемо зробити це, використовуючи функцію
+        mysqli_query() наступним чином:
+
+        <pre>
+            <code>
+                $db_handle = mysqli_connect("localhost", "username", "password");
+                if($db_handle === false){
+                die("ПОМИЛКА: Неможливо підключитися. " . mysqli_connect_error());
+                }
+                mysqli_select_db($db_handle, "test") or die(mysqli_error());
+                $result = mysqli_query($db_handle, "SELECT * FROM users");
+                echo $result;
+            </code>
+        </pre>
+
+        Цей запит робочий, але як відобразити дані зі змінної $result? Якщо ви спробуєте вивести її за допомогою echo,
+        ви отримаєте щось на зразок цього: <b>PHP Recoverable fatal error: Object of class mysqli_result could not be
+            converted to string</b><br>
+
+        Це не те, що нам потрібно. Для правильного відображення обраних даних вам потрібно зробити трохи більше. У PHP є
+        функції, які ви можете використовувати для отримання даних з результуючого набору бази даних MySQL. Ось ці
+        функції:<br><br>
+
+        mysqli_fetch_assoc() – витягує результуючий ряд у вигляді асоціативного масиву<br>
+        mysqli_fetch_row() – отримує рядки результуючої таблиці у вигляді масиву<br>
+        mysqli_fetch_array() – витягує рядок результату як асоціативний масив, звичайний масив або обидва<br><br>
+
+        Всі вони перетворять один запис результату в масив, і пізніше ви можете використовувати цей масив на свій
+        розсуд. Для отримання масиву необхідно викликати одну з вищезгаданих функцій. В даному прикладі ми
+        використовуємо асоціативну версію.
+
+        <pre>
+            <code>
+                $row = mysqli_fetch_assoc($result);
+                echo "ID: " . $row['id'] . ", Ім’я:" . $row['name'] . ", Вік:" . $row['age'] . ", Місто:" . $row['city'] . "<br>";
+            </code>
+        </pre>
+
+        Однак функція повертає тільки один запис, а в наборі результатів повинно бути 5 записів. Щоб обробити всі
+        записи, нам потрібно створити цикл. Функції вибірки повертають масив, якщо в наборі результатів є запис, і
+        повертають false, якщо записів більше немає. Для вибірки ми будемо використовувати простий цикл while:
+
+        <pre>
+            <code>
+                $result = mysqli_query($db_handle, "SELECT * FROM users");
+                while($row = mysqli_fetch_assoc($result)){
+                    echo "ID: " . $row['id'] . ", Ім’я:" . $row['name'] . ", Вік:" . $row['age'] . ", Місто:" . $row['city'] . "<br>";
+                }
+            </code>
+        </pre>
+
+        Як бачите, це не складне завдання. У наступному розділі ми будемо вставляти дані в базу даних.
+
+        <h2>Вставка даних в базу даних за допомогою PHP</h2>
+
+        У цьому розділі ми створимо код для вставки нових записів в нашу базу даних MySQL. Це досить легко. Нам також
+        потрібно створити з’єднання з базою даних, і ми знову будемо використовувати функцію mysqli_query(). Однак в
+        цьому випадку ми будемо використовувати її з оператором вставки в SQL. Тепер давайте спробуємо додати нового
+        користувача в нашу таблицю. Даний SQL-запит буде виглядати наступним чином:
+
+        <pre>
+            <code>
+                INSERT INTO users (name,age,city) VALUES ('Danilo',44,'Dnipro');
+            </code>
+        </pre>
+
+        Тепер збережіть цей SQL-запит у змінній і передайте його в якості параметра mysqli_query наступним чином:
+
+        <pre>
+            <code>
+                $sql = "INSERT INTO users (name,age,city) VALUES ('Danilo',44,'Dnipro')";
+                $result = mysqli_query($db_handle, $sql);
+            </code>
+        </pre>
+
+        Крім цього нам потрібно перевірити результат і повідомити користувачеві, якщо сталася помилка. Повний код ви
+        знайдете в кінці цього уроку.
+
+        <h2>Оновлення даних в базі даних за допомогою PHP</h2>
+
+        Оновлення даних майже таке ж, як і вставка. Вам потрібно лише змінити оператор в SQL-запиті і використовувати
+        його, як і раніше:
+
+        <pre>
+            <code>
+                $sql = "UPDATE users SET age=45 WHERE name='Danilo'";
+                $result = mysqli_query($db_handle, $sql);
+            </code>
+        </pre>
+
+        <h2>Видалення даних з бази даних за допомогою PHP</h2>
+
+        Як ви, напевно, знаєте, тут приблизно все однакове. Тільки потрібно замінити оператор в SQL-запиті:
+
+        <pre>
+            <code>
+                $sql = "DELETE FROM users WHERE name='Danilo'";
+                $result = mysqli_query($db_handle, $sql);
+            </code>
+        </pre>
+
+        <h2>Повний приклад скрипта PHP по роботі з базою даних MySQL</h2>
+
+        Нижче ви побачите повний код, який демонструє всі 4 основних оператора SQL. За допомогою цього коду ви
+        дізнаєтеся, як використовувати PHP для внесення змін в дані в базі даних MySQL.
+
+        <pre>
+            <code>
+                $db_handle = mysqli_connect("localhost", "username", "password");
+                if($db_handle === false){
+                die("ПОМИЛКА: Неможливо підключитися. " . mysqli_connect_error());
+                }
+                mysqli_select_db($db_handle, "test") or die(mysqli_error());
+                echo "<br>Крок  1. Вставка даних<hr>";
+                $sql = "INSERT INTO users (name,age,city) VALUES ('Danilo',44,'Dnipro')";
+                $result = mysqli_query($db_handle, $sql);
+                if ($result){
+                echo "Дані були вставлені!<br>";
+                } else {
+                echo "Сталася помилка під час вставки!<br>";
+                }
+                $result = mysqli_query($db_handle, "SELECT * FROM users");
+                while($row = mysqli_fetch_assoc($result)){
+                echo "ID: " . $row['id'] . ", Ім’я:" . $row['name'] . ", Вік:" . $row['age'] . ", Місто:" . $row['city'] . "<br>";
+                }
+                echo "<br>Крок  2. Оновлення даних<hr>";
+                $sql = "UPDATE users SET age=45 WHERE name='Danilo'";
+                $result = mysqli_query($db_handle, $sql);
+                if ($result){
+                echo "Дані були оновлені!<br>";
+                } else {
+                echo "Сталася помилка під час оновлення!<br>";
+                }
+                $result = mysqli_query($db_handle, "SELECT * FROM users");
+                while($row = mysqli_fetch_assoc($result)){
+                echo "ID: " . $row['id'] . ", Ім’я:" . $row['name'] . ", Вік:" . $row['age'] . ", Місто:" . $row['city'] . "<br>";
+                }
+                echo "<br>Крок  3. Видалення даних<hr>";
+                $sql = "DELETE FROM users WHERE name='Danilo'";
+                $result = mysqli_query($db_handle, $sql);
+                if ($result){
+                echo "Дані були видалені!<br>";
+                } else {
+                echo "Сталася помилка під час видалення!<br>";
+                }
+                $result = mysqli_query($db_handle, "SELECT * FROM users");
+                while($row = mysqli_fetch_assoc($result)){
+                echo "ID: " . $row['id'] . ", Ім’я:" . $row['name'] . ", Вік:" . $row['age'] . ", Місто:" . $row['city'] . "<br>";
+                }
+                mysqli_close($db_handle);
+            </code>
+        </pre>
+
+        Цей код є повністю робочим, і ви можете використовувати його на практиці. Звичайно, ви можете поліпшити код і
+        додати свої дані, але для демонстрації цього коду цілком достатньо.<br>
+
+        На сьогодні все, дякуємо за увагу!
+
+
+    </div>
+    <div class="task">
+        <br>
+        Завдання:<br>
+        Спробувати створити<br>
+        1) Повторити пройдений матеріал<br>
+        <br>
+        <br>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
