@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки PHP – Як використовувати AJAX в PHP та jQuery</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- hightlight -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/codeHightLight.css">
+</head>
+
+<body>
+    <div class="post-content">
+
+        <h2>Як використовувати AJAX в PHP та jQuery</h2>
+
+        Сьогодні ми збираємося дослідити концепцію AJAX з PHP. Техніка AJAX допомагає вам покращити користувальницький
+        інтерфейс вашої програми та покращити загальне сприйняття кінцевого користувача.
+
+        <h2>Що таке AJAX?</h2>
+
+        AJAX розшифровується як асинхронний JavaScript та XML і дозволяє асинхронно отримувати контент із внутрішнього
+        сервера без оновлення сторінки. Це дозволяє оновлювати вміст веб-сторінки без перезавантаження.<br><br>
+
+        Давайте розглянемо приклад, щоб зрозуміти, як ви можете використовувати AJAX у повсякденній розробці програм.
+        Скажімо, ви хочете створити сторінку, яка відображає інформацію профілю користувача, з різними розділами, такими
+        як особиста інформація, соціальна інформація, повідомлення, повідомлення та інше.<br><br>
+
+        Звичайний підхід полягає у створенні різних веб-сторінок для кожного розділу. Так, наприклад, користувачі
+        клацають посилання соціальної інформації, щоб перезавантажити браузер і відобразити сторінку із соціальною
+        інформацією. Це уповільнює навігацію між розділами, оскільки користувачеві доводиться чекати перезавантаження
+        браузера та повторного відображення сторінки щоразу.<br><br>
+
+        З іншого боку, ви можете використовувати AJAX для створення інтерфейсу, який завантажує всю інформацію без
+        оновлення сторінки. У цьому випадку ви можете відобразити різні вкладки для всіх розділів, і, натиснувши на
+        вкладку, він витягує відповідний вміст із внутрішнього сервера та оновлює сторінку, не оновлюючи браузер. Це
+        допоможе покращити загальне сприйняття кінцевого користувача.<br><br>
+
+        Загальний виклик AJAX працює приблизно так:<br>
+
+        <img
+            src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QAWRXhpZgAASUkqAAgAAAAAAAAAAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAG8AyADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKzNa1ZdF003r209yfNihSGDbvd5JFjUDcyr95x1IoA06K5//hIdU/6EzXP+/wBZf/JFH/CQ6p/0Jmuf9/rL/wCSKAOgorn/APhIdU/6EzXP+/1l/wDJFH/CQ6p/0Jmuf9/rL/5IoA6Ciuf/AOEh1T/oTNc/7/WX/wAkUf8ACQ6p/wBCZrn/AH+sv/kigDoKK5//AISHVP8AoTNc/wC/1l/8kUf8JDqn/Qma5/3+sv8A5IoA6Ciuf/4SHVP+hM1z/v8AWX/yRR/wkOqf9CZrn/f6y/8AkigDoKK5/wD4SHVP+hM1z/v9Zf8AyRR/wkOqf9CZrn/f6y/+SKAOgorn/wDhIdU/6EzXP+/1l/8AJFH/AAkOqf8AQma5/wB/rL/5IoA6Ciuf/wCEh1T/AKEzXP8Av9Zf/JFH/CQ6p/0Jmuf9/rL/AOSKAOgorn/+Eh1T/oTNc/7/AFl/8kUf8JDqn/Qma5/3+sv/AJIoA6Ciuf8A+Eh1T/oTNc/7/WX/AMkUf8JDqn/Qma5/3+sv/kigDoKK5/8A4SHVP+hM1z/v9Zf/ACRR/wAJDqn/AEJmuf8Af6y/+SKAOgorI0bWv7aF6Gsbuymsrj7PNBdGMsG8tJAQY3ZSCsi9/WtegAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKA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Of8A+Ee1T/oc9c/782X/AMj0f8I9qn/Q565/35sv/keugooA5/8A4R7VP+hz1z/vzZf/ACPR/wAI9qn/AEOeuf8Afmy/+R66CigDn/8AhHtU/wChz1z/AL82X/yPR/wj2qf9Dnrn/fmy/wDkeugooA5//hHtU/6HPXP+/Nl/8j0f8I9qn/Q565/35sv/AJHroKKAOf8A+Ee1T/oc9c/782X/AMj0f8I9qn/Q565/35sv/keugooA4HxloeoQeBvEEj+K9YmRNNuWaKSK0CuBE3ynbADg9OCD6EV31c/47/5J74l/7BV1/wCimroKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn7P/AJKHrP8A2CrD/wBG3ddBXP2f/JQ9Z/7BVh/6Nu6AOgooooAKKKKACiiigAooooAKKKKACue8Zf8AIEtv+wrpv/pbDXQ1z3jL/kCW3/YV03/0thoA6GiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA5/w9/wAhvxZ/2FY//SK1roK5/wAPf8hvxZ/2FY//AEita6CgAooooAKKKKACiiigAooooAKKKKACiiigArjfihomo+IvhzqulaVb/aL6fyfLi3Km7bMjHliAOATya7KigDx7xb4K8Q6lJ8RpbHT/ADJNW/sw6cwmjUyeTt8zBLDbjHfGccZp/inwPr+sP8SBbWiAayunGwZ5UAnMABcdflORgbsAkjnHNevUUAeZT6B4oTWPH+paZZQQXOqRWDaY90Y3BeOPD5XJAZT0LcbsHkVha74K8S6lp3xBjt9NuGOsf2c1kk93EzymIr5uTvwpGO+BxgZwK9qooA434oaJqPiL4c6rpWlW/wBovp/J8uLcqbtsyMeWIA4BPJrJ8c+E9U1fxAt7ZreT2U2lTaZJbWksERUuwOS0ysFQgYYoC42rgHkV6RRQB5bq/g/XI9Vil0u2llmmgs4riW6uIbi1n8kjJnjdVYMoyVaMHLHOErF8MaNf6xreomziEUdl46u72e9DqCERcGLH3ju39uMbs44z7ZVS1sbSxM/2S0gt/PlaebyYwnmSN952x1Y4GSeTQBwH/CHa1/wkm7J8r/hJP7Z+371z5HkeX5GPvZz8vTG3nOayF8E+IUkMg08Bj49/tcsJowTZf89M7unJ+X73PSvYaKAPK9O8Ga3b6hPY2sL2Wmm3vY0kupIbj7O82drWsgAlAJO5w4AzwN3Wr/w/8L6nol7Hcail8jwaZDp7Ga4tzHIYzkGNIkB2DLbWdt5DEFeAa9FooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAOf8d/8k98S/8AYKuv/RTV0Fc/47/5J74l/wCwVdf+imroKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn7P/koes/8AYKsP/Rt3XQVz9n/yUPWf+wVYf+jbugDoKKKKACiiigAooooAKKKKACiiigArnvGX/IEtv+wrpv8A6Ww10Nc94y/5Alt/2FdN/wDS2GgDoaKKKACiiigAooooAKKKxY/E+jzXsVst2Q8z+XE7ROsUz8/KkhGxz8p4Uk8UAbVFc7p/jXw9qn9j/Y9Q83+2fP8AsH7mRfO8nPmdVG3GD97Ge2a6KgAooqOKRJk3oysuSMg5GQcH9RQBJRWDH4s0SXUIrJL075ZWhikMMgikkBIKLKV2M4IPyhieDxxVvS9b0/WjejT7jzvsV3JZ3HyMuyZMbl5AzjI5GR70AadFZml63p+tG9Gn3HnfYruSzuPkZdkyY3LyBnGRyMj3rToAKKKKACiiigAooooA5/w9/wAhvxZ/2FY//SK1roK5/wAPf8hvxZ/2FY//AEita6CgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAOf8d/8k98S/8AYKuv/RTV0Fc/47/5J74l/wCwVdf+imroKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn7P/koes/8AYKsP/Rt3XQVz9n/yUPWf+wVYf+jbugDoKKKKACiiigAooooAKKKKACiiigArnvGX/IEtv+wrpv8A6Ww10Nc94y/5Alt/2FdN/wDS2GgDoaKKKACiiigAooooAztatrm70DUbWxm8m8mtZY4JP7jlSFP4Eiuc8Fa3ptt4Z0HRHnC6rBZwWtxZIjNLBIsYDeYqgmMZU/M2AeOeRXaUUAeD/Du+u7ez+FFnDdTx211/a/nwpIQku0uV3KOGweRnpW74E1bxFeeKIF1K8iF07Xa6nYtdzSvHhz5REXl+XbgAAD5h5itu5IxXrdFAHhvgjWNWvIPh3Fd6rqFwmtw6pDfGS7kLOsZYoQ2cqw7MCG9+BjrfgrALX4YafE3mrOs1wtxE7sTFIJnBXaT8nAB2gDkk4yST6LRQB5Foc8vhjxDY6X4V1ddT0a4v2in0WaHZcaarF2aQZ2ssYPPzDkYxndmorXWtbOj686X128MfjZ7S5naZi1tZb03BDzsUZxxgAEnivYqKAPC9PvdTsvCfiiXSpH8p/GsyXlw0zQlLYlN7mRVJjHTLgZUEntXo/gG5vrvw7I17eRXiLdyrbTRSSygwZ+QeZIiGTGSN4BDAA5OTXW0UAFFFFABRRRQAUUUUAc/4e/5Dfiz/ALCsf/pFa10Fc/4e/wCQ34s/7Csf/pFa10FABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAc/wCO/wDknviX/sFXX/opq6Cuf8d/8k98S/8AYKuv/RTV0FABRRRQAUUUUAFFFct431jU9E0BL3TLaWXF1Ety8MfmSQ25b95IiYO5gOx4GcnpigDqaK4vRvFWnReFb7xBL4oTWNJgG8XBgVJohgEpIEABbJGBsU8gHPWn33xB0zTfDuq6te2d/A2lSRx3lkyRmeMyFNnAcoQQ6nhume4xQB2NFcx/wmlhENZW/trywfSYBczpcqmXhIYh02MwYHaRjg54IFQy+PtMtrhIp7W9iCx28l27Im2x884iWb5s5J4+UNjvgc0AdbRWBY+KLbUPFWq6Bb2l2bjS/J+0zMEEQ81N64O7ceBjp19ua57xr4nutC8QWNveXl1pGhXEDbtUtoFlKXO9QqPvR1RNpJzjJJ7YJoA9AoriJNduIvEXguxOvC5XU47ppGtLOMwXoSIMrFi5aMDORt3bjwcCqM/jeXUfHXhC10e4lGk6hLqEdwWhXbc+SnylWIJADhumM9+MUAei0VzGleNdM1jU47O3S4QXHnfY7h1UR3fkttl8vDE/KT/EFz1GRXT0AFFFFABRRRQAVz9n/wAlD1n/ALBVh/6Nu66Cufs/+Sh6z/2CrD/0bd0AdBRRRQAUUUUAFFFFABRRRQAUUUUAFc94y/5Alt/2FdN/9LYa6Gue8Zf8gS2/7Cum/wDpbDQB0NFFFABRRRQAUUUUAFFFcp4i1iS18UeF9EhlaNtSu5Xk25BaOGJnIyPVtmfUZHrQB1dFeD+CdY1NtC8GX9xfaxBPfamYLjUb++a4trtN0oEKxmVtrnaqhii4Knk/xd7F8REXRvE+sXunrb2OhX09kzLPved42UDClQBuLAdeD60Ad3RXEXHj/wCxQap9s05I7rSby2h1CJLrcsMM20rMG2jICtkggfdbnAzUJ+JNs0uo2ttYtLc22qQ6bbRNKU+1F3KGRTt4VSk3QEfujz6AHe0VwekfEi21Ke/aSzjt7ayjnkmzdr9ohWLOTLCwUruAypUuMdStVtL+KtlqemarcJb27XFlpTatHBBerLviAJ2OQv7uQEAMuG27hyaAPRaK4LT/ABbdXfiLwnJcRC2g8RadNLHbLMZQrIkcqnO0AHa8gPHOBz0Fd7QAUUUUAFFFFABRRRQBz/h7/kN+LP8AsKx/+kVrXQVz/h7/AJDfiz/sKx/+kVrXQUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBz/AI7/AOSe+Jf+wVdf+imroK5/x3/yT3xL/wBgq6/9FNXQUAFFFFABRRRQAVQ1O2vrqz8uw1A2VyGDLN5Kyqcfwsp6qe+Cp9CKv0UAcO3w5sbzS/EVtqNz5k+vmNrqS2i8mNGjACGOMlsEEbiSSSepqpefDCO88HazoYu9Ps5dUaEvNYaVHbxxiN1YAIp3NnB+85wWOMDivQ6KAOT8T+CoPEurabfPey2y2x23UMagreQh1kEb56AOgP0LDvkUtZ+HFhq/iW41j/Qg14sS3QudOiunPl8AxNJkRkr8rZVsgDGCM13NFAHO6V4ZOl+LvEWvC883+2fs37jy9vk+TGU+9k7s5z0GPerGsaZqd9Khs9ThghKGOe1ubNbiKQHvjcrBu33iuOqmtqigDh9P+Hlrpl34Rks76UQeHEukWOVN7XBmTaSWyNuDk4wRzjjFRab8OE0rWPD1zbakVstDlvXtrQ24yVuAcqX3fwknnHIwOOp72igDhvDXw4sPDOrx3VqLLyLdpWtwmnRrcDzCSQ85yzBQSq7dnynB3V3NFFABRRRQAUUUUAFc/Z/8lD1n/sFWH/o27roK5+z/AOSh6z/2CrD/ANG3dAHQUUUUAFFFFABRRRQAUUUUAFFFFABXPeMv+QJbf9hXTf8A0throa57xl/yBLb/ALCum/8ApbDQB0NFFFABRRRQAUUUUAFc9r2iPqGt+H9VgQGfS7t2OQMmKSNo3AJ+qt/wH1xXQ0UAcVo3w303R7XS7M6hqN7p+lzm5s7S7MJjimyxEmUjViQXYjLEDPTgYv23gjSIdK13TJBPcWmtXc15dJM44eXG4KVAwBtGOpHrXTUUAc4PCGnNpur2dw1xcNq4K3lxKw8yT5BGOQABhQMYHbPWs7Tvhr4f0vUNAvLdJhPokDwWxJX94G3EmTCjJyzkYwMsTiu0ooA5ZPBGmtqw1C7mvb5kjmihiu5Q6xJLxIA2N7Ajj52bA4XApLfwVaW+i3ukNqOqTWdzZNp6RyTgrbwFSoWNQoXIBwGYM3ABJArqqKAOTtfCaWuueHXRWez0DTXtbZ5drOzuI0zkY5CRnJwM7+O4rrKKKACiiigAooooAKKKKAOf8Pf8hvxZ/wBhWP8A9IrWugrn/D3/ACG/Fn/YVj/9IrWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDn/AB3/AMk98S/9gq6/9FNXQVz/AI7/AOSe+Jf+wVdf+imroKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn7P/koes/9gqw/9G3ddBXP2f8AyUPWf+wVYf8Ao27oA6CiiigAooooAKKKKACiiigAooooAK57xl/yBLb/ALCum/8ApbDXQ1z3jL/kCW3/AGFdN/8AS2GgDoaKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDn/D3/Ib8Wf9hWP/ANIrWugrn/D3/Ib8Wf8AYVj/APSK1roKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA5/x3/wAk98S/9gq6/wDRTV0Fc/47/wCSe+Jf+wVdf+imroKACiiigAooooAK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6Duh/wDgmm/+SqPsfi//AKDuh/8Agmm/+SqAOgorn/sfi/8A6Duh/wDgmm/+SqPsfi//AKDuh/8Agmm/+SqAIPGU8Vz8OvEzwyxyoNNvELIwYBljdWHHcMCCOxBFdPXkXi3StVuIPFErX2mqbXSJpL+50+xktnncwsEhf9+6SEIMnzFJRZEKYL7l9doAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACufs/8Akoes/wDYKsP/AEbd10Fc/Z/8lD1n/sFWH/o27oA6CiiigAooooAKKKKACiiigAooooAK57xl/wAgS2/7Cum/+lsNdDXPeMv+QJbf9hXTf/S2GgDoaKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDn/D3/ACG/Fn/YVj/9IrWugrn/AA9/yG/Fn/YVj/8ASK1roKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA5jxlBFbfDrxMkMUcSHTbxyqKFBZo3Zjx3LEknuSTXT1z/jv/knviX/ALBV1/6KaugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACufs/+Sh6z/wBgqw/9G3ddBXP2f/JQ9Z/7BVh/6Nu6AOgooooAKKKKACiiigAooooAKKKKACue8Zf8gS2/7Cum/wDpbDXQ1z3jL/kCW3/YV03/ANLYaAOhooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAOf8Pf8hvxZ/wBhWP8A9IrWugrn/D3/ACG/Fn/YVj/9IrWugoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDn/AB3/AMk98S/9gq6/9FNXQVz/AI7/AOSe+Jf+wVdf+imroKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArn7P/koes/9gqw/9G3ddBXP2f8AyUPWf+wVYf8Ao27oA6CiiigAooooAKKKKACiiigAoooo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S3jW5khZnaN7hmI8qRwBiVOpHegDp6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9k=" />
+
+        <br>
+
+        Давайте швидко пройдемося по звичайному потоку AJAX:
+
+        Спочатку користувач зазвичай відкриває веб-сторінку синхронним запитом.<br>
+        Потім користувач натискає елемент DOM - зазвичай кнопку чи посилання - який ініціює асинхронний запит до
+        серверу. Кінцевий користувач не помітить цього, оскільки виклик виконується асинхронно та не оновлює браузер.
+        Однак, ви можете розпізнати ці AJAX-дзвінки за допомогою такого інструменту, як Firebug.<br>
+        У відповідь на запит AJAX сервер може повернути ці рядки XML, JSON або HTML.<br>
+        Дані відповіді аналізуються за допомогою JavaScript.<br>
+        Зрештою, проаналізовані дані оновлюються в DOM веб-сторінки.<br><br>
+        Отже, як ви можете бачити, веб-сторінка оновлюється в реальному часі з сервера без перезавантаження
+        браузера.<br>
+
+        У наступному розділі ми розповімо, як реалізувати AJAX за допомогою ванільного JavaScript.
+
+        <h2>Як AJAX працює з використанням Vanilla JavaScript</h2>
+
+        У цьому розділі ми побачимо, як AJAX працює у звичайному JavaScript. Звичайно є доступні бібліотеки JavaScript,
+        які полегшують виконання AJAX-дзвінків, але завжди цікаво знати, що відбувається всередині.<br><br>
+
+        Давайте подивимося на наступний ванільний код JavaScript, який виконує виклик AJAX та асинхронно отримує
+        відповідь від сервера.<br>
+
+        <pre>
+            <code>
+                < script > _ _
+                    var objXMLHttpRequest = новий  XMLHttpRequest ();
+                    objXMLHttpRequest.onreadystatechange = функція()  {
+                        if (objXMLHttpRequest.readyState === 4) {
+                            if (objXMLHttpRequest.status === 200) {
+                                alert(objXMLHttpRequest.responseText);
+                            } else {
+                                alert(' Error Code: ' + objXMLHttpRequest.status);
+                                alert(' Error Message : ' + objXMLHttpRequest.statusText);
+                            }
+                        }
+                    }
+                    objXMLHttpRequest.open(' GET ', ' request_ajax_data.php ');
+                    objXMLHttpRequest.send();
+                    < / script >
+            </code >
+        </pre >
+
+                        Давайте пройдемося за наведеним вище кодом, щоб зрозуміти, що відбувається за лаштунками.< br > <br>
+
+                            Спочатку ми ініціалізуємо об'єкт XMLHttpRequest, який відповідає за виконання викликів AJAX.<br>
+                                Об'єкт XMLHttpRequestмає властивість readyState, і значення цієї властивості змінюється протягом життєвого
+                                циклу
+                                запиту. Воно може містити одне з чотирьох значень: OPENED, HEADERS_RECEIVED, LOADINGі DONE.<br>
+                                    Ми можемо налаштувати функцію-обробник для зміни стану, використовуючи властивість onreadystatechange. І це
+                                    те,
+                                    що ми зробили в наведеному вище прикладі: ми використовували функцію, яка буде викликатись щоразу при зміні
+                                    якості стану.<br>
+                                        У цій функції ми перевірили, чи значення readyState 4, що означає, що запит завершено, і ми отримали
+                                        відповідь
+                                        від сервера. Потім ми перевірили, чи дорівнює код стану 200, що означає, що запит був успішним. Нарешті, ми
+                                        отримуємо відповідь, яка зберігається як responseTextоб'єкт XMLHttpRequest.<br>
+                                            Після налаштування обробника ми ініціюємо запит, викликаючи метод openоб'єкта XMLHttpRequest. Значення
+                                            властивості readyStateбуде встановлено 1 після цього виклику.<br>
+                                                Нарешті ми викликали метод sendоб'єкта XMLHttpRequest, який фактично надсилає запит на сервер. Значення
+                                                властивості readyStateбуде встановлено 2 після цього виклику.<br>
+                                                    Коли сервер відповідає, він зрештою встановить значення readyStateрівним 4 і ви повинні побачити вікно
+                                                    попередження, що відображає відповідь від сервера.<br><br>
+
+
+                                                        Ось як AJAX працює з ванільним JavaScript. Звичайно, це був дуже простий приклад для демонстрації концепції
+                                                        AJAX, і в реальному додатку все може бути досить складно, тому що вам потрібно обробити багато різних
+                                                        сценаріїв успіху та невдач. Таким чином, було б непогано вибрати бібліотеку JavaScript, яка ховає специфічні
+                                                        складності браузера!<br>
+
+                                                            У наступному розділі ми побачимо, як використовувати бібліотеку jQuery для здійснення викликів AJAX.<br>
+
+                                                                <h2>Як працює AJAX з використанням бібліотеки jQuery</h2>
+
+                                                                У попередньому розділі ми обговорювали, як можна здійснювати дзвінки AJAX, використовуючи ванільний
+                                                                JavaScript. У цьому розділі ми будемо використовувати бібліотеку jQuery, щоб продемонструвати це. Я
+                                                                припускаю, що ви знаєте основу бібліотеки jQuery.<br><br>
+
+                                                                    Бібліотека jQuery надає кілька різних методів для виконання викликів AJAX, хоча тут ми розглянемо
+                                                                    стандартний метод ajax, який найчастіше використовується.<br><br>
+
+                                                                        Подивіться наступний приклад.<br><br>
+
+                                                                            <pre>
+                                                                                <code>
+                                                                                    < script > _ _
+                                                                                        $ . ajax (
+                                                                                        ' request_ajax_data.php ' ,
+                                                                                        {
+                                                                                            success :  function ( data )  {
+                                                                                            alert(' AJAX call was successful! ');
+                                                                                        alert ( ' Data from the server '  +  data );
+                                                                                      },
+                                                                                        error :  function ()  {
+                                                                                            alert(' There was some error performing the AJAX call! ');
+                                                                                      }
+                                                                                   }
+                                                                                        );
+                                                                                        < /script >
+                                                                                </code>
+                                                                            </pre>
+
+
+
+                                                                            Як ви вже знаєте, знак $використовується для посилання на jQuery об'єкт.<br><br>
+
+                                                                                Першим параметром методу ajaxє URL-адреса, яка буде викликатись у фоновому режимі для отримання вмісту з
+                                                                                боку сервера. Другий параметр має формат JSON і дозволяє вказувати значення деяких різних параметрів,
+                                                                                підтримуваних методом ajax.<br><br>
+
+                                                                                    У більшості випадків вам потрібно буде вказувати функції зворотного виклику (коллбеки) для успішного
+                                                                                    виконання та помилок. Функцію зворотного виклику для успіху буде викликано після успішного завершення
+                                                                                    виклику AJAX. Відповідь, повернена сервером, буде передана коллбеку для успіху. З іншого боку, коллбек для
+                                                                                    помилки буде викликаний, якщо щось піде не так, і виникла проблема під час виклику AJAX.<br><br>
+
+                                                                                        Отже, як ви можете бачити, операції AJAX легко виконувати за допомогою бібліотеки jQuery. Фактично, процес
+                                                                                        більш менш однаковий, незалежно від бібліотеки JavaScript, з якою ви вирішуєте здійснювати виклики
+                                                                                        AJAX.<br><br>
+
+                                                                                            У наступному розділі ми побачимо реальний приклад, щоб зрозуміти, як це працює з PHP.<br><br>
+
+                                                                                                <h2>Реальний приклад AJAX з PHP</h2>
+
+                                                                                                У цьому розділі ми створимо приклад, який витягує контент JSON з PHP-файлу на стороні сервера,
+                                                                                                використовуючи AJAX.<br><br>
+
+                                                                                                    Для демонстрації ми створимо приклад, який виконує вхід користувача за допомогою AJAX та jQuery. Спочатку
+                                                                                                    давайте створимо файл index.php , як показано в наступному фрагменті, який відображає базову форму
+                                                                                                    входу.<br><br>
+
+                                                                                                        <textarea style="height: 50vh">
+                                                                                                            <!doctype html>
+                                                                                                            <html>
+                                                                                                                <head>
+                                                                                                                    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous" ></script>
+    </head>
+    <body>
+    <form  id= "loginform"  method= "post" >
+        <div>
+            Username:
+            <input  type= "text"  name= "username"  id= "username"  />
+            Password:
+            <input  type= "password"  name= "password"  id= "password"  />    
+            <input  type= "submit"  name= "loginBtn"  id= "loginBtn"  value= "Login"  />
+        </div>
+    </form>
+    <script type= "text/javascript" >
+                                                                                                        $ ( Document ). ready ( function ()  {
+                                                                                                            $(' #loginform ').submit(function (e) {
+                                                                                                                e.preventDefault();
+                                                                                                                $.ajax({
+                                                                                                                    type: " POST ",
+                                                                                                                    url: ' login.php ',
+                                                                                                                    data: $(this).serialize(),
+                                                                                                                    success: function (response) {
+                                                                                                                        var jsonData = JSON.parse(response);
+                                                                                                                        // user is logged in successfully in the back-end 
+                                                                                                                        // let's redirect 
+                                                                                                                        if (jsonData.success == " 1 ") {
+                                                                                                                            location.href = ' my_profile.php ';
+                                                                                                                        }
+                                                                                                                        else {
+                                                                                                                            alert(' Invalid Credentials! ');
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                });
+                                                                                                            });
+    });
+    </script>
+    </body>
+    </html>
+</textarea>
+
+
+
+            Файл index.php є досить стандартною HTML-формою, яка містить поля імені користувача та пароля. Він також
+            містить фрагмент JavaScript jQuery, який слідує за схемою, яку ми бачили вище.<br><br>
+
+            Ми використовували подію submitелемента форми, який спрацьовуватиме, коли користувач натискає кнопку
+            відправки. У цьому обробнику подій ми ініціювали виклик AJAX, який надсилає дані форми у файл login.php ,
+            використовуючи метод POST асинхронно. Отримавши відповідь сервера, ми аналізуємо його, використовуючи метод
+            parseоб'єкта JSON. І нарешті, ґрунтуючись на успіху чи невдачі, ми робимо відповідні дії.<br><br>
+
+            Давайте подивимося, як виглядає login.php .<br><br>
+
+            <pre>
+    <code>
+        if  ( isset ( $_POST [ 'username' ])  &&  $_POST [ 'username' ]  &&  isset ( $_POST [ 'password' ])  &&  $_POST [ 'password' ])  {
+            // do user authentication as per your requirements 
+            // ... 
+            // ... 
+            // based on successful authentication 
+            echo  json_encode ( array ( 'success'  =>  1 ));
+        }  else  {
+            echo  json_encode ( array ( 'success'  =>  0 ));
+        }
+    </code>
+</pre>
+
+            Файл login.php містить логіку автентифікації користувачів та повертає відповідь JSON, засновану на успішному
+            або невдалому вході до системи.
+
+
+            <h2>Висновок</h2>
+            В цьому уроці ми обговорили основи AJAX та його роботу в PHP. У першій половині статті ми розглянули, як
+            AJAX працює у ванільному JS та у бібліотеці jQuery. У другій половині ми створили реальний приклад, який
+            продемонстрував, як ви можете використовувати AJAX для отримання PHP вмісту на стороні сервера.
+
+
+    </div>
+    <div class="task">
+        <br>
+        Завдання:<br>
+        Спробувати створити<br>
+        1) Повторити пройдений матеріал<br>
+        <br>
+        <br>
+    </div>
+
+    <script src="assets/js/app.js"></>
+                                                                                                </body>
+
+                                                                                            </html>
